@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="box bg-full-transparent has-text-white">
+    
+    <h1 class="title has-text-centered has-text-white">
+      <i class="fas fa-tools"></i> Member Dashboard
+    </h1>
+
+    <div class="notification bg-full-transparent">
+      <h2 class="has-text-weight-bold"><i class="fas fa-user"></i> Welcome, <%= @user.username %>!</h2>
+    </div>
+
+    <div class="columns is-multiline">
+      
+      <!-- Account Information -->
+      <div class="column is-half">
+        <div class="box bg-full-transparent has-text-white">
+          <h3 class="title is-5"><i class="fas fa-user-circle"></i> Account Information</h3>
+          <ul class="content">
+            <li><strong>Username:</strong> <%= @user.username %></li>
+            <li><strong>Email:</strong> <%= @user.email %></li>
+            <li><strong>Member since:</strong> <%= @user.created_at.strftime("%B %d, %Y") %></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Member Benefits -->
+      <div class="column is-half">
+        <div class="box bg-full-transparent has-text-white">
+          <h3 class="title is-5"><i class="fas fa-gift"></i> Member Benefits</h3>
+          <ul class="content">
+            <li><i class="fas fa-check-circle has-text-success"></i> Exclusive content access</li>
+            <li><i class="fas fa-check-circle has-text-success"></i> Priority support</li>
+            <li><i class="fas fa-check-circle has-text-success"></i> Community features</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="column is-full">
+        <div class="box bg-full-transparent has-text-white has-text-centered">
+          <div class="buttons is-centered">
+            <%= link_to "Edit Profile", edit_user_registration_path, class: "button is-rounded bg-transparent" %>
+            <%= link_to "Return to Home", root_path, class: "button is-rounded bg-transparent" %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

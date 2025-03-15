@@ -1,0 +1,70 @@
+<div class="box bg-full-transparent">
+  <h2 class="title has-text-white has-text-centered">
+    <i class="fas fa-sign-in-alt"></i> Log In
+  </h2>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $("body").on('click', '.toggle-password', function() {
+              $(this).toggleClass("fa-eye fa-eye-slash");
+              var input = $("#pass_log_id");
+              if (input.attr("type") === "password") {
+                input.attr("type", "text");
+              } else {
+                input.attr("type", "password");
+              }
+            
+            });
+        </script>
+    <div class="columns is-centered">
+    <div class="column is-one-third">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "box bg-transparent" }) do |f| %>
+      <% if flash[:alert] %>
+        <div class="notification bg-transparent"><%= flash[:alert] %></div>
+      <% end %>
+        <br>
+
+        <div class="field">
+            <div class="control has-icons-left has-icons-right">
+              <%= f.text_field :login, autofocus: true, class: "input is-rounded bg-full-transparent", placeholder: "Username" %>
+                    <span class="icon is-small is-left">
+                         <i class="fas fa-user"></i>
+                     </span>
+            </div>
+       </div>
+
+                                
+       <div class="field">
+            <div class="control has-icons-left has-icons-right">
+                  <%= f.password_field :password, autocomplete: "current-password", id: "pass_log_id", class: "input is-rounded bg-full-transparent", placeholder: "Password" %>
+            <span class="icon is-small is-left">
+                   <i class="fa fa-lock"></i>
+            </span>
+              <span id="btn_toggle" class="icon is-small is-right" style="pointer-events: all; cursor: pointer">
+                   <i toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></i>
+              </span>
+            </div>
+        </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="field">
+        <label class="checkbox has-text-white">
+          <%= f.check_box :remember_me %> Remember me
+        </label>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <div class="control">
+        <%= f.submit "Log In", class: "button is-fullwidth is-rounded" %>
+      </div>
+    </div>
+  <% end %>
+    </div>
+    </div>
+
+  <div class="has-text-centered mt-3">
+    <a href="/users/sign_up">Registration</a><br>
+    <a href="/users/password/new">Forgot your password?</a>
+  </div>
+</div>

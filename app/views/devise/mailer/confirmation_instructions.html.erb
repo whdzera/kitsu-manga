@@ -1,0 +1,20 @@
+<div style="font-family: Arial, sans-serif; text-align: center; background-color: #f9f9f9; padding: 20px;">
+  <div style="background: #ffffff; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+    <h2 style="color: #333;">🎉 Welcome, <%= @email %>! 🎉</h2>
+
+    <p style="color: #555; font-size: 16px;">
+      Thank you for signing up! Please confirm your email address to activate your account.
+    </p>
+
+    <div style="margin: 20px 0;">
+      <a href="<%= confirmation_url(@resource, confirmation_token: @token) %>" 
+         style="background: #007bff; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 5px; font-weight: bold; display: inline-block;">
+        ✅ Confirm My Account
+      </a>
+    </div>
+
+    <p style="color: #777; font-size: 14px;">
+      If you didn’t sign up, you can ignore this email.
+    </p>
+  </div>
+</div>

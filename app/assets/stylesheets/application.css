@@ -1,0 +1,90 @@
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(59, 57, 57);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 0, 0);
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(211, 211, 211, 0.43);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  background: #cecece;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+/*mobile */
+@media screen and (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons .button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
+
+body {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(43, 42, 43, 1) 17%,
+    rgba(40, 39, 40, 1) 31%,
+    rgba(46, 45, 46, 1) 62%,
+    rgba(104, 104, 105, 1) 89%
+  );
+}
+
+.bg-transparent {
+  background-color: rgba(0, 0, 0, 0.36);
+}
+
+.bg-full-transparent {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#sticky-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.39);
+}
+.navbar-dropdown {
+  background-color: rgba(0, 0, 0, 0.36) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.navbar-item {
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  white-space: nowrap;
+}
+
+.navbar-dropdown .navbar-item:hover {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.navbar-menu {
+  max-width: 100%;
+  justify-content: flex-end;
+  margin-right: 100px;
+}
+
+.navbar-end {
+  margin-right: 0;
+}
