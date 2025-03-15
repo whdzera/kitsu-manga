@@ -1,4 +1,4 @@
-<%= form_with model: manga, local: true do |f| %>
+<%= form_with model: @manga, local: true, html: { multipart: true } do |f| %>
   <div class="form-group">
     <%= f.label :title, "Title" %>
     <%= f.text_field :title, class: "form-control", required: true %>
@@ -6,7 +6,7 @@
 
   <div class="form-group">
     <%= f.label :alternative_title, "Alternative Title" %>
-    <%= f.text_field :alternative_title, class: "form-control" %>
+    <%= f.text_field :alternative_title, class: "form-control", maxlength: 255 %>
   </div>
 
   <div class="form-group">
@@ -20,13 +20,18 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :manga_type, "Manga Type" %>
+    <%= f.select :manga_type, ["Shonen", "Seinen", "Shoujo", "Josei", "Kodomo"], {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :series, "Series" %>
-    <%= f.text_field :series, class: "form-control" %>
+    <%= f.text_field :series, class: "form-control", placeholder: "Enter series name if available" %>
   </div>
 
   <div class="form-group">
     <%= f.label :author, "Author" %>
-    <%= f.text_field :author, class: "form-control" %>
+    <%= f.text_field :author, class: "form-control", required: true %>
   </div>
 
   <div class="form-group">
@@ -36,7 +41,7 @@
 
   <div class="form-group">
     <%= f.label :created_date, "Created Date" %>
-    <%= f.date_select :created_date, class: "form-control" %>
+    <%= f.date_field :created_date, class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -46,7 +51,7 @@
 
   <div class="form-group">
     <%= f.label :chapter, "Chapter" %>
-    <%= f.number_field :chapter, class: "form-control" %>
+    <%= f.number_field :chapter, class: "form-control", min: 1 %>
   </div>
 
   <div class="form-group">
@@ -56,33 +61,6 @@
 
   <div class="form-actions">
     <%= f.submit "Save", class: "btn btn-primary" %>
-    <%= link_to "Cancel", mangas_path, class: "btn btn-secondary" %>
+    <%= button_to "Cancel", mangas_path, class: "btn btn-secondary", method: :get %>
   </div>
 <% end %>
-
-<style>
-  .form-group {
-    margin-bottom: 15px;
-  }
-
-  .form-control {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .form-actions {
-    margin-top: 15px;
-  }
-
-  .btn {
-    padding: 8px 12px;
-    text-decoration: none;
-    border-radius: 3px;
-    display: inline-block;
-  }
-
-  .btn-primary { background-color: blue; color: white; }
-  .btn-secondary { background-color: gray; color: white; }
-</style>

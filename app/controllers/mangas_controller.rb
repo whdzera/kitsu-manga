@@ -58,22 +58,17 @@ class MangasController < ApplicationController
   end
 
   private
+
+  def manga_params
+    params.require(:manga).permit(:title, :alternative_title, :status, :manga_type, 
+                                  :series, :author, :rating, :created_date, 
+                                  :genre, :chapter, :image_cover, :image )
+  end
   
-    def manga_params
-      params.require(:manga).permit(
-        :title, :alternative_title, :image_cover, :status,
-        :series, :author, :rating, :created_date, 
-        :genre, :chapter, :image
-      )
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_manga
       @manga = Manga.find(params[:id])  # There's also a typo here: .expect should be :id
     end
 
-    # Only allow a list of trusted parameters through.
-    def manga_params
-      params.fetch(:manga, {})
-    end
 end

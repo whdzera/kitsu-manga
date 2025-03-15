@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_15_064308) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_15_084039) do
   create_table "mangas", force: :cascade do |t|
     t.string "title"
     t.string "alternative_title"
     t.string "image_cover"
     t.string "status"
-    t.string "type"
+    t.string "manga_type"
     t.string "series"
     t.string "author"
     t.float "rating"
