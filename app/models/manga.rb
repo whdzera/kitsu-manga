@@ -1,0 +1,2 @@
+class Manga < ApplicationRecord
+end

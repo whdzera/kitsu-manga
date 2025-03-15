@@ -1,0 +1,11 @@
+<% content_for :title, "New manga" %>
+
+<h1>New manga</h1>
+
+<%= render "form", manga: @manga %>
+
+<br>
+
+<div>
+  <%= link_to "Back to mangas", mangas_path %>
+</div>

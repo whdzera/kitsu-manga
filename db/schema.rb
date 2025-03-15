@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_14_094540) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_15_064308) do
+  create_table "mangas", force: :cascade do |t|
+    t.string "title"
+    t.string "alternative_title"
+    t.string "image_cover"
+    t.string "status"
+    t.string "type"
+    t.string "series"
+    t.string "author"
+    t.float "rating"
+    t.date "created_date"
+    t.string "genre"
+    t.integer "chapter"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false

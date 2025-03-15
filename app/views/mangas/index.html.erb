@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Mangas" %>
+
+<h1>Mangas</h1>
+
+<div id="mangas">
+  <% @mangas.each do |manga| %>
+    <%= render manga %>
+    <p>
+      <%= link_to "Show this manga", manga %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New manga", new_manga_path %>

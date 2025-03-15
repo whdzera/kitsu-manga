@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :mangas
   # Devise routes for users
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -23,4 +24,6 @@ Rails.application.routes.draw do
   namespace :member do
     get 'dashboard', to: 'dashboard#index'
   end
+
+  resources :mangas
 end
