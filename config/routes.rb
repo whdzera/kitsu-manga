@@ -28,5 +28,5 @@ Rails.application.routes.draw do
   end
 
   # manga
-  resources :mangas, path: 'manga'
+  resources :mangas, path: 'manga', param: :id
 end

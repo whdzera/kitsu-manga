@@ -1,5 +1,11 @@
 class MangasController < ApplicationController
-  before_action :set_manga, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index, :show] # Guest bisa lihat index & show
+  before_action :require_admin, only: [:create, :new, :update, :edit, :destroy]
+  before_action :set_manga, only: [:show, :edit, :update, :destroy]
+
+  def to_param
+    title.parameterize  # Mengubah title jadi slug (misalnya: "Blue Lock" -> "blue-lock")
+  end
 
   # GET /mangas or /mangas.json
   def index
@@ -10,16 +16,16 @@ class MangasController < ApplicationController
   def show
   end
 
-  # GET /mangas/new
+  # GET /mangas/new (Hanya Admin)
   def new
     @manga = Manga.new
   end
 
-  # GET /mangas/1/edit
+  # GET /mangas/1/edit (Hanya Admin)
   def edit
   end
 
-  # POST /mangas or /mangas.json
+  # POST /mangas or /mangas.json (Hanya Admin)
   def create
     @manga = Manga.new(manga_params)
 
@@ -34,7 +40,7 @@ class MangasController < ApplicationController
     end
   end
 
-  # PATCH/PUT /mangas/1 or /mangas/1.json
+  # PATCH/PUT /mangas/1 or /mangas/1.json (Hanya Admin)
   def update
     respond_to do |format|
       if @manga.update(manga_params)
@@ -47,7 +53,7 @@ class MangasController < ApplicationController
     end
   end
 
-  # DELETE /mangas/1 or /mangas/1.json
+  # DELETE /mangas/1 or /mangas/1.json (Hanya Admin)
   def destroy
     @manga.destroy!
 
@@ -62,13 +68,17 @@ class MangasController < ApplicationController
   def manga_params
     params.require(:manga).permit(:title, :alternative_title, :status, :manga_type, 
                                   :series, :author, :rating, :created_date, 
-                                  :genre, :chapter, :image_cover, :image )
+                                  :genre, :chapter, :image_cover, :image)
   end
-  
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_manga
-      @manga = Manga.find(params[:id])  # There's also a typo here: .expect should be :id
+  def set_manga
+    @manga = Manga.find_by!(title: params[:id].tr('-', ' ')) 
+  end
+
+  def require_admin
+    unless current_user&.admin?
+      flash[:alert] = "You are not authorized to access this area."
+      redirect_to root_path
     end
-
+  end
 end

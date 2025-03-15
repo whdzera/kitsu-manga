@@ -16,8 +16,8 @@
         <p><strong>Genre:</strong> <%= manga.genre %></p>
         <p><strong>Status:</strong> <%= manga.status %></p>
         <p>
-          <%= link_to "Show this manga", manga, class: "btn btn-primary" %>
-          <%= link_to "Edit", edit_manga_path(manga), class: "btn btn-secondary" %>
+          <%= link_to "Show this manga", manga_path(manga.title), class: "btn btn-primary" %>
+          <%= link_to "Edit", edit_manga_path(manga.title), class: "btn btn-secondary" %>
           <%= button_to "Delete", manga, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
         </p>
       </div>
