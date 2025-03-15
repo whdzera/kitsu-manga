@@ -1,4 +1,5 @@
 class Manga < ApplicationRecord
+  has_many :chapters, dependent: :destroy
   validates :title, presence: true, length: { maximum: 255 }
   validates :alternative_title, length: { maximum: 255 }, allow_blank: true
   validates :image_cover, presence: true

@@ -1,0 +1,13 @@
+<%= form_with model: [@manga, @chapter], url: manga_chapter_path(@manga.title, @chapter.chapter_number), method: :patch, local: true do |f| %>
+  <div>
+    <%= f.label :chapter_number %>
+    <%= f.number_field :chapter_number, value: @chapter.chapter_number %>
+  </div>
+
+  <div>
+    <%= f.label :images, "Chapter Image URL" %>
+    <%= f.text_field :images, value: @chapter.images %>
+  </div>
+
+  <%= f.submit "Update Chapter" %>
+<% end %>

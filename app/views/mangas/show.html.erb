@@ -10,21 +10,23 @@
   <p><strong>Rating:</strong> <%= @manga.rating %></p>
   <p><strong>Created Date:</strong> <%= @manga.created_at.strftime("%d %B %Y") %></p>
   <p><strong>Genre:</strong> <%= @manga.genre %></p>
-  <p><strong>Chapters:</strong> <%= @manga.chapter %></p>
 
   <% if @manga.image_cover.present? %>
     <p><strong>Cover:</strong></p>
     <img src="<%= @manga.image_cover %>" alt="Cover Image" style="max-width: 200px;">
   <% end %>
 
-  <% if @manga.image.present? %>
-    <p><strong>Manga Pages:</strong></p>
-    <img src="<%= @manga.image %>" alt="Manga Image" style="max-width: 400px;">
-  <% end %>
 </div>
 
+<h2>Chapters :</h2>
+<ul>
+<% @manga.chapters.each do |chapter| %>
+  <%= link_to "Chapter #{chapter.chapter_number}", manga_chapter_path(@manga.title, chapter.chapter_number) %>
+<% end %>
+</ul>
+
 <div>
-  <%= link_to "Edit this manga", edit_manga_path(@manga), class: "btn btn-primary" %> |
+  <%= link_to "Edit this manga", edit_manga_path(@manga.title), class: "btn btn-primary" %> |
   <%= link_to "Back to mangas", mangas_path, class: "btn btn-secondary" %>
 
   <%= button_to "Destroy this manga", @manga, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>

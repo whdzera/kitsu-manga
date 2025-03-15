@@ -14,6 +14,7 @@ class MangasController < ApplicationController
 
   # GET /mangas/1 or /mangas/1.json
   def show
+    @chapters = @manga.chapters.order(:chapter_number)
   end
 
   # GET /mangas/new (Hanya Admin)
@@ -73,6 +74,7 @@ class MangasController < ApplicationController
 
   def set_manga
     @manga = Manga.find_by!(title: params[:id].tr('-', ' ')) 
+    redirect_to mangas_path, alert: "Manga not found" if @manga.nil?
   end
 
   def require_admin

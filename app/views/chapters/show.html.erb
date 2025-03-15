@@ -1,0 +1,17 @@
+<h1><%= @manga.title %> - Chapter <%= @chapter.chapter_number %></h1>
+
+<div>
+  <% if @chapter.images.present? %>
+    <img src="<%= @chapter.images %>" alt="Chapter <%= @chapter.chapter_number %>">
+  <% else %>
+    <p>No image available for this chapter.</p>
+  <% end %>
+</div>
+<div class="actions">
+  <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button" %>
+  <%= button_to "Hapus", manga_delete_chapter_path(@manga.title, @chapter.chapter_number), 
+                method: :delete, 
+                data: { confirm: "Apakah kamu yakin ingin menghapus Chapter #{@chapter.chapter_number}?" },
+                class: "button button-danger" %>
+</div>
+<%= link_to "Back to Manga", manga_path(@manga.title) %>

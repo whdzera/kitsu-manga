@@ -1,0 +1,16 @@
+<h1>Tambah Chapter ke <%= @manga.title %></h1>
+
+<%= form_with url: manga_chapter_create_path(@manga.title), method: :post, local: true do |f| %>
+  
+    <div>
+    <%= f.label :chapter_number, "Nomor Chapter" %>
+    <%= f.number_field :chapter_number, name: "chapter[chapter_number]", value: @chapter.chapter_number %>
+  </div>
+
+  <div>
+    <%= f.label :images, "URL Gambar Chapter" %>
+    <%= f.text_field :images, name: "chapter[images]" %>
+  </div>
+
+  <%= f.submit "Tambah Chapter" %>
+<% end %>
