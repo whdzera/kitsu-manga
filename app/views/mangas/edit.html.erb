@@ -1,12 +1,39 @@
-<% content_for :title, "Editing manga" %>
+<% content_for :title, "Editing Manga" %>
 
-<h1>Editing manga</h1>
+<h1>Editing Manga</h1>
 
-<%= render "form", manga: @manga %>
-
-<br>
-
-<div>
-  <%= link_to "Show this manga", @manga %> |
-  <%= link_to "Back to mangas", mangas_path %>
+<div class="manga-edit-form">
+  <%= render "form", manga: @manga %>
 </div>
+
+<div class="manga-links">
+  <%= link_to "Show this manga", @manga, class: "btn btn-primary" %>
+  <%= link_to "Back to mangas", mangas_path, class: "btn btn-secondary" %>
+</div>
+
+<style>
+  .manga-edit-form {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
+  .manga-links {
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  .btn {
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .btn-primary { background-color: blue; color: white; }
+  .btn-secondary { background-color: gray; color: white; }
+</style>

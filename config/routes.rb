@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :mangas
   # Devise routes for users
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -12,7 +11,10 @@ Rails.application.routes.draw do
   # Homepage accessible to everyone
   root to: 'home#index'
 
-  # Admin area with proper namespace
+  # 404 page not found
+  match "/404", to: "errors#not_found", via: :all
+
+  # Admin area
   namespace :admin do
     get 'dashboard', to: 'dashboard#index'
     get 'users/:id/edit', to: 'dashboard#edit_user', as: 'edit_user'
@@ -25,5 +27,6 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboard#index'
   end
 
-  resources :mangas
+  # manga
+  resources :mangas, path: 'manga'
 end

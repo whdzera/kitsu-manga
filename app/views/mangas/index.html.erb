@@ -1,16 +1,58 @@
-<p style="color: green"><%= notice %></p>
+<p style="color: green"><%= notice if notice.present? %></p>
 
 <% content_for :title, "Mangas" %>
 
 <h1>Mangas</h1>
 
 <div id="mangas">
-  <% @mangas.each do |manga| %>
-    <%= render manga %>
-    <p>
-      <%= link_to "Show this manga", manga %>
-    </p>
+  <% if @mangas.any? %>
+    <% @mangas.each do |manga| %>
+      <div class="manga-card">
+        <% if manga.image_cover.present? %>
+          <img src="<%= manga.image_cover %>" alt="<%= manga.title %> Cover" class="manga-cover">
+        <% end %>
+        <h2><%= manga.title %></h2>
+        <p><strong>Author:</strong> <%= manga.author %></p>
+        <p><strong>Genre:</strong> <%= manga.genre %></p>
+        <p><strong>Status:</strong> <%= manga.status %></p>
+        <p>
+          <%= link_to "Show this manga", manga, class: "btn btn-primary" %>
+          <%= link_to "Edit", edit_manga_path(manga), class: "btn btn-secondary" %>
+          <%= button_to "Delete", manga, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+        </p>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No mangas available.</p>
   <% end %>
 </div>
 
-<%= link_to "New manga", new_manga_path %>
+<%= link_to "New manga", new_manga_path, class: "btn btn-success" %>
+
+<style>
+  .manga-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .manga-cover {
+    max-width: 150px;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
+  .btn-primary { background-color: blue; color: white; }
+  .btn-secondary { background-color: gray; color: white; }
+  .btn-danger { background-color: red; c

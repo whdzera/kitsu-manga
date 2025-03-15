@@ -1,10 +1,31 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @manga %>
+<p style="color: green"><%= notice if notice.present? %></p>
 
 <div>
-  <%= link_to "Edit this manga", edit_manga_path(@manga) %> |
-  <%= link_to "Back to mangas", mangas_path %>
+  <h1><%= @manga.title %></h1>
+  <p><strong>Alternative Title:</strong> <%= @manga.alternative_title %></p>
+  <p><strong>Status:</strong> <%= @manga.status %></p>
+  <p><strong>Type:</strong> <%= @manga.type %></p>
+  <p><strong>Series:</strong> <%= @manga.series %></p>
+  <p><strong>Author:</strong> <%= @manga.author %></p>
+  <p><strong>Rating:</strong> <%= @manga.rating %></p>
+  <p><strong>Created Date:</strong> <%= @manga.created_at.strftime("%d %B %Y") %></p>
+  <p><strong>Genre:</strong> <%= @manga.genre %></p>
+  <p><strong>Chapters:</strong> <%= @manga.chapter %></p>
 
-  <%= button_to "Destroy this manga", @manga, method: :delete %>
+  <% if @manga.image_cover.present? %>
+    <p><strong>Cover:</strong></p>
+    <img src="<%= @manga.image_cover %>" alt="Cover Image" style="max-width: 200px;">
+  <% end %>
+
+  <% if @manga.image.present? %>
+    <p><strong>Manga Pages:</strong></p>
+    <img src="<%= @manga.image %>" alt="Manga Image" style="max-width: 400px;">
+  <% end %>
+</div>
+
+<div>
+  <%= link_to "Edit this manga", edit_manga_path(@manga), class: "btn btn-primary" %> |
+  <%= link_to "Back to mangas", mangas_path, class: "btn btn-secondary" %>
+
+  <%= button_to "Destroy this manga", @manga, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
 </div>
