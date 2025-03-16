@@ -1,17 +1,139 @@
-<h1><%= @manga.title %> - Chapter <%= @chapter.chapter_number %></h1>
 
-<div>
-  <% if @chapter.images.present? %>
-    <img src="<%= @chapter.images %>" alt="Chapter <%= @chapter.chapter_number %>">
-  <% else %>
-    <p>No image available for this chapter.</p>
-  <% end %>
-</div>
-<div class="actions">
-  <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button" %>
-  <%= button_to "Hapus", manga_delete_chapter_path(@manga.title, @chapter.chapter_number), 
-                method: :delete, 
-                data: { confirm: "Apakah kamu yakin ingin menghapus Chapter #{@chapter.chapter_number}?" },
-                class: "button button-danger" %>
-</div>
-<%= link_to "Back to Manga", manga_path(@manga.title) %>
+  <style>
+    
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header */
+    .manga-header {
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+    
+    .manga-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    /* Navigation */
+    .chapter-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px 0;
+    }
+    
+    /* Images container */
+    .manga-images {
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    .manga-images img {
+      display: block;
+      max-width: 100%;
+      margin: 0 auto 10px;
+      border-radius: 4px;
+    }
+    
+    /* Buttons */
+    .button {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #4a89dc;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .button:hover {
+      background-color: #3b7dd8;
+    }
+    
+    .button-danger {
+      background-color: #e74c3c;
+    }
+    
+    .button-danger:hover {
+      background-color: #d62c1a;
+    }
+    
+    /* Actions bar */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    /* Back link */
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4a89dc;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+
+  <div class="container">
+    <div class="manga-header bg-transparent">
+      <h1 class="manga-title"><%= @manga.title %> - Chapter <%= @chapter.chapter_number %></h1>
+      
+      <div class="chapter-nav">
+        <!-- Previous chapter link would go here -->
+        <a href="#" class="button">Previous Chapter</a>
+        
+        <!-- Next chapter link would go here -->
+        <a href="#" class="button">Next Chapter</a>
+      </div>
+    </div>
+    
+    <div class="manga-images bg-transparent">
+      <% if @chapter.images.present? %>
+        <% @chapter.images.split(',').each do |image| %>
+          <img src="<%= image.strip %>" alt="Page from Chapter <%= @chapter.chapter_number %>">
+        <% end %>
+      <% else %>
+        <p>No image available for this chapter.</p>
+      <% end %>
+    </div>
+    
+    <div class="chapter-nav">
+      <!-- Duplicate navigation at bottom for convenience -->
+      <a href="#" class="button">Previous Chapter</a>
+      <a href="#" class="button">Next Chapter</a>
+    </div>
+    
+    <div class="actions">
+      <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button" %>
+      <%= button_to "Hapus", manga_delete_chapter_path(@manga.title, @chapter.chapter_number), 
+                    method: :delete, 
+                    data: { confirm: "Apakah kamu yakin ingin menghapus Chapter #{@chapter.chapter_number}?" },
+                    class: "button button-danger" %>
+    </div>
+    
+    <%= link_to "Back to Manga", manga_path(@manga.title), class: "back-link" %>
+  </div>

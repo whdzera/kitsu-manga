@@ -2,6 +2,18 @@
   <div class="columns">
     <div class="column is-8">
       
+      <!-- Notify -->
+      <% if notice.present? %>
+      <div class="manga-section bg-transparent">
+        <div class="section-title">Notification</div>
+          <article class="message">
+            <div class="message-header bg-full-transparent">
+              <p style="color: green"><%= notice %></p>
+            </div>
+          </article>
+        </div>
+      <% end %>
+
       <!-- Announ -->
       <div class="manga-section bg-transparent">
         <div class="section-title">Announcement</div>
@@ -10,6 +22,7 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          
           <button class="delete" aria-label="delete"></button>
         </div>
         </article>
@@ -24,7 +37,7 @@
             <% featured_manga.each do |manga| %>
               <div class="scroll-item">
                 <div class="manga-box">
-                  <a href="<%= manga_path(manga) %>">
+                  <a href="<%= manga_path(manga.title) %>">
                     <% if manga.image_cover.present? %>
                       <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image">
                     <% else %>
@@ -83,7 +96,7 @@
         <% popular_mangas = Manga.order(created_at: :desc, rating: :desc).limit(5) %>
         <% popular_mangas.each_with_index do |manga, index| %>
           <div class="manga-box">
-            <a href="<%= manga_path(manga) %>">
+            <a href="<%= manga_path(manga.title) %>">
               <div class="columns is-mobile">
                 <div class="column is-3">
                   <% if manga.image_cover.present? %>
