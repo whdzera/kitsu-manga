@@ -1,5 +1,5 @@
 class MangasController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show] # Guest bisa lihat index & show
+  before_action :authenticate_user!, except: [:index, :show] 
   before_action :require_admin, only: [:create, :new, :update, :edit, :destroy]
   before_action :set_manga, only: [:show, :edit, :update, :destroy]
 
@@ -69,12 +69,17 @@ class MangasController < ApplicationController
   def manga_params
     params.require(:manga).permit(:title, :alternative_title, :status, :manga_type, 
                                   :series, :author, :rating, :created_date, 
-                                  :genre, :chapter, :image_cover, :image)
+                                  :genre, :image_cover)
   end
 
   def set_manga
-    @manga = Manga.find_by!(title: params[:id].tr('-', ' ')) 
-    redirect_to mangas_path, alert: "Manga not found" if @manga.nil?
+    # Try to find by numeric ID first
+    @manga = if params[:id].to_i.to_s == params[:id]
+               Manga.find(params[:id])
+             else
+               # If it's not a numeric ID, assume it's a slug
+               Manga.find_by!(title: params[:id].tr('-', ' '))
+             end
   end
 
   def require_admin

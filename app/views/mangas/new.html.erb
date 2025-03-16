@@ -1,11 +1,67 @@
-<% content_for :title, "New manga" %>
+<% content_for :title, "New Manga" %>
 
-<h1>New manga</h1>
+<h1>New Manga</h1>
 
-<%= render "form", manga: @manga %>
+<div class="manga-form">
+  <%= form_with(model: @manga, local: true) do |f| %>
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :alternative_title %>
+      <%= f.text_field :alternative_title, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :image_cover, "Image Cover URL" %>
+      <%= f.text_field :image_cover, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :status %>
+      <%= f.select :status, ["Ongoing", "Completed"], {}, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :manga_type, "Manga Type" %>
+      <%= f.text_field :manga_type, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :series %>
+      <%= f.text_field :series, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :author %>
+      <%= f.text_field :author, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :rating %>
+      <%= f.number_field :rating, step: 0.1, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :created_date %>
+      <%= f.date_field :created_date, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :genre %>
+      <%= f.text_field :genre, placeholder: "Comma separated (e.g., Action, Fantasy)", class: "input" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Create Manga", class: "button is-primary" %>
+    </div>
+  <% end %>
+</div>
 
 <br>
 
 <div>
-  <%= link_to "Back to mangas", mangas_path %>
+  <%= link_to "Back to mangas", mangas_path, class: "button is-light" %>
 </div>
