@@ -44,7 +44,7 @@
                       <div class="manga-image"></div>
                     <% end %>
                     <div class="manga-title"><%= manga.title %></div>
-                    <div class="manga-chapter"><%= manga.status %> • <%= manga.manga_type %></div>
+                    <div class="manga-chapter"><%= manga.status %> • Rating <%= manga.rating %></div>
                   </a>
                 </div>
               </div>
@@ -55,39 +55,47 @@
         </div>
       </div>
       
-      <!-- Latest Updates - Now Vertical -->
-      <div class="manga-section bg-transparent">
-        <div class="section-title">Latest Updates</div>
-        <div class="vertical-scroll latest-vertical-scroll">
-          <% latest_mangas = Manga.order(created_at: :desc).limit(12) %>
-          <% if latest_mangas.any? %>
-            <% latest_mangas.each do |manga| %>
-              <div class="vertical-scroll-item bg-full-transparent">
-                <div class="manga-box">
-                  <a href="<%= manga_path(manga.title) %>">
-                    <div class="columns is-mobile">
-                      <div class="column is-4">
-                        <% if manga.image_cover.present? %>
-                          <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image">
-                        <% else %>
-                          <div class="manga-image-small"></div>
-                        <% end %>
-                      </div>
-                      <div class="column">
-                        <div class="manga-title"><%= manga.title %></div>
-                        <div class="manga-chapter"><%= manga.author %> • <%= manga.status %></div>
-                      </div>
-                    </div>
-                  </a>
+      <!-- Latest Updates -->
+<div class="manga-section bg-transparent">
+  <div class="section-title">Latest Updates</div>
+  <div class="vertical-scroll latest-vertical-scroll">
+    <% latest_chapters = Chapter.includes(:manga).order(created_at: :desc).limit(12) %>
+    <% if latest_chapters.any? %>
+      <% latest_chapters.each do |chapter| %>
+        <div class="vertical-scroll-item bg-full-transparent">
+          <div class="manga-box">
+            <a href="<%= manga_chapter_path(chapter.manga.title, chapter.chapter_number) %>">
+              <div class="columns is-mobile">
+                <div class="column is-4">
+                  <% if chapter.manga.image_cover.present? %>
+                    <img src="<%= chapter.manga.image_cover %>" alt="<%= chapter.manga.title %>" class="manga-chapter-image">
+                  <% else %>
+                    <div class="manga-image-small"></div>
+                  <% end %>
+                </div>
+                <div class="column">
+                  <div class="manga-title">
+                    <%= chapter.manga.title %> - Chapter <%= chapter.chapter_number %>
+                  </div>
+                  <div class="manga-chapter">
+                    <%= chapter.manga.status %> • Rating : <%= chapter.manga.rating %> 
+                  </div>
+                  <div class="field">
+                    Genre : <%= chapter.manga.genre %> 
+                  </div>
                 </div>
               </div>
-            <% end %>
-          <% else %>
-            <div class="vertical-scroll-item">No manga updates available</div>
-          <% end %>
+            </a>
+          </div>
         </div>
-      </div>
-    </div>
+      <% end %>
+    <% else %>
+      <div class="vertical-scroll-item">No manga updates available</div>
+    <% end %>
+  </div>
+</div>
+</div>
+
     
     <div class="column is-4">
       <!-- Popular This Week -->
@@ -148,6 +156,15 @@
   }
   
   .manga-image {
+    width: 100%;
+    height: 90px;
+    background-color: rgba(0, 0, 0, 0.14);
+    margin-bottom: 5px;
+    object-fit: cover;
+  }
+
+  
+  .manga-chapter-image {
     width: 100%;
     height: 150px;
     background-color: rgba(0, 0, 0, 0.14);
@@ -242,7 +259,7 @@
   
   /* Vertical scrolling styles - NEW */
   .vertical-scroll {
-    height: 400px;
+    height: 800px;
     overflow-y: auto;
     padding-right: 10px;
   }

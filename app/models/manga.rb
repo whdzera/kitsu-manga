@@ -10,4 +10,5 @@ class Manga < ApplicationRecord
   validates :rating, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
   validates :created_date, presence: true, comparison: { less_than_or_equal_to: Date.today }
   validates :genre, presence: true, format: { with: /\A[a-zA-Z\s,]+\z/, message: "only allows letters and commas" }
+  validates :synopsis, presence: true
 end

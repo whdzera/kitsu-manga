@@ -63,6 +63,10 @@ class ChaptersController < ApplicationController
     end
   end
 
+  def latest
+    @latest_chapters = Chapter.order(created_at: :desc).limit(5) # Ambil 5 chapter terbaru
+  end
+
   private
 
   def chapter_params

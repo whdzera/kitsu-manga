@@ -58,6 +58,11 @@
           </div>
 
           <div class="field">
+            <%= f.label :synopsis %>
+            <%= f.text_area :synopsis, class: "input" %>
+          </div>
+
+          <div class="field">
           <div class="actions">
             <%= f.submit "Create Manga", class: "button" %>
             <%= link_to "Back to list manga", mangas_path, class: "button" %>

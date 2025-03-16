@@ -11,34 +11,38 @@
       <% @mangas.each do |manga| %>
         <div class="manga-card">
           <a href="<%= manga_path(manga.title) %>">
-          <div class="manga-cover-container">
-            <% if manga.image_cover.present? %>
-              <img src="<%= manga.image_cover %>" alt="<%= manga.title %> Cover" class="manga-cover">
-            <% end %>
-          </div>
-          <div class="manga-details">
-            <h2 class="manga-title"><%= manga.title %></h2>
-            <p class="manga-info"><strong>Author:</strong> <%= manga.author %></p>
-            <p class="manga-info"><strong>Genre:</strong> <%= manga.genre %></p>
-            <p class="manga-info"><strong>Status:</strong> <%= manga.status %></p>
-            
-            <div class="manga-actions">
-              <% if current_user&.admin? %>
-              <a href="<%= edit_manga_path(manga.title) %>" class="btn btn-secondary">Edit</a>
-              <%= button_to "Delete", manga, method: :delete, class: "btn btn-danger", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
+            <div class="manga-cover-container">
+              <% if manga.image_cover.present? %>
+                <img src="<%= manga.image_cover %>" alt="<%= manga.title %> Cover" class="manga-cover">
               <% end %>
             </div>
-          </div>
+            <div class="manga-details">
+              <h2 class="manga-title"><%= manga.title %></h2>
+              <p class="manga-info"><strong>Author:</strong> <%= manga.author %></p>
+              <p class="manga-info"><strong>Genre:</strong> <%= manga.genre %></p>
+              <p class="manga-info"><strong>Status:</strong> <%= manga.status %></p>
+              
+              <div class="manga-actions">
+                <% if current_user&.admin? %>
+                <a href="<%= edit_manga_path(manga.title) %>" class="btn btn-secondary">Edit</a>
+                <%= button_to "Delete", manga, method: :delete, class: "btn btn-danger", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
+                <% end %>
+              </div>
+            </div>
           </a>
         </div>
       <% end %>
-    </a>
+    </div>
+
+    <!-- Pagination untuk mangas -->
+    <div class="pagination">
+      <%= paginate @mangas %>
+    </div>
   <% else %>
     <div class="empty-state">
       <p>No mangas available.</p>
     </div>
   <% end %>
-</div>
 </div>
 
 <style>
@@ -183,5 +187,37 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pagination a, .pagination span {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: #333;
+  color:rgb(255, 255, 255);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.pagination a:hover {
+  background: #444;
+}
+
+.pagination .current {
+  color: #333;
+  font-weight: bold;
+}
+
+.pagination .disabled {
+  color: #777;
+  cursor: not-allowed;
 }
 </style>

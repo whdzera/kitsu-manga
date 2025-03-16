@@ -4,29 +4,26 @@ class MangasController < ApplicationController
   before_action :set_manga, only: [:show, :edit, :update, :destroy]
 
   def to_param
-    title.parameterize  # Mengubah title jadi slug (misalnya: "Blue Lock" -> "blue-lock")
+    title.parameterize 
   end
 
   # GET /mangas or /mangas.json
   def index
-    @mangas = Manga.all
+    @mangas = Manga.page(params[:page]).per(6)
   end
 
   # GET /mangas/1 or /mangas/1.json
   def show
-    @chapters = @manga.chapters.order(:chapter_number)
+    @chapters = @manga.chapters.order(chapter_number: :desc) 
   end
 
-  # GET /mangas/new (Hanya Admin)
   def new
     @manga = Manga.new
   end
 
-  # GET /mangas/1/edit (Hanya Admin)
   def edit
   end
 
-  # POST /mangas or /mangas.json (Hanya Admin)
   def create
     @manga = Manga.new(manga_params)
 
@@ -41,7 +38,6 @@ class MangasController < ApplicationController
     end
   end
 
-  # PATCH/PUT /mangas/1 or /mangas/1.json (Hanya Admin)
   def update
     respond_to do |format|
       if @manga.update(manga_params)
@@ -54,7 +50,6 @@ class MangasController < ApplicationController
     end
   end
 
-  # DELETE /mangas/1 or /mangas/1.json (Hanya Admin)
   def destroy
     @manga.destroy!
 
@@ -69,15 +64,13 @@ class MangasController < ApplicationController
   def manga_params
     params.require(:manga).permit(:title, :alternative_title, :status, :manga_type, 
                                   :series, :author, :rating, :created_date, 
-                                  :genre, :image_cover)
+                                  :genre, :image_cover, :synopsis)
   end
 
   def set_manga
-    # Try to find by numeric ID first
     @manga = if params[:id].to_i.to_s == params[:id]
                Manga.find(params[:id])
              else
-               # If it's not a numeric ID, assume it's a slug
                Manga.find_by!(title: params[:id].tr('-', ' '))
              end
   end

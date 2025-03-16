@@ -57,6 +57,11 @@
       <%= f.text_field :genre, placeholder: "Comma separated (e.g., Action, Fantasy)", class: "input" %>
     </div>
 
+    <div class="field">
+      <%= f.label :synopsis %>
+      <%= f.text_area :synopsis, class: "input" %>
+    </div>
+
     <div class="actions">
       <%= f.submit "Update Manga", class: "button" %>
     </div>
