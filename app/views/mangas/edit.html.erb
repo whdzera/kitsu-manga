@@ -1,6 +1,9 @@
-<% content_for :title, "Editing Manga" %>
+<div class="container">
+  
+<div class="box bg-full-transparent">
+  <div class="columns is-centered">
+    <div class="column is-half">
 
-<h1>Editing Manga</h1>
 
 <div class="manga-edit-form">
   <%= form_with(model: @manga, local: true) do |f| %>
@@ -55,12 +58,18 @@
     </div>
 
     <div class="actions">
-      <%= f.submit "Update Manga", class: "button is-primary" %>
+      <%= f.submit "Update Manga", class: "button" %>
     </div>
   <% end %>
 </div>
 
 <div class="manga-links">
-  <%= link_to "Show this manga", @manga, class: "button is-link" %>
-  <%= link_to "Back to mangas", mangas_path, class: "button is-light" %>
+  <%= link_to "Show this manga", @manga, class: "button" %>
+  <%= link_to "Back to manga", mangas_path, class: "button" %>
+</div>
+
+
+</div>
+</div>
+</div>
 </div>

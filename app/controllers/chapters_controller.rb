@@ -5,6 +5,19 @@ class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
 
   def show
+     
+    @chapter = Chapter.find_by(chapter_number: params[:chapter_number])
+    
+    if @chapter.nil?
+      redirect_to root_path, alert: "Chapter tidak ditemukan"
+      return
+    end
+    
+    # Sesuaikan juga untuk previous dan next chapter
+    @previous_chapter = Chapter.where("chapter_number < ?", @chapter.chapter_number)
+                               .order(chapter_number: :desc).first
+    @next_chapter = Chapter.where("chapter_number > ?", @chapter.chapter_number)
+                           .order(:chapter_number).first
   end
 
   def new
