@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   # Homepage accessible to everyone
   root to: 'home#index'
+  
+  patch "/announcement", to: "announcements#update", as: :update_announcement
 
   # 404 page not found
   match "/404", to: "errors#not_found", via: :all
@@ -26,6 +28,9 @@ Rails.application.routes.draw do
   namespace :member do
     get 'dashboard', to: 'dashboard#index'
   end
+
+  # List lastest chapters
+  get "/manga/chapters", to: "chapters#index", as: "all_manga_chapters"
 
   # manga
   resources :mangas, path: 'manga', param: :id do

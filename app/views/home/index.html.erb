@@ -14,19 +14,61 @@
         </div>
       <% end %>
 
-      <!-- Announ -->
-      <div class="manga-section bg-transparent">
-        <div class="section-title">Announcement</div>
-        <article class="message">
-        <div class="message-header bg-full-transparent">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    <!-- Announcement  -->
+    <div class="manga-section bg-transparent">
+      <div class="section-title">
+        Announcement
+        <% if current_user&.admin? %>
+        <button id="edit-btn" class="button is-small" onclick="toggleEdit()">Edit</button>
+        <% end %>
+      </div>
 
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          
+      <article id="announcement-box" class="message">
+        <div class="message-header bg-full-transparent">
+          <span id="announcement-text"><%= @announcement&.content %></span>
           <button class="delete" aria-label="delete"></button>
         </div>
-        </article>
+      </article>
+
+
+    <% if current_user&.admin? %>
+    <div id="edit-form" style="display: none;">    
+    <%= form_with(model: @announcement, url: update_announcement_path, method: :patch) do |f| %>
+      <div class="field">
+        <div class="control">
+          <%= f.text_area :content, rows: 5, class: "textarea" %>
+        </div>
       </div>
+
+      <div class="field">
+        <div class="control">
+          <%= f.submit "Update", class: "button is-centered" %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+    <% end %>
+
+    </div>
+
+    <script>
+      function toggleEdit() {
+        let announcementBox = document.getElementById("announcement-box");
+        let editForm = document.getElementById("edit-form");
+        let editBtn = document.getElementById("edit-btn");
+
+        if (editForm.style.display === "none") {
+          editForm.style.display = "block";
+          announcementBox.style.display = "none"; 
+          editBtn.innerText = "Cancel";
+        } else {
+          editForm.style.display = "none";
+          announcementBox.style.display = "block"; 
+          editBtn.innerText = "Edit";
+        }
+      }
+    </script>
+
 
       <!-- Featured Manga -->
       <div class="manga-section bg-transparent">
@@ -55,7 +97,7 @@
         </div>
       </div>
       
-      <!-- Latest Updates -->
+<!-- Latest Updates -->
 <div class="manga-section bg-transparent">
   <div class="section-title">Latest Updates</div>
   <div class="vertical-scroll latest-vertical-scroll">

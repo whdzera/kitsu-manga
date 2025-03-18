@@ -1,0 +1,404 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Chapters</h1>
+  </div>
+  <% if @latest_chapters && @latest_chapters.any? %>
+    <div class="manga-grid">
+      <% @latest_chapters.each do |chapter| %>
+        <div class="manga-card">
+          <a href="<%= manga_chapter_path(chapter.manga.title, chapter.chapter_number) %>">
+            <div class="manga-cover-container">
+              <% if chapter.manga.image_cover.present? %>
+                <img src="<%= chapter.manga.image_cover %>" alt="<%= chapter.manga.title %>" class="manga-cover">
+              <% end %>  
+            </div>
+            <div class="manga-details">
+              <h2 class="manga-title"><%= chapter.manga.title %> - Chapter <%= chapter.chapter_number %></h2>
+              <p class="manga-info"><strong>Status:</strong> <%= chapter.manga.status %></p>
+              <p class="manga-info"><strong>Rating:</strong> <%= chapter.manga.rating %> </p>
+              <p class="manga-info"><strong>Genre:</strong> <%= chapter.manga.genre %> </p>
+            </div>
+          </a>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Pagination controls -->
+    <div class="pagination">
+      <%= paginate @latest_chapters %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <p>No chapters available.</p>
+    </div>
+  <% end %>
+</div>
+
+<style>
+/* Page Header styling */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-header h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin: 0;
+  background: linear-gradient(90deg, #e2e2e2, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.add-new:hover {
+  background-color: rgba(100, 100, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Manga Grid styling */
+.manga-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.manga-card {
+  background-color: rgba(30, 30, 30, 0.7);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.manga-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.manga-cover-container {
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+}
+
+.manga-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.manga-card:hover .manga-cover {
+  transform: scale(1.05);
+}
+
+.manga-details {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.manga-title {
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem 0;
+  color: #ffffff;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.manga-info {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+.manga-actions {
+  margin-top: auto;
+  padding-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Empty state styling */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background-color: rgba(30, 30, 30, 0.7);
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  color: #aaaaaa;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .manga-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+  
+  .manga-cover-container {
+    height: 220px;
+  }
+  
+  .manga-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Container for the whole page */
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Pagination styling */
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pagination a, .pagination span {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: #333;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.pagination a:hover {
+  background: #444;
+}
+
+.pagination .current {
+  background: #606060;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination .disabled {
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* Specific styling for pagination gap */
+.pagination .gap {
+  background: transparent;
+  color: #999;
+}
+</style>
+<style>
+/* Page Header styling */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-header h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin: 0;
+  background: linear-gradient(90deg, #e2e2e2, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.add-new:hover {
+  background-color: rgba(100, 100, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Manga Grid styling */
+.manga-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.manga-card {
+  background-color: rgba(30, 30, 30, 0.7);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.manga-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.manga-cover-container {
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+}
+
+.manga-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.manga-card:hover .manga-cover {
+  transform: scale(1.05);
+}
+
+.manga-details {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.manga-title {
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem 0;
+  color: #ffffff;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.manga-info {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+.manga-actions {
+  margin-top: auto;
+  padding-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Empty state styling */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background-color: rgba(30, 30, 30, 0.7);
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  color: #aaaaaa;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .manga-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+  
+  .manga-cover-container {
+    height: 220px;
+  }
+  
+  .manga-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Container for the whole page */
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Pagination styling */
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pagination a, .pagination span {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: #333;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.pagination a:hover {
+  background: #444;
+}
+
+.pagination .current {
+  background: #606060;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination .disabled {
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* Specific styling for pagination gap */
+.pagination .gap {
+  background: transparent;
+  color: #999;
+}
+</style>
