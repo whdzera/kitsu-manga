@@ -15,10 +15,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
+
   </head>
   <body>
   <!-- id="sticky-navbar" use stiky navbar -->
-<nav class="navbar bg-transparent" role="navigation" aria-label="main navigation">
+<nav class="navbar bg-transparent" role="navigation" aria-label="main navigation"  data-controller="navbar">
   <div class="navbar-brand">
     <a class="navbar-item" href="<%= root_path %>">
       <h1 class="fa-solid">KitsuManga</h1>
@@ -37,7 +39,8 @@
     </div>
 
     <!-- Navbar Burger for Mobile -->
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+    <a data-action="click->navbar#toggle"
+   class="navbar-burger">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -74,7 +77,7 @@
     </div>
   </div>
 
-  <div id="navbar-menu" class="navbar-menu bg-full-transparent">
+  <div id="navbar-menu" data-navbar-target="menu" class="navbar-menu">
       
     <div class="navbar-end bg-full-transparent">
       <% if user_signed_in? %>

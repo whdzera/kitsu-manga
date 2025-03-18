@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   # Member area
   namespace :member do
     get 'dashboard', to: 'dashboard#index'
+    get 'dashboard/bookmarks', to: 'dashboard#bookmarks'
   end
 
   # List lastest chapters
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
 
   # manga
   resources :mangas, path: 'manga', param: :id do
+    resource :bookmark, only: [:create, :destroy]
     get "chapter-:chapter_number", to: "chapters#show", as: "chapter"
 
     # update chapter

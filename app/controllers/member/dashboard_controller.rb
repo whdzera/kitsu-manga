@@ -4,8 +4,13 @@ module Member
     before_action :require_member
     
     def index
-      # You can fetch member-specific data here
       @user = current_user
+      @bookmarked_mangas = current_user.bookmarked_mangas.page(params[:page]).per(5)
+
+    end
+
+    def bookmarks
+      @bookmarked_mangas = current_user.bookmarked_mangas.page(params[:page]).per(5)
     end
     
     private

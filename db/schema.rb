@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_18_071408) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_18_092610) do
   create_table "announcements", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "manga_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["manga_id"], name: "index_bookmarks_on_manga_id"
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -62,5 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_18_071408) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "bookmarks", "mangas"
+  add_foreign_key "bookmarks", "users"
   add_foreign_key "chapters", "mangas"
 end

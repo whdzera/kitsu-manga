@@ -21,7 +21,14 @@
     <p class="manga-info"><strong>Genre:</strong> <%= @manga.genre %></p>
     <!-- Tombol Aksi -->
     <div class="manga-actions">
-      <button class="button">Bookmark</button>
+      <% if user_signed_in? %>
+  <% if current_user.bookmarked_mangas.include?(@manga) %>
+    <%= button_to "Unbookmark", manga_bookmark_path(@manga), method: :delete, class: "button" %>
+  <% else %>
+    <%= button_to "Bookmark", manga_bookmark_path(@manga), method: :post, class: "button" %>
+  <% end %>
+<% end %>
+
       <% if current_user&.admin? %>
       <a href="<%= @manga.title %>/chapter/new" class="button">New</a>
       <%= link_to "Edit", edit_manga_path(@manga.title), class: "button" %>
