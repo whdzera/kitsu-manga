@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_18_092610) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_19_080900) do
   create_table "announcements", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
@@ -33,6 +33,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_18_092610) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["manga_id"], name: "index_chapters_on_manga_id"
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mangas", force: :cascade do |t|

@@ -1,4 +1,4 @@
-<div class="container is-fluid"></div>
+<div class="container is-fluid">
   <div class="columns is-gapless">
     
     <!-- Sidebar -->
@@ -10,29 +10,22 @@
       <div class="sidebar-menu">
         <ul>
           <li>
-            <a href="#" class="tab-link is-active" data-tab="users-tab">
+            <a href="#users-tab" class="tab-link is-active" data-tab="users-tab">
               <i class="fas fa-users"></i> Users Management
             </a>
           </li>
           <li>
-            <a href="#" class="tab-link" data-tab="content-tab">
+            <a href="#content-tab" class="tab-link" data-tab="content-tab">
               <i class="fas fa-book"></i> Content Management
             </a>
           </li>
           <li>
-            <a href="#" class="tab-link" data-tab="settings-tab">
-              <i class="fas fa-cog"></i> Site Settings
-            </a>
-          </li>
-          <li>
-            <a href="#" class="tab-link" data-tab="reports-tab">
+            <a href="#reports-tab" class="tab-link" data-tab="reports-tab">
               <i class="fas fa-chart-bar"></i> Reports
             </a>
           </li>
           <li class="mt-6">
-            <%= link_to destroy_user_session_path, method: :delete, class: "has-text-grey-light" do %>
-              <i class="fas fa-sign-out-alt"></i> Logout
-            <% end %>
+            <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %>
           </li>
         </ul>
       </div>
@@ -41,19 +34,10 @@
     <!-- Main Content -->
     <div class="column content-area">
       <div class="box bg-full-transparent has-text-white">
-        <h1 class="title has-text-centered has-text-white">
-          <i class="fas fa-tools"></i> Admin Dashboard
-        </h1>
         
         <div class="notification bg-full-transparent">
           <h2 class="has-text-weight-bold"><i class="fas fa-user-shield"></i> Welcome, <%= current_user.username %>!</h2>
         </div>
-
-        <% if flash[:alert] %>
-          <div class="notification is-danger">
-            <%= flash[:alert] %>
-          </div>
-        <% end %>
 
         <!-- Users Management Tab -->
         <div id="users-tab" class="tab-content is-active">
@@ -70,7 +54,6 @@
                     <option value="">Filter by Role</option>
                     <option value="admin">Admin</option>
                     <option value="member">Member</option>
-                    <option value="moderator">Moderator</option>
                   </select>
                 </div>
               </div>
@@ -80,50 +63,57 @@
             </div>
             
             <!-- Responsive Table Wrapper -->
-            <div class="table-container">
-              <table class="table is-fullwidth bg-full-transparent">
-                <thead>
+           <div class="table-container">
+            <table class="table is-fullwidth bg-full-transparent">
+              <thead>
+                <tr>
+                  <th><i class="fas fa-user"></i> Username</th>
+                  <th><i class="fas fa-envelope"></i> Email</th>
+                  <th><i class="fas fa-user-tag"></i> Role</th>
+                  <th><i class="fas fa-calendar"></i> Joined</th>
+                  <th><i class="fas fa-cogs"></i> Actions</th>
+                </tr>
+              </thead>
+              <tbody id="user-table-body">
+                <% @users.first(10).each do |user| %>
                   <tr>
-                    <th><i class="fas fa-user"></i> Username</th>
-                    <th><i class="fas fa-envelope"></i> Email</th>
-                    <th><i class="fas fa-user-tag"></i> Role</th>
-                    <th><i class="fas fa-calendar"></i> Joined</th>
-                    <th><i class="fas fa-cogs"></i> Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @users.each do |user| %>
-                    <tr>
-                      <td><%= user.username %></td>
-                      <td><%= user.email %></td>
-                      <td><%= user.role.capitalize %></td>
-                      <td><%= user.created_at.strftime("%b %d, %Y") %></td>
-                      <td class="has-text-centered">
-                        <div class="buttons is-flex">
-                          <%= link_to admin_edit_user_path(user), class: "button is-small bg-transparent" do %>
-                            <i class="fas fa-edit"></i>
-                          <% end %>
+                    <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.role.capitalize %></td>
+                    <td><%= user.created_at.strftime("%b %d, %Y") %></td>
+                    <td class="has-text-centered">
+                      <div class="buttons is-flex">
+                        <%= link_to admin_edit_user_path(user), class: "button is-small bg-transparent" do %>
+                          <i class="fas fa-edit"></i>
+                        <% end %>
 
-                          <% if user != current_user %>
-                            <%= button_to admin_delete_user_path(user), method: :delete, 
-                                data: { turbo: false, confirm: 'Are you sure you want to delete this user?' }, 
-                                class: "button is-small is-danger is-outlined", 
-                                form: { style: 'display: inline-block;' } do %>
-                              <i class="fas fa-trash"></i>
-                            <% end %>
-                          <% else %>
-                            <span class="tag is-info is-light">Current</span>
+                        <% if user != current_user %>
+                          <%= button_to admin_delete_user_path(user), method: :delete, 
+                              data: { turbo: false, confirm: 'Are you sure you want to delete this user?' }, 
+                              class: "button is-small is-danger is-outlined", 
+                              form: { style: 'display: inline-block;' } do %>
+                            <i class="fas fa-trash"></i>
                           <% end %>
-                        </div>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
+                        <% else %>
+                          <span class="tag is-info is-light">Current</span>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
             
+            <% if @users.count > 10 %>
+              <div class="has-text-centered my-3">
+                <button id="load-more-btn" class="button bg-transparant is-small" data-page="1" data-total="<%= @users.count %>">
+                  Load More
+                </button>
+              </div>
+            <% end %>
           </div>
         </div>
+
 
         <!-- Content Management Tab -->
         <div id="content-tab" class="tab-content">
@@ -191,49 +181,6 @@
           </div>
         </div>
 
-        <!-- Settings Tab -->
-        <div id="settings-tab" class="tab-content">
-          <div class="box bg-full-transparent has-text-white">
-            <h3 class="title is-5"><i class="fas fa-cog"></i> Site Settings</h3>
-            
-            <form action="/admin/settings" method="post">
-              <div class="field">
-                <label class="label has-text-white">Site Name</label>
-                <div class="control">
-                  <input class="input" type="text" value="MangaReader" name="site_name">
-                </div>
-              </div>
-              
-              <div class="field">
-                <label class="label has-text-white">Site Description</label>
-                <div class="control">
-                  <textarea class="textarea" name="site_description">Your favorite manga reading platform</textarea>
-                </div>
-              </div>
-              
-              <div class="field">
-                <label class="label has-text-white">Maintenance Mode</label>
-                <div class="control">
-                  <label class="radio">
-                    <input type="radio" name="maintenance_mode" value="0" checked>
-                    Off
-                  </label>
-                  <label class="radio">
-                    <input type="radio" name="maintenance_mode" value="1">
-                    On
-                  </label>
-                </div>
-              </div>
-              
-              <div class="field is-grouped mt-5">
-                <div class="control">
-                  <button class="button is-primary">Save Changes</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
         <!-- Reports Tab -->
         <div id="reports-tab" class="tab-content">
           <div class="box bg-full-transparent has-text-white">
@@ -288,83 +235,172 @@
     </div>
   </div>
 </div>
+</div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Tab switching functionality
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // Main tab functionality
+  function setupMainTabs() {
     const tabLinks = document.querySelectorAll('.tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
     
-    // Function to set active tab
-    function setActiveTab(tabId) {
-      // Remove active class from all tabs and links
-      document.querySelectorAll('.tab-content').forEach(function(tab) {
+    console.log("Found tab links:", tabLinks.length);
+    console.log("Found tab contents:", tabContents.length);
+    
+    // Make sure first tab content is visible initially
+    if (tabContents.length > 0) {
+      // Hide all tab contents first
+      tabContents.forEach(tab => {
         tab.classList.remove('is-active');
+        tab.style.display = 'none';
       });
       
-      document.querySelectorAll('.tab-link').forEach(function(tabLink) {
-        tabLink.classList.remove('is-active');
-      });
-      
-      // Add active class to selected tab and link
-      document.getElementById(tabId).classList.add('is-active');
-      document.querySelector(`.tab-link[data-tab="${tabId}"]`).classList.add('is-active');
-      
-      // Store active tab in session storage
-      sessionStorage.setItem('adminActiveTab', tabId);
+      // Then show the first one (or the saved one)
+      const savedTab = sessionStorage.getItem('adminActiveTab');
+      if (savedTab && document.getElementById(savedTab)) {
+        document.getElementById(savedTab).style.display = 'block';
+        document.getElementById(savedTab).classList.add('is-active');
+      } else if (tabContents.length > 0) {
+        tabContents[0].style.display = 'block';
+        tabContents[0].classList.add('is-active');
+      }
     }
     
-    // Handle tab link clicks
-    tabLinks.forEach(function(link) {
+    // Click handler for tab links
+    tabLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const tabId = this.getAttribute('data-tab');
-        setActiveTab(tabId);
+        console.log("Tab clicked:", tabId);
+        
+        // Remove active class from all links
+        tabLinks.forEach(tab => {
+          tab.classList.remove('is-active');
+        });
+        
+        // Add active class to current link
+        this.classList.add('is-active');
+        
+        // Hide all tab contents
+        tabContents.forEach(tab => {
+          tab.style.display = 'none';
+          tab.classList.remove('is-active');
+        });
+        
+        // Show the selected tab content
+        const activeContent = document.getElementById(tabId);
+        if (activeContent) {
+          activeContent.style.display = 'block';
+          activeContent.classList.add('is-active');
+          // Store active tab in session storage
+          sessionStorage.setItem('adminActiveTab', tabId);
+        } else {
+          console.error("Tab content not found:", tabId);
+        }
       });
     });
     
-    // Content management sub-tabs
-    const contentTabs = document.querySelectorAll('.tabs.is-boxed li a');
-    contentTabs.forEach(function(tab) {
-      tab.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Remove active class from all tabs
-        document.querySelectorAll('.tabs.is-boxed li').forEach(function(t) {
-          t.classList.remove('is-active');
-        });
-        
-        // Hide all section contents
-        document.querySelectorAll('#manga-section, #chapter-section, #genre-section').forEach(function(section) {
-          section.style.display = 'none';
-        });
-        
-        // Set active tab and show content
-        this.parentElement.classList.add('is-active');
-        const sectionId = this.getAttribute('href');
-        document.querySelector(sectionId).style.display = 'block';
-      });
-    });
-    
-    // Restore active tab from session storage if available
+    // Set default active tab or restore from session
     const savedTab = sessionStorage.getItem('adminActiveTab');
-    if (savedTab) {
-      setActiveTab(savedTab);
+    
+    if (savedTab && document.getElementById(savedTab)) {
+      // Trigger click on the saved tab link
+      const savedTabLink = document.querySelector(`.tab-link[data-tab="${savedTab}"]`);
+      if (savedTabLink) {
+        savedTabLink.click();
+      } else {
+        // Default to first tab if saved tab link not found
+        if (tabLinks.length > 0) tabLinks[0].click();
+      }
     } else {
-      // Default to users tab if no saved state
-      setActiveTab('users-tab');
+      // Default to first tab if no saved state
+      if (tabLinks.length > 0) tabLinks[0].click();
+    }
+  }
+  
+  // Content management sub-tabs functionality
+  function setupContentSubTabs() {
+    const subTabLinks = document.querySelectorAll('.tabs.is-boxed li a');
+    const subTabContents = {
+      '#manga-section': document.getElementById('manga-section'),
+      '#chapter-section': document.getElementById('chapter-section'),
+      '#genre-section': document.getElementById('genre-section')
+    };
+    
+    console.log("Found sub-tab links:", subTabLinks.length);
+    console.log("Found sub-tab sections:", Object.values(subTabContents).filter(Boolean).length);
+    
+    // Only proceed if we found sub-tabs
+    if (subTabLinks.length === 0) {
+      console.log("Content sub-tabs not found");
+      return;
     }
     
-    // Initialize content management tabs (show only manga section initially)
-    document.querySelectorAll('#chapter-section, #genre-section').forEach(function(section) {
-      section.style.display = 'none';
+    // Hide all sub-tab sections initially
+    Object.values(subTabContents).forEach(section => {
+      if (section) {
+        section.style.display = 'none';
+      }
     });
+    
+    // Show the first sub-tab section by default
+    if (subTabContents['#manga-section']) {
+      subTabContents['#manga-section'].style.display = 'block';
+    }
+    
+    // Make first tab active
+    if (subTabLinks.length > 0) {
+      const firstTabLi = subTabLinks[0].parentElement;
+      if (firstTabLi) {
+        firstTabLi.classList.add('is-active');
+      }
+    }
+    
+    // Click handler for sub-tab links
+    subTabLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const sectionId = this.getAttribute('href');
+        console.log("Sub-tab clicked:", sectionId);
+        
+        // Remove active class from all sub-tabs
+        document.querySelectorAll('.tabs.is-boxed li').forEach(tab => {
+          tab.classList.remove('is-active');
+        });
+        
+        // Add active class to current sub-tab
+        this.parentElement.classList.add('is-active');
+        
+        // Hide all sub-tab sections
+        Object.values(subTabContents).forEach(section => {
+          if (section) {
+            section.style.display = 'none';
+          }
+        });
+        
+        // Show the selected sub-tab section
+        const activeSection = subTabContents[sectionId];
+        if (activeSection) {
+          activeSection.style.display = 'block';
+        } else {
+          console.error("Sub-tab section not found:", sectionId);
+        }
+      });
+    });
+  }
+  
+  // Initialize all tab functionality with delay to ensure DOM is fully loaded
+  setTimeout(() => {
+    setupMainTabs();
+    setupContentSubTabs();
     
     // User search functionality
     const userSearch = document.getElementById('user-search');
     if (userSearch) {
       userSearch.addEventListener('keyup', function() {
         const searchText = this.value.toLowerCase();
-        const userRows = document.querySelectorAll('#users-tab tbody tr');
+        const userRows = document.querySelectorAll('#user-table-body tr');
         
         userRows.forEach(function(row) {
           const username = row.cells[0].textContent.toLowerCase();
@@ -384,12 +420,12 @@
     if (roleFilter) {
       roleFilter.addEventListener('change', function() {
         const selectedRole = this.value.toLowerCase();
-        const userRows = document.querySelectorAll('#users-tab tbody tr');
+        const userRows = document.querySelectorAll('#user-table-body tr');
         
         userRows.forEach(function(row) {
           const role = row.cells[2].textContent.toLowerCase();
           
-          if (selectedRole === '' || role === selectedRole) {
+          if (selectedRole === '' || role.includes(selectedRole)) {
             row.style.display = '';
           } else {
             row.style.display = 'none';
@@ -397,7 +433,16 @@
         });
       });
     }
-  });
+  }, 100); // Small delay to ensure DOM is loaded
+  
+  // Load more functionality
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() {
+      // Your existing load more code...
+    });
+  }
+});
 </script>
 
  <style>
@@ -473,3 +518,124 @@
       display: block;
     }
   </style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() {
+      const currentPage = parseInt(this.getAttribute('data-page'));
+      const nextPage = currentPage + 1;
+      
+      fetch(`<%= admin_dashboard_path %>?page=${nextPage}&format=json`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.users && data.users.length > 0) {
+            const tableBody = document.getElementById('user-table-body');
+            
+            data.users.forEach(user => {
+              const row = document.createElement('tr');
+              
+              // Username column
+              const usernameCell = document.createElement('td');
+              usernameCell.textContent = user.username;
+              row.appendChild(usernameCell);
+              
+              // Email column
+              const emailCell = document.createElement('td');
+              emailCell.textContent = user.email;
+              row.appendChild(emailCell);
+              
+              // Role column
+              const roleCell = document.createElement('td');
+              roleCell.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+              row.appendChild(roleCell);
+              
+              // Joined date column
+              const joinedCell = document.createElement('td');
+              const joinedDate = new Date(user.created_at);
+              const options = { month: 'short', day: 'numeric', year: 'numeric' };
+              joinedCell.textContent = joinedDate.toLocaleDateString('en-US', options);
+              row.appendChild(joinedCell);
+              
+              // Actions column
+              const actionsCell = document.createElement('td');
+              actionsCell.className = 'has-text-centered';
+              
+              const buttonsDiv = document.createElement('div');
+              buttonsDiv.className = 'buttons is-flex';
+              
+              // Edit button
+              const editLink = document.createElement('a');
+              editLink.href = `/admin/users/${user.id}/edit`;
+              editLink.className = 'button is-small bg-transparent';
+              
+              const editIcon = document.createElement('i');
+              editIcon.className = 'fas fa-edit';
+              editLink.appendChild(editIcon);
+              
+              buttonsDiv.appendChild(editLink);
+              
+              // Delete button if not current user
+              if (user.id !== <%= current_user.id %>) {
+                const deleteForm = document.createElement('form');
+                deleteForm.action = `/admin/users/${user.id}`;
+                deleteForm.method = 'post';
+                deleteForm.style = 'display: inline-block;';
+                
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = 'authenticity_token';
+                csrfInput.value = csrfToken;
+                
+                const methodInput = document.createElement('input');
+                methodInput.type = 'hidden';
+                methodInput.name = '_method';
+                methodInput.value = 'delete';
+                
+                const deleteButton = document.createElement('button');
+                deleteButton.type = 'submit';
+                deleteButton.className = 'button is-small is-danger is-outlined';
+                deleteButton.dataset.turbo = 'false';
+                deleteButton.dataset.confirm = 'Are you sure you want to delete this user?';
+                
+                const deleteIcon = document.createElement('i');
+                deleteIcon.className = 'fas fa-trash';
+                deleteButton.appendChild(deleteIcon);
+                
+                deleteForm.appendChild(csrfInput);
+                deleteForm.appendChild(methodInput);
+                deleteForm.appendChild(deleteButton);
+                
+                buttonsDiv.appendChild(deleteForm);
+              } else {
+                const currentTag = document.createElement('span');
+                currentTag.className = 'tag is-info is-light';
+                currentTag.textContent = 'Current';
+                buttonsDiv.appendChild(currentTag);
+              }
+              
+              actionsCell.appendChild(buttonsDiv);
+              row.appendChild(actionsCell);
+              
+              tableBody.appendChild(row);
+            });
+            
+            // Update the page number
+            loadMoreBtn.setAttribute('data-page', nextPage);
+            
+            // Hide the button if we've loaded all users
+            const totalUsers = parseInt(loadMoreBtn.getAttribute('data-total'));
+            if (nextPage * 10 >= totalUsers) {
+              loadMoreBtn.style.display = 'none';
+            }
+          }
+        })
+        .catch(error => console.error('Error loading more users:', error));
+    });
+  }
+});
+</script>

@@ -60,6 +60,10 @@
           </label>
         </div>
 
+        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+        <% site_key = Rails.application.credentials.dig(:hcaptcha, :site_key) %>
+        <div class="h-captcha" data-sitekey="<%= site_key %>" data-theme="dark" data-size="compact"></div>
+
         <div class="field">
           <div class="control">
             <%= f.submit "Sign Up", class: "button is-fullwidth is-rounded" %>

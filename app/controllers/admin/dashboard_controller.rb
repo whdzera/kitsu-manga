@@ -4,7 +4,26 @@ module Admin
     before_action :require_admin
     
     def index
-      @users = User.all
+      @users = User.all.order(created_at: :desc)
+    
+      respond_to do |format|
+        format.html # Regular HTML view
+        format.json do
+          page = params[:page].to_i || 1
+          per_page = 10
+          offset = (page - 1) * per_page
+          
+          users_page = @users.offset(offset).limit(per_page)
+          
+          render json: {
+            users: users_page.as_json(
+              only: [:id, :username, :email, :role, :created_at],
+              methods: []
+            ),
+            total: @users.count
+          }
+        end
+      end
     end
     
     def edit_user

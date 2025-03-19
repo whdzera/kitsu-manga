@@ -1,5 +1,5 @@
 class MangasController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show] 
+  before_action :authenticate_user!, except: [:index, :show, :by_genre, :genres] 
   before_action :require_admin, only: [:create, :new, :update, :edit, :destroy]
   before_action :set_manga, only: [:show, :edit, :update, :destroy]
 
@@ -57,6 +57,16 @@ class MangasController < ApplicationController
       format.html { redirect_to mangas_path, status: :see_other, notice: "Manga was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def by_genre
+    @genre = params[:name]
+    @mangas = Manga.where("genre LIKE ?", "%#{@genre}%").page(params[:page]).per(6)
+
+  end
+
+  def genres
+    @genres = Genre.order(:name)
   end
 
   private

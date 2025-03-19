@@ -1,5 +1,5 @@
 class ChaptersController < ApplicationController
-  before_action :authenticate_user!, except: [:show] 
+  before_action :authenticate_user!, except: [:show, :index] 
   before_action :require_admin, only: [:create, :new, :update, :edit, :destroy]
   before_action :set_manga, except: [:index]
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]

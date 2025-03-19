@@ -1,48 +1,31 @@
+
 <div class="container">
   <div class="page-header">
-    <h1>Manga</h1>
-    <% if current_user&.admin? %>
-    <a href="<%= new_manga_path %>" class="add-new">+ Add New Manga</a>
-    <% end %>
+    <h1>Manga Genre: <%= @genre %></h1>
   </div>
 
-  <% if @mangas.any? %>
-    <div class="manga-grid">
-      <% @mangas.each do |manga| %>
-        <div class="manga-card">
-          <a href="<%= manga_path(manga.title) %>">
-            <div class="manga-cover-container">
-              <% if manga.image_cover.present? %>
-                <img src="<%= manga.image_cover %>" alt="<%= manga.title %> Cover" class="manga-cover">
-              <% end %>
-            </div>
-            <div class="manga-details">
-              <h2 class="manga-title"><%= manga.title %></h2>
-              <p class="manga-info"><strong>Author:</strong> <%= manga.author %></p>
-              <p class="manga-info"><strong>Genre:</strong> <%= manga.genre %></p>
-              <p class="manga-info"><strong>Status:</strong> <%= manga.status %></p>
-              
-              <div class="manga-actions">
-                <% if current_user&.admin? %>
-                <%= link_to "Edit", edit_manga_path(manga.title), class: "button is-small"  %>
-                <%= button_to "Delete", manga, method: :delete, class: "button is-small", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
-                <% end %>
-              </div>
-            </div>
-          </a>
-        </div>
-      <% end %>
-    </div>
-
-    <!-- Pagination untuk mangas -->
-    <div class="pagination">
-      <%= paginate @mangas %>
-    </div>
-  <% else %>
-    <div class="empty-state">
-      <p>No mangas available.</p>
+<div class="manga-grid">
+  <% @mangas.each do |manga| %>
+    <div class="manga-card">
+      <a href="<%= manga_path(manga.title) %>">
+      <div class="manga-cover-container">
+        <% if manga.image_cover.present? %>
+            <img src="<%= manga.image_cover %>" alt="<%= manga.title %> Cover" class="manga-cover">
+        <% end %>
+      </div> 
+      <div class="manga-details">
+        <h2 class="manga-title"><%= manga.title %></h2>
+        <p class="manga-info"><strong>Author:</strong> <%= manga.author %></p>
+        <p class="manga-info"><strong>Genre:</strong> <%= manga.genre %></p>
+        <p class="manga-info"><strong>Status:</strong> <%= manga.status %></p>
+      </div>
+      </a>
     </div>
   <% end %>
+</div>
+
+<!-- Pagination untuk mangas -->
+<%= paginate @mangas %>
 </div>
 
 <style>

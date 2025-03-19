@@ -1,0 +1,215 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Daftar Genre Manga</h1>
+  </div>
+
+  <% if @genres.any? %>
+    <div class="genre-grid">
+      <% @genres.each do |genre| %>
+        <div class="genre-card">
+          <a href="<%= manga_by_genre_path(genre.name) %>">
+            <h2 class="genre-name"><%= genre.name %></h2>
+          </a>
+            <div class="genre-actions is-centered">
+              <% if current_user&.admin? %>
+              <%= button_to "Delete", genre_path(genre), method: :delete, 
+                  onclick: "return confirm('Are you sure you want to delete this manga?');", 
+                  class: "button is-small" %>
+              <% end %>
+            </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if current_user&.admin? %>
+  <div id="add-genre-form" class="add-genre-section">
+    <h2>Add New Genre</h2>
+    <%= form_with(model: Genre.new, url: genres_path, local: true, class: "genre-form") do |form| %>
+      <div class="form-group">
+        <%= form.text_field :name, class: "form-input", placeholder: "name genre" %>
+      </div>
+      <%= form.submit "Add", class: "button bg-transparent" %>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+<style>
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-header h1 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin: 0;
+  background: linear-gradient(90deg, #e2e2e2, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.add-new {
+  background-color: rgba(80, 80, 255, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.add-new:hover {
+  background-color: rgba(100, 100, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Lebih kecil */
+  gap: 1rem; /* Kurangi jarak antar-card */
+  margin-top: 1rem;
+}
+
+.genre-card {
+  background-color: rgba(30, 30, 30, 0.45);
+  border-radius: 6px; /* Kurangi sudut melengkung */
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: auto; /* Biarkan otomatis */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Kurangi shadow */
+  padding: 0.75rem; /* Kurangi padding dalam */
+}
+
+.genre-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background-color: rgba(40, 40, 40, 0.8);
+}
+
+.genre-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.genre-name {
+  font-size: 1.2rem; /* Sebelumnya 1.5rem */
+  margin: 0 0 0.5rem 0;
+  color:rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.genre-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Add Genre Form styling */
+.add-genre-section {
+  margin-top: 3rem;
+  padding: 2rem;
+  background-color: rgba(30, 30, 30, 0.7);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-genre-section h2 {
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: #ffffff;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.75rem;
+}
+
+.genre-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #ddd;
+  font-size: 1rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(20, 20, 20, 0.7);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: rgba(80, 80, 255, 0.8);
+  box-shadow: 0 0 0 2px rgba(80, 80, 255, 0.2);
+}
+
+/* Empty state styling */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background-color: rgba(30, 30, 30, 0.7);
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+
+.empty-state p {
+  font-size: 1.2rem;
+  color: #aaaaaa;
+  margin: 0;
+}
+
+/* Container for the whole page */
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .genre-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Lebih kecil di mobile */
+  }
+  
+  .genre-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+</style>

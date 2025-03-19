@@ -101,9 +101,7 @@
             </a>
           </li>
           <li class="mt-6">
-            <%= link_to destroy_user_session_path, method: :delete, class: "has-text-grey-light" do %>
-              <i class="fas fa-sign-out-alt"></i> Logout
-            <% end %>
+            <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %>
           </li>
         </ul>
       </div>

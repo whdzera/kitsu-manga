@@ -33,6 +33,11 @@ Rails.application.routes.draw do
   # List lastest chapters
   get "/manga/chapters", to: "chapters#index", as: "all_manga_chapters"
 
+  # List Genre
+  resources :genres, only: [:create, :destroy]
+  get '/manga/genres', to: 'mangas#genres', as: 'manga_genres'
+  get '/manga/genre/:name', to: 'mangas#by_genre', as: 'manga_by_genre'
+
   # manga
   resources :mangas, path: 'manga', param: :id do
     resource :bookmark, only: [:create, :destroy]
