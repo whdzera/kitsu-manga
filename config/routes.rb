@@ -19,10 +19,12 @@ Rails.application.routes.draw do
   # Admin area
   namespace :admin do
     get 'dashboard', to: 'dashboard#index'
+    get 'reports', to: 'dashboard#reports', as: 'reports'
     get 'users/:id/edit', to: 'dashboard#edit_user', as: 'edit_user'
     patch 'users/:id', to: 'dashboard#update_user', as: 'update_user'
     delete 'users/:id', to: 'dashboard#delete_user', as: 'delete_user'
   end
+  
 
   # Member area
   namespace :member do

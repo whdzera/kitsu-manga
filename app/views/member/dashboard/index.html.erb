@@ -1,42 +1,16 @@
-<div class="container is-fluid">
-  <div class="columns is-gapless">
-    
-    <!-- Sidebar -->
-    <div class="column is-2 sidebar bg-full-transparent has-text-white">
-      
-      <div class="sidebar-menu">
-        <ul>
-          <li>
-            <a href="#" class="tab-link is-active" data-tab="account-tab">
-              <i class="fas fa-user-circle"></i> Account Information
-            </a>
-          </li>
-          <li>
-            <a href="#" class="tab-link" data-tab="benefits-tab">
-              <i class="fas fa-gift"></i> Member Benefits
-            </a>
-          </li>
-          <li class="mt-6">
-            <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %>
-          </li>
-        </ul>
-      </div>
-    </div>
-    
+<div class="container is-fluid"></div>
+  <div class="dashboard-container">
     <!-- Main Content -->
-    <div class="column content-area">
+    <div class="content-area">
       <div class="box bg-full-transparent has-text-white">
-        <h1 class="title has-text-centered has-text-white">
-          <i class="fas fa-tools"></i> Member Dashboard
-        </h1>
 
         <div class="notification bg-full-transparent">
           <h2 class="has-text-weight-bold"><i class="fas fa-user"></i> Welcome, <%= current_user.username %>!</h2>
         </div>
 
-        <!-- Account Information Tab -->
-        <div id="account-tab" class="tab-content is-active">
-          <div class="box bg-full-transparent has-text-white">
+        <!-- Account Information Section -->
+        <div class="dashboard-section">
+          <div class="box bg-transparent has-text-white">
             <h3 class="title is-5"><i class="fas fa-user-circle"></i> Account Information</h3>
             <ul class="content">
               <li><strong>Username:</strong> <%= current_user.username %></li>
@@ -44,93 +18,30 @@
               <li><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %d, %Y") %></li>
             </ul>
           </div>
-
-          <div class="has-text-centered mt-4">
-            <%= link_to "Edit Profile", edit_user_registration_path, class: "button is-rounded bg-transparent" %>
-          </div>
         </div>
 
-        <!-- Member Benefits Tab -->
-        <div id="benefits-tab" class="tab-content">
-          <div class="box bg-full-transparent has-text-white">
-            <h3 class="title is-5"><i class="fas fa-gift"></i> Member Benefits</h3>
-            <ul class="content">
-              <li><i class="fas fa-check-circle has-text-success"></i> Exclusive content access</li>
-              <li><i class="fas fa-check-circle has-text-success"></i> Priority support</li>
-              <li><i class="fas fa-check-circle has-text-success"></i> Community features</li>
-              <li><i class="fas fa-check-circle has-text-success"></i> Ad-free experience</li>
-              <li><i class="fas fa-check-circle has-text-success"></i> Early access to new features</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Quick Actions - Visible on all tabs -->
-        <div class="has-text-centered mt-4">
+        <!-- Quick Actions -->
+        <div class="buttons is-centered mt-4">
+          <%= link_to "Account Setting", edit_user_registration_path, class: "button is-rounded bg-transparent" %>
           <%= link_to "Return to Home", root_path, class: "button is-rounded bg-transparent" %>
-        </div>
+          </div>
       </div>
     </div>
   </div>
 </div>
 
-  <style>
-    .sidebar {
-      min-height: 100vh;
-      padding: 1rem;
-      border-right: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .sidebar-menu {
-      margin-top: 2rem;
-    }
-    .sidebar-menu li {
-      margin-bottom: 1rem;
-    }
-    .sidebar-menu a {
-      color: white;
-      display: block;
-      padding: 0.75rem;
-      border-radius: 4px;
-    }
-    .sidebar-menu a:hover, .sidebar-menu a.is-active {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-    .sidebar-menu i {
-      margin-right: 0.5rem;
-    }
-    .content-area {
-      padding: 1rem;
-    }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.is-active {
-      display: block;
-    }
-  </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Tab switching functionality
-    const tabLinks = document.querySelectorAll('.tab-link');
-    
-    tabLinks.forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Remove active class from all tabs and links
-        document.querySelectorAll('.tab-content').forEach(function(tab) {
-          tab.classList.remove('is-active');
-        });
-        
-        document.querySelectorAll('.tab-link').forEach(function(tabLink) {
-          tabLink.classList.remove('is-active');
-        });
-        
-        // Add active class to selected tab and link
-        const tabId = this.getAttribute('data-tab');
-        document.getElementById(tabId).classList.add('is-active');
-        this.classList.add('is-active');
-      });
-    });
-  });
-</script>
+<style>
+  .dashboard-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .content-area {
+    padding: 1rem;
+  }
+  .dashboard-section {
+    margin-bottom: 1.5rem;
+  }
+  .buttons.is-centered {
+    justify-content: center;
+  }
+</style>

@@ -25,6 +25,13 @@ module Admin
         end
       end
     end
+
+    def reports
+      @total_mangas = Manga.count
+      @total_users = User.count
+      @mangas_by_genre = Manga.group(:genre).count
+      @users_by_role = User.group(:role).count
+    end
     
     def edit_user
       @user = User.find(params[:id])
