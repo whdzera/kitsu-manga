@@ -1,12 +1,8 @@
 <div class="container">
   <div class="page-header">
-    <h1>Manga</h1>
-    <% if current_user&.admin? %>
-    <a href="<%= new_manga_path %>" class="add-new">+ Add New Manga</a>
-    <% end %>
+    <h1>Search Results : "<%= params[:q] %>"</h1>
   </div>
-
-  <% if @mangas.any? %>
+ <% if @mangas.any? %>
     <div class="manga-grid">
       <% @mangas.each do |manga| %>
         <div class="manga-card">
@@ -33,7 +29,6 @@
         </div>
       <% end %>
     </div>
-
     <!-- Pagination -->
     <div class="pagination">
       <%= paginate @mangas %>
@@ -44,6 +39,8 @@
     </div>
   <% end %>
 </div>
+
+
 
 <style>
 .page-header {

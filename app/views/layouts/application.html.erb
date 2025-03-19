@@ -30,10 +30,17 @@
     <div class="navbar-start" style="flex-grow: 1;">
       <div class="navbar-item">
         <div class="control has-icons-left">
-          <input id="search" class="input is-rounded bg-full-transparent" type="search" placeholder="Search">
-          <span class="icon is-small is-left">
-            <i class="fas fa-search"></i>
-          </span>
+          <form action="/search" method="get">
+            <div class="field has-addons">
+              <div class="control">
+                <input class="input bg-full-transparent" type="text" name="q" placeholder="Search Manga">
+              </div>
+                <button class="button bg-full-transparent" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+            </div>
+          </form>
+
         </div>
       </div>
     </div>

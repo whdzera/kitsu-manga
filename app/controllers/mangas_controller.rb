@@ -1,5 +1,5 @@
 class MangasController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :by_genre, :genres] 
+  before_action :authenticate_user!, except: [:index, :show, :by_genre, :genres, :search] 
   before_action :require_admin, only: [:create, :new, :update, :edit, :destroy]
   before_action :set_manga, only: [:show, :edit, :update, :destroy]
 
@@ -7,12 +7,10 @@ class MangasController < ApplicationController
     title.parameterize 
   end
 
-  # GET /mangas or /mangas.json
   def index
     @mangas = Manga.page(params[:page]).per(6)
   end
 
-  # GET /mangas/1 or /mangas/1.json
   def show
     @chapters = @manga.chapters.order(chapter_number: :desc) 
   end
@@ -67,6 +65,19 @@ class MangasController < ApplicationController
 
   def genres
     @genres = Genre.order(:name)
+  end
+
+  def search
+    query = params[:q]
+    @mangas = if query.present?
+                Manga.where("title LIKE ?", "%#{query}%").page(params[:page]).per(6)
+              else
+                Manga.all.page(params[:page]).per(6)
+              end
+
+    respond_to do |format|
+      format.html 
+      end
   end
 
   private

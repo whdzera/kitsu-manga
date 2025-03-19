@@ -25,13 +25,15 @@ Rails.application.routes.draw do
     delete 'users/:id', to: 'dashboard#delete_user', as: 'delete_user'
   end
   
-
   # Member area
   namespace :member do
     get 'dashboard', to: 'dashboard#index'
     get 'dashboard/bookmarks', to: 'dashboard#bookmarks'
   end
 
+  # Search
+  get "/search", to: "mangas#search"
+  
   # Bookmarks
   get '/manga/bookmarks', to: 'bookmarks#index', as: 'manga_bookmarks'
 
