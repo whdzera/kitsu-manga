@@ -11,6 +11,7 @@ gem "stimulus-rails", "1.3.4"
 gem "jbuilder", "2.13.0"  
 gem 'devise', "4.9.4"  #auth
 gem 'kaminari', "1.2.2" #pagination
+gem 'hcaptcha', '7.1.0' #captcha
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

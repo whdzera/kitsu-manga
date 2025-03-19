@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Rails Temp Lr" %></title>
+    <title><%= content_for(:title) || "KitsuManga" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -59,22 +59,18 @@
     </div>
   </div>
 
-  <div class="navbar-item">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/manga">Type</a>
+  
+  <div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-item">Genre</a>
+
+    <div class="navbar-dropdown bg-full-transparent">
+       <div class="navbar-item bg-transparent">Action</div>
+       <div class="navbar-item">Isekai</div>
     </div>
   </div>
 
-  <div class="navbar-item">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/manga">Genre</a>
-    </div>
-  </div>
-
-  <div class="navbar-item">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/manga">Community</a>
-    </div>
+  <div class="navbar-dropdown is-hoverable">aaa
+          <a class="navbar-item">zzz</a>
   </div>
 
   <div id="navbar-menu" data-navbar-target="menu" class="navbar-menu">
