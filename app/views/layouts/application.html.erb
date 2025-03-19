@@ -65,6 +65,14 @@
     </div>
   </div>
 
+  <% if user_signed_in? %>
+  <div class="navbar-item">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/manga/bookmarks">Bookmarks</a>
+    </div>
+  </div>
+  <% end %>
+
   <div id="navbar-menu" data-navbar-target="menu" class="navbar-menu">
       
     <div class="navbar-end bg-full-transparent">

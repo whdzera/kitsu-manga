@@ -8,10 +8,6 @@ module Member
       @bookmarked_mangas = current_user.bookmarked_mangas.page(params[:page]).per(5)
 
     end
-
-    def bookmarks
-      @bookmarked_mangas = current_user.bookmarked_mangas.page(params[:page]).per(5)
-    end
     
     private
     

@@ -1,24 +1,21 @@
 # Kitsu Manga
 
-Kitsu Manga is a web reading manga written with in Ruby on Rails, featuring a clean interface and seamless reading experience.
+Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean interface and seamless reading experience.
 
-## Library
-##### Backend:
+## Tech Stack
 - Rails
 - Sqlite
-
-##### Frontend:
-- css Bulma & Font-awesome
-- js Turbo & Stimulus
+- Bulma & Font-awesome
+- Turbo & Stimulus
 
 ## Features
 
 - Auth login/regist with Devise
 - Email Confirmation Register with Action Mailer
-- UI Material Semi Transparancy with Bulma css
+- UI Semi Transparancy with Bulma css
 - Have role member and admin (guest user can read manga)
 - Role admin (dashboard admin and CRUD manga)
-- Role member (dashboard member and bookmark manga capability)
+- Role member (dashboard member and bookmark manga)
 - etc
 
 ## View

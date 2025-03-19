@@ -30,6 +30,9 @@ Rails.application.routes.draw do
     get 'dashboard/bookmarks', to: 'dashboard#bookmarks'
   end
 
+  # Bookmarks
+  get '/manga/bookmarks', to: 'bookmarks#index', as: 'manga_bookmarks'
+
   # List lastest chapters
   get "/manga/chapters", to: "chapters#index", as: "all_manga_chapters"
 
