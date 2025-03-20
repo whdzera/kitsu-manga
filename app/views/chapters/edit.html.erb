@@ -1,30 +1,23 @@
 <div class="container">
-  
-<div class="box bg-full-transparent">
-  <div class="columns is-centered">
-    <div class="column is-half">
-
-    <div class="box bg-transparent">
-      <div class="manga-form">
-<%= form_with model: [@manga, @chapter], url: manga_chapter_path(@manga.title, @chapter.chapter_number), method: :patch, local: true do |f| %>
-  <div class="field">
-    <%= f.label :chapter_number %>
-    <%= f.number_field :chapter_number, value: @chapter.chapter_number, class: "input"  %>
-  </div>
-
-  <div class="field">
-    <%= f.label :images, "Chapter Image URL" %>
-    <%= f.text_area :images, value: @chapter.images, class: "textarea", rows: 10 %>
-
-  </div>
-
-  <%= f.submit "Update Chapter", class: "button" %>
-<% end %>
-
+  <div class="box bg-full-transparent">
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <div class="box bg-transparent">
+          <div class="manga-form">
+            <%= form_with model: [@manga, @chapter], url: manga_chapter_path(@manga.title, @chapter.chapter_number), method: :patch, local: true do |f| %>
+              <div class="field">
+                <%= f.label :chapter_number %>
+                <%= f.number_field :chapter_number, value: @chapter.chapter_number, class: "input bg-transparent"  %>
+              </div>
+              <div class="field">
+                <%= f.label :images, "Chapter Images URL" %>
+                <%= f.text_area :images, value: @chapter.images, class: "textarea bg-transparent", rows: 10 %>
+              </div>
+              <%= f.submit "Update Chapter", class: "button bg-transparent" %>
+            <% end %>
+          </div>
+        </div>
       </div>
-</div>
-
     </div>
-    </div>
-    </div>
+  </div>
 </div>

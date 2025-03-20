@@ -7,7 +7,7 @@ module Admin
       @users = User.all.order(created_at: :desc)
     
       respond_to do |format|
-        format.html # Regular HTML view
+        format.html 
         format.json do
           page = params[:page].to_i || 1
           per_page = 10
@@ -40,7 +40,7 @@ module Admin
     def update_user
       @user = User.find(params[:id])
       
-      # Don't allow admins to edit their own role (security measure)
+      # Don't allow admins to edit their own role
       if @user == current_user && user_params[:role] != @user.role
         flash[:alert] = "You cannot change your own admin status."
         redirect_to admin_dashboard_path

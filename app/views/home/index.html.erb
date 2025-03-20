@@ -1,56 +1,48 @@
 <div class="main-content bg-full-transparent"></div>
-  <div class="columns">
-    <div class="column is-8">
-      
-      <!-- Notify -->
-      <% if notice.present? %>
+<div class="columns">
+  <div class="column is-8">
+    <!-- Notify -->
+    <% if notice.present? %>
       <div class="manga-section bg-transparent">
         <div class="section-title">Notification</div>
-          <article class="message">
-            <div class="message-header bg-full-transparent">
-              <p style="color: green"><%= notice %></p>
-            </div>
-          </article>
-        </div>
-      <% end %>
-
+        <article class="message">
+          <div class="message-header bg-full-transparent">
+            <p style="color: green"><%= notice %></p>
+          </div>
+        </article>
+      </div>
+    <% end %>
     <!-- Announcement  -->
     <div class="manga-section bg-transparent">
       <div class="section-title">
         Announcement
         <% if current_user&.admin? %>
-        <button id="edit-btn" class="button is-small" onclick="toggleEdit()">Edit</button>
+          <button id="edit-btn" class="button is-small" onclick="toggleEdit()">Edit</button>
         <% end %>
       </div>
-
       <article id="announcement-box" class="message">
         <div class="message-header bg-full-transparent">
           <span id="announcement-text"><%= @announcement&.content %></span>
           <button class="delete" aria-label="delete"></button>
         </div>
       </article>
-
-
-    <% if current_user&.admin? %>
-    <div id="edit-form" style="display: none;">    
-    <%= form_with(model: @announcement, url: update_announcement_path, method: :patch) do |f| %>
-      <div class="field">
-        <div class="control">
-          <%= f.text_area :content, rows: 5, class: "textarea" %>
+      <% if current_user&.admin? %>
+        <div id="edit-form" style="display: none;">
+          <%= form_with(model: @announcement, url: update_announcement_path, method: :patch) do |f| %>
+            <div class="field">
+              <div class="control">
+                <%= f.text_area :content, rows: 5, class: "textarea" %>
+              </div>
+            </div>
+            <div class="field">
+              <div class="control">
+                <%= f.submit "Update", class: "button is-centered" %>
+              </div>
+            </div>
+          <% end %>
         </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <%= f.submit "Update", class: "button is-centered" %>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
     </div>
-    <% end %>
-
-    </div>
-
     <script>
       function toggleEdit() {
         let announcementBox = document.getElementById("announcement-box");
@@ -59,120 +51,114 @@
 
         if (editForm.style.display === "none") {
           editForm.style.display = "block";
-          announcementBox.style.display = "none"; 
+          announcementBox.style.display = "none";
           editBtn.innerText = "Cancel";
         } else {
           editForm.style.display = "none";
-          announcementBox.style.display = "block"; 
+          announcementBox.style.display = "block";
           editBtn.innerText = "Edit";
         }
       }
     </script>
-
-
-      <!-- Featured Manga -->
-      <div class="manga-section bg-transparent">
-        <div class="section-title">Featured Manga</div>
-        <div class="scroll-container featured-scroll">
-          <% featured_manga = Manga.order(rating: :desc).limit(10) %>
-          <% if featured_manga.any? %>
-            <% featured_manga.each do |manga| %>
-              <div class="scroll-item">
-                <div class="manga-box">
-                  <a href="<%= manga_path(manga.title) %>">
-                    <% if manga.image_cover.present? %>
-                      <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image">
-                    <% else %>
-                      <div class="manga-image"></div>
-                    <% end %>
-                    <div class="manga-title"><%= manga.title %></div>
-                    <div class="manga-chapter"><%= manga.status %> • Rating <%= manga.rating %></div>
-                  </a>
-                </div>
-              </div>
-            <% end %>
-          <% else %>
-            <div class="scroll-item">No featured manga available</div>
-          <% end %>
-        </div>
-      </div>
-      
-<!-- Latest Updates -->
-<div class="manga-section bg-transparent">
-  <div class="section-title">Latest Updates</div>
-  <div class="vertical-scroll latest-vertical-scroll">
-    <% latest_chapters = Chapter.includes(:manga).order(created_at: :desc).limit(12) %>
-    <% if latest_chapters.any? %>
-      <% latest_chapters.each do |chapter| %>
-        <div class="vertical-scroll-item bg-full-transparent">
-          <div class="manga-box">
-            <a href="<%= manga_chapter_path(chapter.manga.title, chapter.chapter_number) %>">
-              <div class="columns is-mobile">
-                <div class="column is-4">
-                  <% if chapter.manga.image_cover.present? %>
-                    <img src="<%= chapter.manga.image_cover %>" alt="<%= chapter.manga.title %>" class="manga-chapter-image">
-                  <% else %>
-                    <div class="manga-image-small"></div>
-                  <% end %>
-                </div>
-                <div class="column">
-                  <div class="manga-title">
-                    <%= chapter.manga.title %> - Chapter <%= chapter.chapter_number %>
-                  </div>
-                  <div class="manga-chapter">
-                    <%= chapter.manga.status %> • Rating : <%= chapter.manga.rating %> 
-                  </div>
-                  <div class="field">
-                    Genre : <%= chapter.manga.genre %> 
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      <% end %>
-    <% else %>
-      <div class="vertical-scroll-item">No manga updates available</div>
-    <% end %>
-  </div>
-</div>
-</div>
-
-    
-    <div class="column is-4">
-      <!-- Popular This Week -->
-      <div class="manga-section">
-        <div class="section-title">Popular This Week</div>
-        <% popular_mangas = Manga.order(created_at: :desc, rating: :desc).limit(5) %>
-        <% popular_mangas.each_with_index do |manga, index| %>
-          <div class="manga-box">
-            <a href="<%= manga_path(manga.title) %>">
-              <div class="columns is-mobile">
-                <div class="column is-3">
+    <!-- Featured Manga -->
+    <div class="manga-section bg-transparent">
+      <div class="section-title">Featured Manga</div>
+      <div class="scroll-container featured-scroll">
+        <% featured_manga = Manga.order(rating: :desc).limit(10) %>
+        <% if featured_manga.any? %>
+          <% featured_manga.each do |manga| %>
+            <div class="scroll-item">
+              <div class="manga-box">
+                <a href="<%= manga_path(manga.title) %>">
                   <% if manga.image_cover.present? %>
                     <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image">
                   <% else %>
                     <div class="manga-image"></div>
                   <% end %>
-                  <div class="manga-rank">#<%= index + 1 %></div>
-                </div>
-                <div class="column">
                   <div class="manga-title"><%= manga.title %></div>
-                  <div class="manga-chapter"><%= manga.genre %></div>
-                  <div class="manga-rating">Rating: <%= manga.rating %>/10</div>
-                </div>
+                  <div class="manga-chapter"><%= manga.status %> • Rating <%= manga.rating %></div>
+                </a>
               </div>
-            </a>
-          </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="scroll-item">No featured manga available</div>
         <% end %>
-        <% if popular_mangas.empty? %>
-          <div class="manga-box">No popular manga available</div>
+      </div>
+    </div>
+    <!-- Latest Updates -->
+    <div class="manga-section bg-transparent">
+      <div class="section-title">Latest Updates</div>
+      <div class="vertical-scroll latest-vertical-scroll">
+        <% latest_chapters = Chapter.includes(:manga).order(created_at: :desc).limit(12) %>
+        <% if latest_chapters.any? %>
+          <% latest_chapters.each do |chapter| %>
+            <div class="vertical-scroll-item bg-full-transparent">
+              <div class="manga-box">
+                <a href="<%= manga_chapter_path(chapter.manga.title, chapter.chapter_number) %>">
+                  <div class="columns is-mobile">
+                    <div class="column is-4">
+                      <% if chapter.manga.image_cover.present? %>
+                        <img src="<%= chapter.manga.image_cover %>" alt="<%= chapter.manga.title %>" class="manga-chapter-image">
+                      <% else %>
+                        <div class="manga-image-small"></div>
+                      <% end %>
+                    </div>
+                    <div class="column">
+                      <div class="manga-title">
+                        <%= chapter.manga.title %> - Chapter <%= chapter.chapter_number %>
+                      </div>
+                      <div class="manga-chapter">
+                        <%= chapter.manga.status %> • Rating : <%= chapter.manga.rating %>
+                      </div>
+                      <div class="field">
+                        Genre : <%= chapter.manga.genre %>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="vertical-scroll-item">No manga updates available</div>
         <% end %>
       </div>
     </div>
   </div>
+  <div class="column is-4">
+    <!-- Popular This Week -->
+    <div class="manga-section">
+      <div class="section-title">Popular This Week</div>
+      <% popular_mangas = Manga.order(created_at: :desc, rating: :desc).limit(5) %>
+      <% popular_mangas.each_with_index do |manga, index| %>
+        <div class="manga-box">
+          <a href="<%= manga_path(manga.title) %>">
+            <div class="columns is-mobile">
+              <div class="column is-3">
+                <% if manga.image_cover.present? %>
+                  <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image">
+                <% else %>
+                  <div class="manga-image"></div>
+                <% end %>
+                <div class="manga-rank">#<%= index + 1 %></div>
+              </div>
+              <div class="column">
+                <div class="manga-title"><%= manga.title %></div>
+                <div class="manga-chapter"><%= manga.genre %></div>
+                <div class="manga-rating">Rating: <%= manga.rating %>/10</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% end %>
+      <% if popular_mangas.empty? %>
+        <div class="manga-box">No popular manga available</div>
+      <% end %>
+    </div>
+  </div>
 </div>
-
+</div>
 <style>
   .manga-box {
     background-color: rgba(0, 0, 0, 0.15);
@@ -181,14 +167,14 @@
     border-radius: 5px;
     width: 100%;
     border-radius: 8px;
-    overflow: hidden; 
+    overflow: hidden;
     text-align: center;
   }
-  
+
   .manga-section {
     margin-bottom: 20px;
   }
-  
+
   .section-title {
     background-color: rgba(20, 20, 20, 0.27);
     padding: 5px 10px;
@@ -196,7 +182,7 @@
     border-radius: 3px;
     font-weight: bold;
   }
-  
+
   .manga-image {
     width: 100%;
     height: 90px;
@@ -205,7 +191,7 @@
     object-fit: cover;
   }
 
-  
+
   .manga-chapter-image {
     width: 100%;
     height: 150px;
@@ -213,7 +199,7 @@
     margin-bottom: 5px;
     object-fit: cover;
   }
-  
+
   .manga-image-small {
     width: 100%;
     height: 80px;
@@ -221,46 +207,45 @@
     object-fit: cover;
     border-radius: 4px;
   }
-  
+
   .manga-title {
     font-weight: bold;
     font-size: 0.9rem;
   }
-  
+
   .manga-chapter {
     font-size: 0.8rem;
     color: #bbb;
   }
-  
+
   .manga-rating {
     font-size: 0.8rem;
     color: #ffdd57;
   }
-  
+
   .manga-rank {
     font-weight: bold;
     text-align: center;
   }
-  
+
   .social-icons a {
     margin: 0 5px;
   }
-  
+
   .main-content {
     padding: 20px;
   }
-  
+
   a {
     color: inherit;
     text-decoration: none;
   }
-  
+
   a:hover .manga-box {
     background-color: rgba(255, 255, 255, 0.1);
     transition: background-color 0.3s;
   }
-  
-  /* Horizontal scrolling styles */
+
   .scroll-container {
     display: flex;
     overflow-x: auto;
@@ -269,88 +254,87 @@
     padding: 5px 0;
     margin-right: 8px;
   }
-  
+
   .scroll-container::-webkit-scrollbar {
     height: 6px;
   }
-  
+
   .scroll-container::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin: 0 -10px;
   }
-  
+
   .scroll-container::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
   }
-  
+
   .scroll-container::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
   }
-  
+
   .scroll-item {
     flex: 0 0 auto;
     width: 2000px;
     margin: 0 10px;
   }
-  
+
   .featured-scroll .scroll-item {
     width: 220px;
   }
-  
-  /* Vertical scrolling styles - NEW */
+
   .vertical-scroll {
     height: 800px;
     overflow-y: auto;
     padding-right: 10px;
   }
-  
+
   .vertical-scroll::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   .vertical-scroll::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
-  
+
   .vertical-scroll::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
   }
-  
+
   .vertical-scroll::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
   }
-  
+
   .vertical-scroll-item {
     margin-bottom: 10px;
   }
-  
+
   .vertical-scroll-item .manga-box {
     display: block;
     text-align: left;
   }
-  
+
   /* Mobile responsiveness */
   @media screen and (max-width: 768px) {
     .scroll-item {
       width: 150px;
     }
-    
+
     .featured-scroll .scroll-item {
       width: 180px;
     }
-    
+
     .manga-image {
       height: 120px;
     }
-    
+
     .vertical-scroll {
       height: 350px;
     }
-    
+
     .manga-image-small {
       height: 60px;
     }

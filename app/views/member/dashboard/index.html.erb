@@ -1,35 +1,31 @@
 <div class="container is-fluid"></div>
-  <div class="dashboard-container">
-    <!-- Main Content -->
-    <div class="content-area">
-      <div class="box bg-full-transparent has-text-white">
-
-        <div class="notification bg-full-transparent">
-          <h2 class="has-text-weight-bold"><i class="fas fa-user"></i> Welcome, <%= current_user.username %>!</h2>
+<div class="dashboard-container">
+  <!-- Main Content -->
+  <div class="content-area">
+    <div class="box bg-full-transparent has-text-white">
+      <div class="notification bg-full-transparent">
+        <h2 class="has-text-weight-bold"><i class="fas fa-user"></i> Welcome, <%= current_user.username %>!</h2>
+      </div>
+      <!-- Account Information Section -->
+      <div class="dashboard-section">
+        <div class="box bg-transparent has-text-white">
+          <h3 class="title is-5"><i class="fas fa-user-circle"></i> Account Information</h3>
+          <ul class="content">
+            <li><strong>Username:</strong> <%= current_user.username %></li>
+            <li><strong>Email:</strong> <%= current_user.email %></li>
+            <li><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %d, %Y") %></li>
+          </ul>
         </div>
-
-        <!-- Account Information Section -->
-        <div class="dashboard-section">
-          <div class="box bg-transparent has-text-white">
-            <h3 class="title is-5"><i class="fas fa-user-circle"></i> Account Information</h3>
-            <ul class="content">
-              <li><strong>Username:</strong> <%= current_user.username %></li>
-              <li><strong>Email:</strong> <%= current_user.email %></li>
-              <li><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %d, %Y") %></li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="buttons is-centered mt-4">
-          <%= link_to "Account Setting", edit_user_registration_path, class: "button is-rounded bg-transparent" %>
-          <%= link_to "Return to Home", root_path, class: "button is-rounded bg-transparent" %>
-          </div>
+      </div>
+      <!-- Quick Actions -->
+      <div class="buttons is-centered mt-4">
+        <%= link_to "Account Setting", edit_user_registration_path, class: "button is-rounded bg-transparent" %>
+        <%= link_to "Return to Home", root_path, class: "button is-rounded bg-transparent" %>
       </div>
     </div>
   </div>
 </div>
-
+</div>
 <style>
   .dashboard-container {
     max-width: 800px;

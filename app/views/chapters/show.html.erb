@@ -1,118 +1,96 @@
-
-
-  <div class="container">
-    <div class="manga-header bg-transparent">
-      <h1 class="manga-title"><%= @manga.title %> - Chapter <%= @chapter.chapter_number %></h1>
-     
+<div class="container">
+  <div class="manga-header bg-transparent">
+    <h1 class="manga-title"><%= @manga.title %> - Chapter <%= @chapter.chapter_number %></h1>
     <div class="chapter-nav">
       <% if @previous_chapter %>
-      <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button" %>
+        <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button" %>
       <% else %>
         <span class="button disabled">Previous Chapter</span>
       <% end %>
-
       <% if @next_chapter %>
         <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button" %>
       <% else %>
         <span class="button disabled">Next Chapter</span>
       <% end %>
-    </div>
-
-
-     </div>
-    
-    <div class="manga-images bg-transparent">
-      <% if @chapter.images.present? %>
-        <% @chapter.images.split(',').each do |image| %>
-          <img src="<%= image.strip %>" alt="Page from Chapter <%= @chapter.chapter_number %>">
-        <% end %>
-      <% else %>
-        <p>No image available for this chapter.</p>
-      <% end %>
-    </div>
-    
-    <div class="box bg-transparent">
-
-    <div class="chapter-nav">
-      <% if @previous_chapter %>
-      <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button" %>
-      <% else %>
-        <span class="button disabled">Previous Chapter</span>
-      <% end %>
-
-      <% if @next_chapter %>
-        <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button" %>
-      <% else %>
-        <span class="button disabled">Next Chapter</span>
-      <% end %>
-    </div>
-    
-    <% if current_user&.admin? %>
-    <div class="actions">
-      <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button" %>
-      <%= button_to "Hapus", manga_delete_chapter_path(@manga.title, @chapter.chapter_number), 
-                    method: :delete, 
-                    class: "button button-danger",
-                    onclick: "return confirm('Apakah kamu yakin ingin menghapus Chapter #{@chapter.chapter_number}?');" %>
-
-    </div>
-    <% end %>
-
-    <div class="actions">
-    <%= link_to "Back to Manga", manga_path(@manga.title), class: "button" %>
     </div>
   </div>
-
+  <div class="manga-images bg-transparent">
+    <% if @chapter.images.present? %>
+      <% @chapter.images.split(',').each do |image| %>
+        <img src="<%= image.strip %>" alt="Page from Chapter <%= @chapter.chapter_number %>">
+      <% end %>
+    <% else %>
+      <p>No image available for this chapter.</p>
+    <% end %>
+  </div>
+  <div class="box bg-transparent">
+    <div class="chapter-nav">
+      <% if @previous_chapter %>
+        <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button" %>
+      <% else %>
+        <span class="button disabled">Previous Chapter</span>
+      <% end %>
+      <% if @next_chapter %>
+        <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button" %>
+      <% else %>
+        <span class="button disabled">Next Chapter</span>
+      <% end %>
     </div>
-  
-  <style>
-    
-    
-    /* Header */
-    .manga-header {
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      position: relative;
-    }
-    
-    .manga-title {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    
-    /* Navigation */
-    .chapter-nav {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 15px 0;
-    }
-    
-    /* Images container */
-    .manga-images {
-      border-radius: 8px;
-      padding: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-    }
-    
-    .manga-images img {
-      display: block;
-      max-width: 100%;
-      margin: 0 auto 10px;
-      border-radius: 4px;
-    }
-    
-    /* Actions bar */
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    
-  </style>
+    <% if current_user&.admin? %>
+      <div class="actions">
+        <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button" %>
+        <%= button_to "Hapus", manga_delete_chapter_path(@manga.title, @chapter.chapter_number), 
+                    method: :delete, 
+                    class: "button button-danger",
+                    onclick: "return confirm('Are You Sure Delete the Chapter #{@chapter.chapter_number}?');" %>
+      </div>
+    <% end %>
+    <div class="actions">
+      <%= link_to "Back to Manga", manga_path(@manga.title), class: "button" %>
+    </div>
+  </div>
+</div>
+<style>
+  .manga-header {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  .manga-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .chapter-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+  }
+
+  .manga-images {
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+
+  .manga-images img {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto 10px;
+    border-radius: 4px;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+</style>

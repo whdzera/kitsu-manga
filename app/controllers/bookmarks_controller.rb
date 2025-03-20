@@ -21,4 +21,5 @@ class BookmarksController < ApplicationController
   def set_manga
     @manga = Manga.find(params[:manga_id])
   end
+  
 end

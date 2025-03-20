@@ -13,11 +13,10 @@ class ChaptersController < ApplicationController
     @chapter = Chapter.find_by(chapter_number: params[:chapter_number])
     
     if @chapter.nil?
-      redirect_to root_path, alert: "Chapter tidak ditemukan"
+      redirect_to root_path, alert: "Chapter not found"
       return
     end
     
-    # Sesuaikan juga untuk previous dan next chapter
     @previous_chapter = Chapter.where("chapter_number < ?", @chapter.chapter_number)
                                .order(chapter_number: :desc).first
     @next_chapter = Chapter.where("chapter_number > ?", @chapter.chapter_number)
@@ -68,7 +67,7 @@ class ChaptersController < ApplicationController
   end
 
   def latest
-    @latest_chapters = Chapter.order(created_at: :desc).limit(5) # Ambil 5 chapter terbaru
+    @latest_chapters = Chapter.order(created_at: :desc).limit(5) 
   end
 
   private

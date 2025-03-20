@@ -1,79 +1,64 @@
 <div class="container">
-  
-<div class="box bg-full-transparent">
-  <div class="columns is-centered">
-    <div class="column is-half">
-
-    <div class="box bg-transparent">
-      <div class="manga-form">
-        <%= form_with(model: @manga, local: true) do |f| %>
-          <div class="field">
-            <%= f.label :title %>
-            <%= f.text_field :title, class: "input" %>
+  <div class="box bg-full-transparent">
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <div class="box bg-transparent">
+          <div class="manga-form">
+            <%= form_with(model: @manga, local: true) do |f| %>
+              <div class="field">
+                <%= f.label :title %>
+                <%= f.text_field :title, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :alternative_title %>
+                <%= f.text_field :alternative_title, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :image_cover, "Image Cover URL" %>
+                <%= f.text_field :image_cover, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :status %>
+                <%= f.select :status, ["Ongoing", "Completed"], {}, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :manga_type, "Manga Type" %>
+                <%= f.text_field :manga_type, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :series %>
+                <%= f.text_field :series, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :author %>
+                <%= f.text_field :author, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :rating %>
+                <%= f.number_field :rating, step: 0.1, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :created_date %>
+                <%= f.date_field :created_date, class: "input bg-transparent" %>
+              </div>
+              <div class="field">
+                <%= f.label :genre %>
+                <%= f.text_area :genre, placeholder: "Comma separated (e.g., Action, Fantasy)", class: "input bg-transparent", rows: "4" %>
+              </div>
+              <div class="field">
+                <%= f.label :synopsis %>
+                <%= f.text_area :synopsis, class: "input bg-transparent", rows: "10" %>
+              </div>
+              <div class="field">
+                <div class="actions">
+                  <%= f.submit "Create Manga", class: "button bg-transparent" %>
+                  <%= link_to "Back to list manga", mangas_path, class: "button bg-transparent" %>
+                </div>
+              </div>
+            <% end %>
           </div>
-
-          <div class="field">
-            <%= f.label :alternative_title %>
-            <%= f.text_field :alternative_title, class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :image_cover, "Image Cover URL" %>
-            <%= f.text_field :image_cover, class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :status %>
-            <%= f.select :status, ["Ongoing", "Completed"], {}, class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :manga_type, "Manga Type" %>
-            <%= f.text_field :manga_type, class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :series %>
-            <%= f.text_field :series, class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :author %>
-            <%= f.text_field :author, class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :rating %>
-            <%= f.number_field :rating, step: 0.1, class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :created_date %>
-            <%= f.date_field :created_date, class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :genre %>
-            <%= f.text_field :genre, placeholder: "Comma separated (e.g., Action, Fantasy)", class: "input" %>
-          </div>
-
-          <div class="field">
-            <%= f.label :synopsis %>
-            <%= f.text_area :synopsis, class: "input" %>
-          </div>
-
-          <div class="field">
-          <div class="actions">
-            <%= f.submit "Create Manga", class: "button" %>
-            <%= link_to "Back to list manga", mangas_path, class: "button" %>
-          </div>
-          </div>
-        <% end %>
+        </div>
       </div>
-
     </div>
   </div>
-</div>
-</div>
-
 </div>

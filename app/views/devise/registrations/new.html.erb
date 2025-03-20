@@ -2,14 +2,11 @@
   <h2 class="title has-text-white has-text-centered">
     <i class="fas fa-user-plus"></i> Registration
   </h2>
-
   <div class="columns is-centered">
     <div class="column is-one-third">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "box bg-transparent" }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
-        
         <br>
-
         <div class="field">
           <div class="control has-icons-left has-icons-right">
             <%= f.text_field :username, autofocus: true, class: "input is-rounded bg-full-transparent", placeholder: "Username" %>
@@ -18,8 +15,6 @@
             </span>
           </div>
         </div>
-
-
         <div class="field">
           <div class="control has-icons-left has-icons-right">
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input is-rounded bg-full-transparent", placeholder: "Email" %>
@@ -28,42 +23,37 @@
             </span>
           </div>
         </div>
-
-        <div class="field">
+        <div class="field" data-controller="toggle-password">
           <div class="control has-icons-left has-icons-right">
-            <%= f.password_field :password, autocomplete: "new-password", class: "input is-rounded bg-full-transparent", placeholder: "Password", id: "password-field" %>
+            <%= f.password_field :password, autocomplete: "new-password", class: "input is-rounded bg-full-transparent", placeholder: "Password", id: "password-field", data: { toggle_password_target: "password" } %>
             <span class="icon is-small is-left">
               <i class="fa fa-lock"></i>
             </span>
-            <span class="icon is-small is-right toggle-password" style="pointer-events: all; cursor: pointer">
-              <i class="fa fa-fw fa-eye"></i>
+            <span class="icon is-small is-right" style="pointer-events: all; cursor: pointer" data-action="click->toggle-password#toggle">
+              <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
             </span>
           </div>
         </div>
-
-        <div class="field">
+        <div class="field" data-controller="toggle-password">
           <div class="control has-icons-left has-icons-right">
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input is-rounded bg-full-transparent", placeholder: "Password Confirmation", id: "password-confirmation-field" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input is-rounded bg-full-transparent", placeholder: "Password Confirmation", id: "password-confirmation-field", data: { toggle_password_target: "password" } %>
             <span class="icon is-small is-left">
               <i class="fa fa-lock"></i>
             </span>
-            <span class="icon is-small is-right toggle-password" style="pointer-events: all; cursor: pointer">
-              <i class="fa fa-fw fa-eye"></i>
+            <span class="icon is-small is-right" style="pointer-events: all; cursor: pointer" data-action="click->toggle-password#toggle">
+              <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
             </span>
           </div>
         </div>
-
         <div class="field">
           <label class="checkbox">
             <input type="checkbox" />
             Term and Condition
           </label>
         </div>
-
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <% site_key = Rails.application.credentials.dig(:hcaptcha, :site_key) %>
         <div class="h-captcha" data-sitekey="<%= site_key %>" data-theme="dark" data-size="compact"></div>
-
         <div class="field">
           <div class="control">
             <%= f.submit "Sign Up", class: "button is-fullwidth is-rounded" %>
@@ -72,28 +62,9 @@
       <% end %>
     </div>
   </div>
-
   <div class="field">
     <div class="has-text-centered mt-3">
       <a href="/users/sign_in">Login</a><br>
     </div>
   </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-  $(document).ready(function () {
-    $(".toggle-password").click(function () {
-      let input = $(this).siblings("input");
-      let icon = $(this).find("i");
-
-      if (input.attr("type") === "password") {
-        input.attr("type", "text");
-        icon.removeClass("fa-eye").addClass("fa-eye-slash");
-      } else {
-        input.attr("type", "password");
-        icon.removeClass("fa-eye-slash").addClass("fa-eye");
-      }
-    });
-  });
-</script>

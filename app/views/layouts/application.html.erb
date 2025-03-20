@@ -7,153 +7,136 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
     <link rel="icon" type="image/x-icon" href="<%= asset_path('favicon.ico') %>">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
-
   </head>
   <body>
-  <!-- id="sticky-navbar" use stiky navbar -->
-<nav class="navbar bg-transparent" role="navigation" aria-label="main navigation"  data-controller="navbar">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="<%= root_path %>">
-      <h1 class="fa-solid">KitsuManga</h1>
-    </a>
-
-      <!-- Search Bar -->
-    <div class="navbar-start" style="flex-grow: 1;">
-      <div class="navbar-item">
-        <div class="control has-icons-left">
-          <form action="/search" method="get">
-            <div class="field has-addons">
-              <div class="control">
-                <input class="input bg-full-transparent" type="text" name="q" placeholder="Search Manga">
-              </div>
-                <button class="button bg-full-transparent" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-            </div>
-          </form>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- Navbar Burger for Mobile -->
-    <a data-action="click->navbar#toggle"
-   class="navbar-burger">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div class="navbar-item">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/manga/chapters">Latest Updates</a>
-    </div>
-  </div>
-
-  <div class="navbar-item">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/manga">List Manga</a>
-    </div>
-  </div>
-
-  <div class="navbar-item">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/manga/genres">Genre</a>
-    </div>
-  </div>
-
-  <% if user_signed_in? %>
-  <div class="navbar-item">
-    <div class="navbar-start">
-      <a class="navbar-item" href="/manga/bookmarks">Bookmarks</a>
-    </div>
-  </div>
-  <% end %>
-
-  <div id="navbar-menu" data-navbar-target="menu" class="navbar-menu">
-      
-    <div class="navbar-end bg-full-transparent">
-      <% if user_signed_in? %>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-item">
-            <span class="icon">
-              <i class="fa fa-user-circle fa-2x"></i>
-            </span>
-            <strong><%= current_user.username %></strong>
-          </a>
-
-          <div class="navbar-dropdown bg-full-transparent">
-            <div class="navbar-item">
-              <span class="icon">
-                <i class="fas fa-user-tag"></i>
-              </span>
-              <strong><%= current_user.role %></strong>
-            </div>
-
-            <% if current_user.member? %>
-              <a class="navbar-item" href="<%= member_dashboard_path %>">
-                <span class="icon">
-                  <i class="fas fa-tools"></i>
-                </span>
-                <strong>account</strong>
-              </a>
-            <% end %>
-
-            <% if current_user.admin? %>
-              <a class="navbar-item" href="<%= admin_dashboard_path %>">
-                <span class="icon">
-                  <i class="fas fa-tools"></i>
-                </span>
-                <strong>Users Manage</strong>
-              </a>
-              <a class="navbar-item" href="<%= admin_reports_path %>">
-                <span class="icon">
-                  <i class="fas fa-chart-bar"></i>
-                </span>
-                <strong>Reports</strong>
-              </a>
-            <% end %>
-
-            <div class="navbar-item">
-              <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "button bg-transparent" %>
+    <!-- id="sticky-navbar" use stiky navbar -->
+    <nav class="navbar bg-transparent" role="navigation" aria-label="main navigation"  data-controller="navbar">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="<%= root_path %>">
+          <h1 class="fa-solid">KitsuManga</h1>
+        </a>
+        <!-- Search Bar -->
+        <div class="navbar-start" style="flex-grow: 1;">
+          <div class="navbar-item">
+            <div class="control has-icons-left">
+              <form action="/search" method="get">
+                <div class="field has-addons">
+                  <div class="control">
+                    <input class="input bg-full-transparent" type="text" name="q" placeholder="Search Manga">
+                  </div>
+                  <button class="button bg-full-transparent" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      <% else %>
+        <!-- Navbar Burger for Mobile -->
+        <a data-action="click->navbar#toggle"
+          class="navbar-burger">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-item">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/manga/chapters">Latest Updates</a>
+        </div>
+      </div>
+      <div class="navbar-item">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/manga">List Manga</a>
+        </div>
+      </div>
+      <div class="navbar-item">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/manga/genres">Genre</a>
+        </div>
+      </div>
+      <% if user_signed_in? %>
         <div class="navbar-item">
-          <div class="buttons">
-            <a href="<%= new_user_registration_path %>" class="button bg-transparent">
-              <strong>Register</strong>
-            </a>
-            <a href="<%= new_user_session_path %>" class="button bg-transparent">
-              <strong>Log in</strong>
-            </a>
+          <div class="navbar-start">
+            <a class="navbar-item" href="/manga/bookmarks">Bookmarks</a>
           </div>
         </div>
       <% end %>
-    </div>
-  </div>
-</nav>
-
+      <div id="navbar-menu" data-navbar-target="menu" class="navbar-menu">
+        <div class="navbar-end bg-full-transparent">
+          <% if user_signed_in? %>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-item">
+                <span class="icon">
+                  <i class="fa fa-user-circle fa-2x"></i>
+                </span>
+                <strong><%= current_user.username %></strong>
+              </a>
+              <div class="navbar-dropdown bg-full-transparent">
+                <div class="navbar-item">
+                  <span class="icon">
+                    <i class="fas fa-user-tag"></i>
+                  </span>
+                  <strong><%= current_user.role %></strong>
+                </div>
+                <% if current_user.member? %>
+                  <a class="navbar-item" href="<%= member_dashboard_path %>">
+                    <span class="icon">
+                      <i class="fas fa-tools"></i>
+                    </span>
+                    <strong>account</strong>
+                  </a>
+                <% end %>
+                <% if current_user.admin? %>
+                  <a class="navbar-item" href="<%= admin_dashboard_path %>">
+                    <span class="icon">
+                      <i class="fas fa-tools"></i>
+                    </span>
+                    <strong>Users Manage</strong>
+                  </a>
+                  <a class="navbar-item" href="<%= admin_reports_path %>">
+                    <span class="icon">
+                      <i class="fas fa-chart-bar"></i>
+                    </span>
+                    <strong>Reports</strong>
+                  </a>
+                <% end %>
+                <div class="navbar-item">
+                  <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "button bg-transparent" %>
+                </div>
+              </div>
+            </div>
+          <% else %>
+            <div class="navbar-item">
+              <div class="buttons">
+                <a href="<%= new_user_registration_path %>" class="button bg-transparent">
+                  <strong>Register</strong>
+                </a>
+                <a href="<%= new_user_session_path %>" class="button bg-transparent">
+                  <strong>Log in</strong>
+                </a>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </nav>
     <%= yield %>
-
-<footer class="footer bg-transparent">
-  <div class="content has-text-centered">
-    <p> &copy; <%= Time.now.year %> KitsuManga</p>
-    <p>
-      <strong>Code</strong> by <a href="https://github.com/rokhimin">Rokhimin</a>.
-    </p>
-  </div>
-</footer>
+    <!-- Footer -->
+    <footer class="footer bg-transparent">
+      <div class="content has-text-centered">
+        <p> &copy; <%= Time.now.year %> KitsuManga</p>
+        <p>
+          <strong>Code</strong> by <a href="https://github.com/rokhimin">Rokhimin</a>.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

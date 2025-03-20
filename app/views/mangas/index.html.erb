@@ -2,10 +2,9 @@
   <div class="page-header">
     <h1>Manga</h1>
     <% if current_user&.admin? %>
-    <a href="<%= new_manga_path %>" class="add-new">+ Add New Manga</a>
+      <a href="<%= new_manga_path %>" class="add-new">+ Add New Manga</a>
     <% end %>
   </div>
-
   <% if @mangas.any? %>
     <div class="manga-grid">
       <% @mangas.each do |manga| %>
@@ -21,11 +20,10 @@
               <p class="manga-info"><strong>Author:</strong> <%= manga.author %></p>
               <p class="manga-info"><strong>Genre:</strong> <%= manga.genre %></p>
               <p class="manga-info"><strong>Status:</strong> <%= manga.status %></p>
-              
               <div class="manga-actions">
                 <% if current_user&.admin? %>
-                <%= link_to "Edit", edit_manga_path(manga.title), class: "button is-small"  %>
-                <%= button_to "Delete", manga, method: :delete, class: "button is-small", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
+                  <%= link_to "Edit", edit_manga_path(manga.title), class: "button is-small"  %>
+                  <%= button_to "Delete", manga, method: :delete, class: "button is-small", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
                 <% end %>
               </div>
             </div>
@@ -33,7 +31,6 @@
         </div>
       <% end %>
     </div>
-
     <!-- Pagination -->
     <div class="pagination">
       <%= paginate @mangas %>
@@ -44,175 +41,170 @@
     </div>
   <% end %>
 </div>
-
 <style>
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.page-header h1 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin: 0;
-  background: linear-gradient(90deg, #e2e2e2, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.add-new:hover {
-  background-color: rgba(100, 100, 255, 0.9);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Manga Grid styling */
-.manga-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.manga-card {
-  background-color: rgba(30, 30, 30, 0.7);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.manga-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.manga-cover-container {
-  height: 280px;
-  overflow: hidden;
-  position: relative;
-}
-
-.manga-cover {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.manga-card:hover .manga-cover {
-  transform: scale(1.05);
-}
-
-.manga-details {
-  padding: 1rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.manga-title {
-  font-size: 1.25rem;
-  margin: 0 0 0.75rem 0;
-  color: #ffffff;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.manga-info {
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
-  color: #cccccc;
-}
-
-.manga-actions {
-  margin-top: auto;
-  padding-top: 1rem;
-  display: flex;
-  gap: 0.5rem;
-}
-
-/* Empty state styling */
-.empty-state {
-  text-align: center;
-  padding: 3rem;
-  background-color: rgba(30, 30, 30, 0.7);
-  border-radius: 8px;
-  margin-top: 1.5rem;
-}
-
-.empty-state p {
-  font-size: 1.2rem;
-  color: #aaaaaa;
-  margin: 0;
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
   .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
+  .page-header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin: 0;
+    background: linear-gradient(90deg, #e2e2e2, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .add-new:hover {
+    background-color: rgba(100, 100, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
   .manga-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
   }
-  
+
+  .manga-card {
+    background-color: rgba(30, 30, 30, 0.7);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .manga-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
   .manga-cover-container {
-    height: 220px;
+    height: 280px;
+    overflow: hidden;
+    position: relative;
   }
-  
-  .manga-actions {
+
+  .manga-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .manga-card:hover .manga-cover {
+    transform: scale(1.05);
+  }
+
+  .manga-details {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
     flex-direction: column;
   }
-  
-}
 
-/* Container for the whole page */
-.container {
-  width: 95%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
+  .manga-title {
+    font-size: 1.25rem;
+    margin: 0 0 0.75rem 0;
+    color: #ffffff;
+    font-weight: 600;
+    line-height: 1.3;
+  }
 
-.pagination {
-  margin-top: 20px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
+  .manga-info {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #cccccc;
+  }
 
-.pagination a, .pagination span {
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 4px;
-  background: #333;
-  color:rgb(255, 255, 255);
-  text-decoration: none;
-  transition: all 0.3s;
-}
+  .manga-actions {
+    margin-top: auto;
+    padding-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
 
-.pagination a:hover {
-  background: #444;
-}
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background-color: rgba(30, 30, 30, 0.7);
+    border-radius: 8px;
+    margin-top: 1.5rem;
+  }
 
-.pagination .current {
-  color: #333;
-  font-weight: bold;
-}
+  .empty-state p {
+    font-size: 1.2rem;
+    color: #aaaaaa;
+    margin: 0;
+  }
 
-.pagination .disabled {
-  color: #777;
-  cursor: not-allowed;
-}
+  @media screen and (max-width: 768px) {
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .manga-grid {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .manga-cover-container {
+      height: 220px;
+    }
+
+    .manga-actions {
+      flex-direction: column;
+    }
+
+  }
+
+  .container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .pagination a, .pagination span {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background: #333;
+    color:rgb(255, 255, 255);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .pagination a:hover {
+    background: #444;
+  }
+
+  .pagination .current {
+    color: #333;
+    font-weight: bold;
+  }
+
+  .pagination .disabled {
+    color: #777;
+    cursor: not-allowed;
+  }
 </style>

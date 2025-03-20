@@ -1,145 +1,133 @@
-
 <div class="container">
-<div class="manga-container bg-transparent">
-  <!-- Cover Manga -->
-  <div class="manga-cover">
-    <% if @manga.image_cover.present? %>
-      <img src="<%= @manga.image_cover %>" alt="<%= @manga.title %> Cover">
-    <% end %>
-  </div>
-
-  <!-- Detail Manga -->
-  <div class="manga-details">
-    <h1><%= @manga.title %></h1>
-    <p class="manga-info"><strong>Alternative Title:</strong> <%= @manga.alternative_title %></p>
-    <p class="manga-info"><strong>Status:</strong> <%= @manga.status %></p>
-    <p class="manga-info"><strong>Type:</strong> <%= @manga.manga_type %></p>
-    <p class="manga-info"><strong>Series:</strong> <%= @manga.series %></p>
-    <p class="manga-info"><strong>Author:</strong> <%= @manga.author %></p>
-    <p class="manga-info"><strong>Rating:</strong> ⭐ <%= @manga.rating %>/10</p>
-    <p class="manga-info"><strong>Created Date:</strong> <%= @manga.created_at.strftime("%d %B %Y") %></p>
-    <p class="manga-info"><strong>Genre:</strong> <%= @manga.genre %></p>
-    <!-- Tombol Aksi -->
-    <div class="manga-actions">
-      <% if user_signed_in? %>
-        <% if current_user.bookmarked_mangas.include?(@manga) %>
-          <%= button_to "Unbookmark", manga_bookmark_path(@manga), method: :delete, class: "button" %>
-        <% else %>
-          <%= button_to "Bookmark", manga_bookmark_path(@manga), method: :post, class: "button" %>
-        <% end %>
-      <% end %>
-
-      <% if current_user&.admin? %>
-      <a href="<%= @manga.title %>/chapter/new" class="button">New</a>
-      <%= link_to "Edit", edit_manga_path(@manga.title), class: "button" %>
-      <%= button_to "Delete", @manga, method: :delete, class: "button", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
+  <div class="manga-container bg-transparent">
+    <!-- Cover Manga -->
+    <div class="manga-cover">
+      <% if @manga.image_cover.present? %>
+        <img src="<%= @manga.image_cover %>" alt="<%= @manga.title %> Cover">
       <% end %>
     </div>
+    <!-- Detail Manga -->
+    <div class="manga-details">
+      <h1><%= @manga.title %></h1>
+      <p class="manga-info"><strong>Alternative Title:</strong> <%= @manga.alternative_title %></p>
+      <p class="manga-info"><strong>Status:</strong> <%= @manga.status %></p>
+      <p class="manga-info"><strong>Type:</strong> <%= @manga.manga_type %></p>
+      <p class="manga-info"><strong>Series:</strong> <%= @manga.series %></p>
+      <p class="manga-info"><strong>Author:</strong> <%= @manga.author %></p>
+      <p class="manga-info"><strong>Rating:</strong> ⭐ <%= @manga.rating %>/10</p>
+      <p class="manga-info"><strong>Created Date:</strong> <%= @manga.created_at.strftime("%d %B %Y") %></p>
+      <p class="manga-info"><strong>Genre:</strong> <%= @manga.genre %></p>
+      <div class="manga-actions">
+        <% if user_signed_in? %>
+          <% if current_user.bookmarked_mangas.include?(@manga) %>
+            <%= button_to "Unbookmark", manga_bookmark_path(@manga), method: :delete, class: "button bg-transparent" %>
+          <% else %>
+            <%= button_to "Bookmark", manga_bookmark_path(@manga), method: :post, class: "button bg-transparent" %>
+          <% end %>
+        <% end %>
+        <% if current_user&.admin? %>
+          <a href="<%= @manga.title %>/chapter/new" class="button bg-transparent">New</a>
+          <%= link_to "Edit", edit_manga_path(@manga.title), class: "button bg-transparent" %>
+          <%= button_to "Delete", @manga, method: :delete, class: "button bg-transparent", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="box bg-transparent">
+    <div class="article">
+      <h1 class="manga-info"><strong>synopsis</strong></h1>
+      <p><%= @manga.synopsis %></p>
+    </div>
+  </div>
+  <!-- Chapter List -->
+  <div class="chapter-list">
+    <h2>📖 Chapters</h2>
+    <ul>
+      <% @chapters.each do |chapter| %>
+        <li>
+          <%= link_to "Chapter #{chapter.chapter_number}", manga_chapter_path(@manga.title, chapter.chapter_number) %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
-
-
-<div class="box bg-transparent">
-<div class="article">
-
-    <h1 class="manga-info"><strong>synopsis</strong></h1>
-    <p><%= @manga.synopsis %></p>
-</div>
-</div>
-
-<!-- Chapter List -->
-<div class="chapter-list">
-  <h2>📖 Chapters</h2>
-  <ul>
-    <% @chapters.each do |chapter| %>
-      <li>
-        <%= link_to "Chapter #{chapter.chapter_number}", manga_chapter_path(@manga.title, chapter.chapter_number) %>
-      </li>
-    <% end %>
-  </ul>
-</div>
-
-</div>
-
-
 <style>
-.manga-container {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 20px;
-  padding: 20px;
-  color: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  margin-top: 16px;
-}
+  .manga-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+    padding: 20px;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 16px;
+  }
 
-.manga-cover img {
-  width: 100%;
-  border-radius: 6px;
-}
+  .manga-cover img {
+    width: 100%;
+    border-radius: 6px;
+  }
 
-.manga-details {
-  display: flex;
-  flex-direction: column;
-}
+  .manga-details {
+    display: flex;
+    flex-direction: column;
+  }
 
-.manga-details h1 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #ffdd57;
-}
+  .manga-details h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffdd57;
+  }
 
-.manga-info {
-  font-size: 0.95rem;
-  margin-bottom: 5px;
-}
+  .manga-info {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+  }
 
-.manga-info strong {
-  color: #ffdd57;
-}
+  .manga-info strong {
+    color: #ffdd57;
+  }
 
-.manga-actions {
-  margin-top: 15px;
-}
+  .manga-actions {
+    margin-top: 15px;
+  }
 
-.manga-actions a,
-.manga-actions button {
-  margin-right: 8px;
-}
+  .manga-actions a,
+  .manga-actions button {
+    margin-right: 8px;
+  }
 
-.chapter-list {
-  margin-top: 20px;
-  padding: 15px;
-  background: #282828;
-  border-radius: 6px;
-  margin-bottom: 16px;
-}
+  .chapter-list {
+    margin-top: 20px;
+    padding: 15px;
+    background: #282828;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
 
-.chapter-list h2 {
-  color: #ffdd57;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
+  .chapter-list h2 {
+    color: #ffdd57;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
 
-.chapter-list ul {
-  list-style: none;
-  padding: 0;
-}
+  .chapter-list ul {
+    list-style: none;
+    padding: 0;
+  }
 
-.chapter-list li {
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
+  .chapter-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
-.chapter-list a {
-  color: #ffdd57;
-  font-weight: bold;
-  transition: color 0.3s;
-}
+  .chapter-list a {
+    color: #ffdd57;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
 
-.chapter-list a:hover {
-  color: #ff9800;
-}
-
+  .chapter-list a:hover {
+    color: #ff9800;
+  }
 </style>
