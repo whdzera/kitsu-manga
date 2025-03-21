@@ -3,10 +3,6 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["password", "icon"];
 
-  connect() {
-    console.log("Toggle password controller connected")
-  }
-
   toggle() {
     if (this.passwordTarget.type === "password") {
       this.passwordTarget.type = "text";

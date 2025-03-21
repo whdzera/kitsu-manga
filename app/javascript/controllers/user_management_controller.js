@@ -3,10 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["table", "search", "filter", "loadMore"]
   
-  connect() {
-    console.log("User management controller connected")
-  }
-  
   search() {
     this.filterTable()
   }
