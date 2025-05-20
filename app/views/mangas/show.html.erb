@@ -15,7 +15,6 @@
       <p class="manga-info"><strong>Series:</strong> <%= @manga.series %></p>
       <p class="manga-info"><strong>Author:</strong> <%= @manga.author %></p>
       <p class="manga-info"><strong>Rating:</strong> ⭐ <%= @manga.rating %>/10</p>
-      <p class="manga-info"><strong>Created Date:</strong> <%= @manga.created_at.strftime("%d %B %Y") %></p>
       <p class="manga-info"><strong>Genre:</strong> 
           <% @manga.genre.split(',').map(&:strip).each_with_index do |genre, index| %>
           <%= link_to genre, "/manga/genre/#{ERB::Util.url_encode(genre)}" %><%= ", " unless index == @manga.genre.split(',').size - 1 %>
@@ -199,7 +198,6 @@
     }
 
     .manga-details h1 {
-      text-align: center;
       margin-top: 10px;
     }
 

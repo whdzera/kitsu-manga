@@ -47,28 +47,28 @@
         </a>
       </div>
       <div id="navbar-menu" data-navbar-target="menu" class="navbar-menu bg-full-transparent">
-      <div class="navbar-item">
-        <div class="navbar-start">
-          <a class="navbar-item" href="/manga/chapters">Latest Updates</a>
-        </div>
-      </div>
-      <div class="navbar-item">
-        <div class="navbar-start">
-          <a class="navbar-item" href="/manga">List Manga</a>
-        </div>
-      </div>
-      <div class="navbar-item">
-        <div class="navbar-start">
-          <a class="navbar-item" href="/manga/genres">Genre</a>
-        </div>
-      </div>
-      <% if user_signed_in? %>
         <div class="navbar-item">
           <div class="navbar-start">
-            <a class="navbar-item" href="/manga/bookmarks">Bookmarks</a>
+            <a class="navbar-item" href="/manga/chapters">Latest Updates</a>
           </div>
         </div>
-      <% end %>
+        <div class="navbar-item">
+          <div class="navbar-start">
+            <a class="navbar-item" href="/manga">List Manga</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <div class="navbar-start">
+            <a class="navbar-item" href="/manga/genres">Genre</a>
+          </div>
+        </div>
+        <% if user_signed_in? %>
+          <div class="navbar-item">
+            <div class="navbar-start">
+              <a class="navbar-item" href="/manga/bookmarks">Bookmarks</a>
+            </div>
+          </div>
+        <% end %>
         <div class="navbar-end bg-full-transparent">
           <% if user_signed_in? %>
             <div class="navbar-item has-dropdown is-hoverable">
@@ -127,6 +127,25 @@
         </div>
       </div>
     </nav>
+    <% if notice.present? %>
+      <div class="notification-container" data-controller="notification" data-notification-timeout-value="3000">
+        <div class="notification bg-transparent">
+          <div class="columns is-mobile is-vcentered">
+            <div class="column is-narrow">
+              <span class="icon">
+                <i class="fas fa-info-circle"></i>
+              </span>
+            </div>
+            <div class="column">
+              <p><%= notice %></p>
+            </div>
+            <div class="column is-narrow">
+              <button type="button" class="delete" data-action="click->notification#dismiss" aria-label="delete"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
     <%= yield %>
     <!-- Footer -->
     <footer class="footer bg-transparent">
@@ -138,4 +157,55 @@
       </div>
     </footer>
   </body>
+  <style>
+    .notification-container {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 400px;
+    width: 90%;
+    }
+
+    .notification {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    }
+
+    .notification .columns {
+    margin: 0;
+    }
+
+    .notification .column.is-narrow {
+    display: flex;
+    align-items: center;
+    }
+
+    .notification .icon {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    }
+
+    .notification p {
+    margin: 0;
+    line-height: 1.5;
+    vertical-align: middle;
+    }
+
+    .notification .delete {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+    .notification-container {
+      top: 60px;
+      right: 10px;
+      max-width: 300px;
+    }
+    }
+  </style>
 </html>
