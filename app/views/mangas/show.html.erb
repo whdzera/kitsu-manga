@@ -20,9 +20,13 @@
       <div class="manga-actions">
         <% if user_signed_in? %>
           <% if current_user.bookmarked_mangas.include?(@manga) %>
-            <%= button_to "Unbookmark", manga_bookmark_path(@manga), method: :delete, class: "button bg-transparent" %>
+            <%= button_to manga_bookmark_path(@manga), method: :delete, class: "button bg-transparent" do %>
+              <i class="fa fa-bookmark"></i> Unbookmark
+            <% end %>
           <% else %>
-            <%= button_to "Bookmark", manga_bookmark_path(@manga), method: :post, class: "button bg-transparent" %>
+            <%= button_to manga_bookmark_path(@manga), method: :post, class: "button bg-transparent" do %>
+              <i class="fa fa-bookmark"></i> Bookmark
+            <% end %>
           <% end %>
         <% end %>
         <% if current_user&.admin? %>
@@ -35,23 +39,33 @@
   </div>
   <div class="box bg-transparent">
     <div class="article">
-      <h1 class="manga-info"><strong>synopsis</strong></h1>
+      <h1 class="manga-info"><strong>Synopsis</strong></h1>
       <p><%= @manga.synopsis %></p>
     </div>
   </div>
   <!-- Chapter List -->
-  <div class="chapter-list">
-    <h2>📖 Chapters</h2>
-    <ul>
-      <% @chapters.each do |chapter| %>
-        <li>
-          <%= link_to "Chapter #{chapter.chapter_number}", manga_chapter_path(@manga.title, chapter.chapter_number) %>
-        </li>
-      <% end %>
-    </ul>
+  <div class="box bg-transparent">
+    <div class="chapter-list">
+      <h2>📖 Chapters</h2>
+      <div class="chapters-scroll-container">
+        <ul>
+          <% @chapters.each do |chapter| %>
+            <li>
+              <%= link_to "Chapter #{chapter.chapter_number}", manga_chapter_path(@manga.title, chapter.chapter_number) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 <style>
+  .container {
+    padding: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
   .manga-container {
     display: grid;
     grid-template-columns: 250px 1fr;
@@ -76,7 +90,7 @@
   .manga-details h1 {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #ffdd57;
+    color: #ffffff;
   }
 
   .manga-info {
@@ -85,30 +99,66 @@
   }
 
   .manga-info strong {
-    color: #ffdd57;
+    color: #ffffff;
+    font-weight: bold;
   }
 
   .manga-actions {
     margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
-  .manga-actions a,
-  .manga-actions button {
-    margin-right: 8px;
+  .button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   .chapter-list {
     margin-top: 20px;
     padding: 15px;
-    background: #282828;
+    background: bg-transparent;
     border-radius: 6px;
     margin-bottom: 16px;
   }
 
   .chapter-list h2 {
-    color: #ffdd57;
+    color: #ffffff;
+    font-weight: bold;
     font-size: 1.5rem;
     margin-bottom: 10px;
+  }
+
+  .chapters-scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff #282828;
+  }
+
+  .chapters-scroll-container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chapters-scroll-container::-webkit-scrollbar-track {
+    background: #282828;
+    border-radius: 3px;
+  }
+
+  .chapters-scroll-container::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 3px;
   }
 
   .chapter-list ul {
@@ -122,12 +172,62 @@
   }
 
   .chapter-list a {
-    color: #ffdd57;
+    color: #ffffff;
     font-weight: bold;
     transition: color 0.3s;
+    display: block;
+    width: 100%;
   }
 
   .chapter-list a:hover {
-    color: #ff9800;
+    color: #cccccc;
+  }
+
+  /* Responsive design */
+  @media screen and (max-width: 768px) {
+    .manga-container {
+      grid-template-columns: 1fr;
+    }
+
+    .manga-cover {
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    .manga-details h1 {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .manga-actions {
+      justify-content: center;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .manga-container {
+      padding: 10px;
+    }
+
+    .manga-details h1 {
+      font-size: 1.5rem;
+    }
+
+    .chapter-list {
+      padding: 10px;
+    }
+  }
+
+  .box {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 6px;
+  }
+
+  .article h1 {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
   }
 </style>
