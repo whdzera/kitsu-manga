@@ -23,7 +23,6 @@
       <article id="announcement-box" class="message">
         <div class="message-header bg-full-transparent">
           <span id="announcement-text"><%= @announcement&.content %></span>
-          <button class="delete" aria-label="delete"></button>
         </div>
       </article>
       <% if current_user&.admin? %>

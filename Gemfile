@@ -9,9 +9,9 @@ gem "importmap-rails", "2.1.0"
 gem "turbo-rails", "2.0.13"  
 gem "stimulus-rails", "1.3.4"  
 gem "jbuilder", "2.13.0"  
-gem 'devise', "4.9.4"  #auth
-gem 'kaminari', "1.2.2" #pagination
-gem 'hcaptcha', '7.1.0' #captcha
+gem 'devise', "4.9.4"  
+gem 'kaminari', "1.2.2" 
+gem 'hcaptcha', "7.1.0"
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

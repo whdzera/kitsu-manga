@@ -3,20 +3,21 @@
 Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean interface and seamless reading experience.
 
 ## Tech Stack
-- Rails
-- Sqlite
-- Bulma & Font-awesome
-- Turbo & Stimulus
+
+- Ruby on Rails (Backend)
+- SQLite (Database) — can be switched to MySQL or PostgreSQL
+- Bulma & Font-awesome (Styling and icon)
+- Stimulus (Interactive)
 
 ## Features
 
 - login/regist Auth with Devise
 - hcaptcha before login/regist
+- Role member and admin (guest user can read manga)
 - Email Confirmation Register with Action Mailer
-- UI Semi Transparent with Bulma css
+- UI Semi Transparent with Bulma
 - Pagination with Kaminari
-- Have role member and admin (guest user can read manga)
-- etc
+- Bookmarks Manga
 
 ## View
 <img src="https://i.imgur.com/rKz4ei3.png" width="80%">
@@ -26,10 +27,12 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 <img src="https://i.imgur.com/tjbW7c0.png" width="80%">
 
 ### Prerequisites
+
 - Ruby (3.3.0)
 - Rails (8.0.1)
 
 ### Setup
+
 1. Clone this repository:
    ```sh
    git clone https://github.com/rokhimin/kitsu-manga.git
@@ -56,6 +59,10 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 3. Make your changes and commit them: `git commit -m 'Add new feature'`
 4. Push to the branch: `git push origin feature-branch`
 5. Create a pull request.
+
+## Gists
+
+![Automation increase chapter in kitsumanga](https://gist.github.com/rokhimin/b99aa5c9d2d779a52ae4e2fc9b132e99)
 
 ## License
 
