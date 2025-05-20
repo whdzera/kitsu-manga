@@ -3,7 +3,10 @@ class BookmarksController < ApplicationController
   before_action :set_manga, only: [:create, :destroy]
 
   def index
-    @bookmarked_mangas = current_user.bookmarked_mangas.page(params[:page]).per(8)
+    @bookmarked_mangas = current_user.bookmarked_mangas
+                                    .order('bookmarks.updated_at DESC')
+                                    .page(params[:page])
+                                    .per(8)
   end
 
   def create

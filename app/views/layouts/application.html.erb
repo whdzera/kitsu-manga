@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
   </head>
   <body>
     <!-- id="sticky-navbar" use stiky navbar -->
@@ -47,6 +46,7 @@
           <span aria-hidden="true"></span>
         </a>
       </div>
+      <div id="navbar-menu" data-navbar-target="menu" class="navbar-menu bg-full-transparent">
       <div class="navbar-item">
         <div class="navbar-start">
           <a class="navbar-item" href="/manga/chapters">Latest Updates</a>
@@ -69,13 +69,12 @@
           </div>
         </div>
       <% end %>
-      <div id="navbar-menu" data-navbar-target="menu" class="navbar-menu">
         <div class="navbar-end bg-full-transparent">
           <% if user_signed_in? %>
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-item">
+              <a class="navbar-item" style="margin-left: 16px;">
                 <span class="icon">
-                  <i class="fa fa-user-circle fa-2x"></i>
+                  <i class="fa fa-user-circle fa-2x" style="margin-right: 16px;"></i>
                 </span>
                 <strong><%= current_user.username %></strong>
               </a>

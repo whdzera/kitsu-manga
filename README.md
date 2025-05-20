@@ -2,12 +2,13 @@
 
 Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean interface and seamless reading experience.
 
-## Tech Stack
+## View
 
-- Ruby on Rails (Backend)
-- SQLite (Database) — can be switched to MySQL or PostgreSQL
-- Bulma & Font-awesome (Styling and icon)
-- Stimulus (Interactive)
+<img src="https://i.imgur.com/kqbWq4O.png" width="80%">
+
+<img src="https://i.imgur.com/HrQfMMH.png" width="80%">
+
+<img src="https://i.imgur.com/KibV3kz.png" width="80%">
 
 ## Features
 
@@ -19,12 +20,13 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 - Pagination with Kaminari
 - Bookmarks Manga
 
-## View
-<img src="https://i.imgur.com/rKz4ei3.png" width="80%">
 
-<img src="https://i.imgur.com/hIJYl8U.png" width="80%">
+## Tech Stack
 
-<img src="https://i.imgur.com/tjbW7c0.png" width="80%">
+- Ruby on Rails (Backend)
+- SQLite (Database) — can be switched to MySQL or PostgreSQL
+- Bulma & Font-awesome (Styling and icon)
+- Stimulus (Interactive)
 
 ### Prerequisites
 
@@ -62,11 +64,11 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 
 ## Gists
 
-![Automation increase chapter in kitsumanga](https://gist.github.com/rokhimin/b99aa5c9d2d779a52ae4e2fc9b132e99)
+- [Automation increase chapter in kitsumanga](https://gist.github.com/rokhimin/b99aa5c9d2d779a52ae4e2fc9b132e99)
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the Apache License.
 
 ## Contact
 
