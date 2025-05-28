@@ -12,6 +12,7 @@ gem "jbuilder", "2.13.0"
 gem 'devise', "4.9.4"  
 gem 'kaminari', "1.2.2" 
 gem 'hcaptcha', "7.1.0"
+gem "syntax_tree", "6.2.0"
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

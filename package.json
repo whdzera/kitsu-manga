@@ -1,0 +1,20 @@
+{
+  "name": "kitsu-manga",
+  "version": "1.0.0",
+  "description": "Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean interface and seamless reading experience.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@prettier/plugin-ruby": "^4.0.4",
+    "prettier": "^3.5.3"
+  }
+}
