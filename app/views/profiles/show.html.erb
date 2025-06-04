@@ -1,0 +1,241 @@
+<div class="container mb-5 mt-5">
+  <div class="box bg-transparent has-text-white">
+    <h3 class="title is-5">
+      <%= @user.username %></h3>
+    <div class="field is-grouped mb-4">
+      <p>Role: <%= @user.role %></p>
+    </div>
+  </div>
+  <div class="box bg-transparent has-text-white">
+    <h3 class="title is-5">
+      Recent Favorites</h3>
+      <% if @bookmarked_mangas&.any? %>
+        <div class="bookmarks-grid">
+          <% @bookmarked_mangas.each do |manga| %>
+            <div class="bookmark-card">
+              <%= link_to manga_path(manga.title), class: "bookmark-link" do %>
+                <div class="bookmark-cover-container">
+                  <% if manga.image_cover.present? %>
+                    <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="bookmark-cover">
+                  <% else %>
+                    <div class="bookmark-cover-placeholder"></div>
+                  <% end %>
+                </div>
+                <div class="bookmark-details">
+                  <h2 class="bookmark-title"><%= manga.title %></h2>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <div class="empty-icon">
+            <i class="fas fa-bookmark"></i>
+          </div>
+          <p>You haven't bookmarked any manga yet.</p>
+          <a href="<%= mangas_path if defined?(mangas_path) %>" class="button">Browse Manga</a>
+        </div>
+      <% end %>
+  </div>
+</div>
+<style>
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .page-header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin: 0;
+    background: linear-gradient(90deg, #e2e2e2, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .page-header h1 i {
+    margin-right: 0.5rem;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Bookmarks Grid styling */
+  .bookmarks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .bookmark-card {
+    background-color: rgba(30, 30, 30, 0.7);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  .bookmark-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .bookmark-link {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+  }
+
+  .bookmark-cover-container {
+    height: 280px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bookmark-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .bookmark-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bookmark-card:hover .bookmark-cover {
+    transform: scale(1.05);
+  }
+
+  .bookmark-details {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bookmark-title {
+    font-size: 1.1rem;
+    margin: 0 0 0.75rem 0;
+    color: #ffffff;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .bookmark-actions {
+    margin-top: auto;
+    padding-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  /* Empty state styling */
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background-color: rgba(30, 30, 30, 0.7);
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.2);
+  }
+
+  .empty-state p {
+    font-size: 1.2rem;
+    color: #aaaaaa;
+    margin: 0;
+  }
+
+  .empty-state .btn {
+    max-width: 200px;
+  }
+
+  /* Pagination */
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .pagination a, .pagination span {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background: #333;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .pagination a:hover {
+    background: #444;
+  }
+
+  .pagination .current {
+    color: #333;
+    font-weight: bold;
+  }
+
+  .pagination .disabled {
+    color: #777;
+    cursor: not-allowed;
+  }
+
+  /* Container for the whole page */
+  .container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .bookmarks-grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    .bookmark-cover-container {
+      height: 220px;
+    }
+
+    .bookmark-title {
+      font-size: 1rem;
+    }
+
+    .bookmark-actions {
+      flex-direction: column;
+    }
+  }
+</style>

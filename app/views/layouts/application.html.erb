@@ -72,19 +72,14 @@
         <div class="navbar-end bg-full-transparent">
           <% if user_signed_in? %>
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-item" style="margin-left: 16px;">
+              <%= link_to user_profile_path(current_user.username), class: "navbar-item", style: "margin-left: 16px;" do %>
                 <span class="icon">
                   <i class="fa fa-user-circle fa-2x" style="margin-right: 16px;"></i>
                 </span>
                 <strong><%= current_user.username %></strong>
-              </a>
+              <% end %>
               <div class="navbar-dropdown bg-full-transparent">
-                <div class="navbar-item">
-                  <span class="icon">
-                    <i class="fas fa-user-tag"></i>
-                  </span>
-                  <strong><%= current_user.role %></strong>
-                </div>
+                
                 <% if current_user.member? %>
                   <a class="navbar-item" href="<%= member_dashboard_path %>">
                     <span class="icon">
