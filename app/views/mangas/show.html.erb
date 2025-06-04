@@ -35,7 +35,13 @@
         <% if current_user&.admin? %>
           <a href="<%= @manga.title %>/chapter/new" class="button bg-transparent">New</a>
           <%= link_to "Edit", edit_manga_path(@manga.title), class: "button bg-transparent" %>
-          <%= button_to "Delete", @manga, method: :delete, class: "button bg-transparent", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
+          <%= button_to "Delete", @manga, method: :delete, class: "button bg-transparent", data: {
+                controller: "confirm",
+                action: "confirm#confirm",
+                confirm_title_value: "Delete?",
+                confirm_message_value: "This will permanently remove the manga.",
+                confirm_confirm_text_value: "Yes, delete it!"
+              } %>
         <% end %>
       </div>
     </div>

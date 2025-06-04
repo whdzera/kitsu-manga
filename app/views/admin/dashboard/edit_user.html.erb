@@ -1,59 +1,62 @@
-<div class="container">
-  <div class="box bg-full-transparent">
-    <h1 class="title has-text-centered">
-      <i class="fas fa-user-edit"></i> Edit User
-    </h1>
-    
-    <% if @user.errors.any? %>
-      <div class="notification is-danger">
-        <ul>
-          <% @user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    
-    <div class="box bg-transparent">
-      <%= form_with(model: @user, url: admin_update_user_path(@user), method: :patch) do |f| %>
-        <div class="field ">
-          <%= f.label :username, class: "label" %>
-          <div class="control has-icons-left">
-            <%= f.text_field :username, class: "input bg-full-transparent" %>
-            <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
-            </span>
-          </div>
-        </div>
-        
-        <div class="field">
-          <%= f.label :email, class: "label" %>
-          <div class="control has-icons-left">
-            <%= f.email_field :email, class: "input bg-full-transparent" %>
-            <span class="icon is-small is-left">
-              <i class="fas fa-envelope"></i>
-            </span>
-          </div>
-        </div>
-        
-        <div class="field">
-          <%= f.label :role, class: "label" %>
-          <div class="control">
-            <div class="select">
-              <%= f.select :role, User::ROLES, { selected: @user.role } %>
+<div class="container mb-5 mt-5">
+  <h1 class="title has-text-centered">
+    <i class="fas fa-user-edit"></i> Edit User
+  </h1>
+  <% if @user.errors.any? %>
+    <div class="notification is-danger">
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="box bg-transparent">
+        <%= form_with(model: @user, url: admin_update_user_path(@user), method: :patch) do |f| %>
+          <div class="field ">
+            <%= f.label :username, class: "label" %>
+            <div class="control has-icons-left">
+              <%= f.text_field :username, class: "input bg-full-transparent" %>
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
             </div>
           </div>
-        </div>
-        
-        <div class="field is-grouped">
-          <div class="control">
-            <%= f.submit "Update", class: "button bg-transparent", onclick: "return confirm('Are you sure you want to update?')" %>
+          <div class="field">
+            <%= f.label :email, class: "label" %>
+            <div class="control has-icons-left">
+              <%= f.email_field :email, class: "input bg-full-transparent" %>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
           </div>
-          <div class="control">
-            <%= link_to "Cancel", admin_dashboard_path, class: "button bg-transparent" %>
+          <div class="field">
+            <%= f.label :role, class: "label" %>
+            <div class="control">
+              <div class="select">
+                <%= f.select :role, User::ROLES, { selected: @user.role } %>
+              </div>
+            </div>
           </div>
-        </div>
-      <% end %>
+          <div class="field is-grouped">
+            <div class="control">
+              <%= f.submit "Update", class: "button bg-transparent", data: {
+                controller: "confirm",
+                action: "confirm#confirm",
+                confirm_title_value: "Update?",
+                confirm_message_value: "Do you want to save the changes?",
+                confirm_confirm_text_value: "Yes, update it!"
+              } %>
+            </div>
+            <div class="control">
+              <%= link_to "Cancel", admin_dashboard_path, class: "button bg-transparent" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

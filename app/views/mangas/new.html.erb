@@ -1,5 +1,4 @@
-<div class="container">
-  <div class="box bg-full-transparent">
+<div class="container mt-5 mb-5">
     <div class="columns is-centered">
       <div class="column is-half">
         <div class="box bg-transparent">
@@ -47,18 +46,24 @@
               </div>
               <div class="field">
                 <%= f.label :synopsis %>
-                <%= f.text_area :synopsis, class: "input bg-transparent", rows: "10" %>
+                <%= f.text_area :synopsis, class: "textarea bg-transparent", rows: "10" %>
               </div>
               <div class="field">
                 <div class="actions">
-                  <%= f.submit "Create Manga", class: "button bg-transparent" %>
-                  <%= link_to "Back to list manga", mangas_path, class: "button bg-transparent" %>
+                  <%= f.submit "Create Manga", class: "button bg-transparent", data: {
+                controller: "confirm",
+                action: "confirm#confirm",
+                confirm_title_value: "Confirmation",
+                confirm_message_value: "Do you want to create the manga?",
+                confirm_confirm_text_value: "Yes, create it!"
+              } %>
                 </div>
               </div>
             <% end %>
           </div>
         </div>
+        
+        <%= link_to "Back to list manga", mangas_path, class: "button bg-transparent" %>
       </div>
     </div>
-  </div>
 </div>

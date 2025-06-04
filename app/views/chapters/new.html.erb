@@ -1,5 +1,4 @@
-<div class="container">
-  <div class="box bg-full-transparent">
+<div class="container mb-5 mt-5">
     <div class="columns is-centered">
       <div class="column is-half">
         <div class="box bg-transparent">
@@ -14,12 +13,18 @@
                 <%= f.text_area :images, name: "chapter[images]", class: "textarea bg-transparent", rows: 10 %>
               </div>
               <div class="field">
-                <%= f.submit "Added Chapter", class: "button bg-transparent" %>
+                <%= f.submit "Added Chapter", class: "button bg-transparent", data: {
+                controller: "confirm",
+                action: "confirm#confirm",
+                confirm_title_value: "Added?",
+                confirm_message_value: "Do you want to save the changes?",
+                confirm_confirm_text_value: "Yes, update it!"
+              } %>
               </div>
             <% end %>
           </div>
         </div>
+          <%= link_to "Back to Manga", @manga, class: "button bg-tansparent" %>
       </div>
     </div>
-  </div>
 </div>

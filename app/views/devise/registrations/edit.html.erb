@@ -1,5 +1,4 @@
-<div class="container">
-  <div class="box bg-full-transparent has-text-white">
+<div class="container mt-5 mb-5">
     <h1 class="title has-text-centered has-text-white">
       <i class="fas fa-user-edit"></i> Edit <%= resource_name.to_s.humanize %>
     </h1>
@@ -65,7 +64,13 @@
           <!-- Update Button -->
           <div class="field">
             <div class="control">
-              <%= f.submit "Update", class: "button bg-transparent is-rounded" %>
+              <%= f.submit "Update", class: "button bg-transparent is-rounded", data: {
+                controller: "confirm",
+                action: "confirm#confirm",
+                confirm_title_value: "Update?",
+                confirm_message_value: "Do you want to save the changes?",
+                confirm_confirm_text_value: "Yes, update it!"
+              } %>
             </div>
           </div>
         <% end %>
@@ -74,11 +79,16 @@
     <!-- Cancel Account -->
     <div class="has-text-centered">
       <%= button_to "Delete My Account", registration_path(resource_name), method: :delete, class: "button is-danger is-rounded",
-                    onclick: "return confirm('Are You Sure Delete Your Account');" %>
+              data: {
+                controller: "confirm",
+                action: "confirm#confirm",
+                confirm_title_value: "Delete Record?",
+                confirm_message_value: "This will permanently remove the record.",
+                confirm_confirm_text_value: "Yes, delete it!"
+              } %>
     </div>
     <br>
     <div class="has-text-centered">
       <%= link_to "<i class='fas fa-arrow-left'></i> Back".html_safe, :back, class: "button bg-transparent is-rounded" %>
     </div>
-  </div>
 </div>

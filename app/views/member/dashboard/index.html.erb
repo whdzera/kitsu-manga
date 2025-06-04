@@ -2,8 +2,7 @@
 <div class="dashboard-container">
   <!-- Main Content -->
   <div class="content-area">
-    <div class="box bg-full-transparent has-text-white">
-      <div class="notification bg-full-transparent">
+      <div class="notification bg-transparent">
         <h2 class="has-text-weight-bold"><i class="fas fa-user"></i> Welcome, <%= current_user.username %>!</h2>
       </div>
       <!-- Account Information Section -->
@@ -22,7 +21,6 @@
         <%= link_to "Account Setting", edit_user_registration_path, class: "button is-rounded bg-transparent" %>
         <%= link_to "Return to Home", root_path, class: "button is-rounded bg-transparent" %>
       </div>
-    </div>
   </div>
 </div>
 </div>
