@@ -3,7 +3,10 @@
     <h3 class="title is-5">
       <%= @user.username %></h3>
     <div class="field is-grouped mb-4">
-      <p>Role: <%= @user.role %></p>
+      <p><strong>Role:</strong> <%= @user.role %></p>
+    </div>
+    <div class="field is-grouped mb-4">
+      <p><strong>Joined since:</strong> <%= @user.created_at.strftime("%B %d, %Y") %></p>
     </div>
   </div>
   <div class="box bg-transparent has-text-white">
