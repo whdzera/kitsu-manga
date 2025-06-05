@@ -95,7 +95,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:username, :email, :role, :avatar)
+      params.require(:user).permit(:username, :email, :role, :avatar, :about)
     end
   end
 end

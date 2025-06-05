@@ -14,13 +14,13 @@ module Member
       else
         flash[:alert] = "Failed to update profile."
       end
-      redirect_to member_dashboard_path
+      redirect_to member_account_path
     end
 
     private
 
     def user_params
-      params.require(:user).permit(:username, :email, :avatar)
+      params.require(:user).permit(:username, :email, :avatar, :about)
     end
 
     def require_member

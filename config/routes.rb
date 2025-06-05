@@ -36,8 +36,7 @@ Rails.application.routes.draw do
 
   # Member area
   namespace :member do
-    get "dashboard", to: "dashboard#index"
-    get "dashboard/bookmarks", to: "dashboard#bookmarks"
+    get "account", to: "dashboard#index"
     patch "profile", to: "dashboard#update", as: :profile_update
   end
 

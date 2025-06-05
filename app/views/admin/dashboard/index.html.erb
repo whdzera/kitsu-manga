@@ -1,10 +1,7 @@
 <div class="container is-fluid">
-<div class="dashboard-container">
-  <!-- Main Content -->
-  <div class="content-area">
-      <div class="notification bg-transparent">
-        <h2 class="has-text-weight-bold"><i class="fas fa-user"></i> Welcome, <%= current_user.username %>!</h2>
-      </div>
+  <div class="dashboard-container">
+    <!-- Main Content -->
+    <div class="content-area">
       <!-- Account Information Section -->
       <div class="dashboard-section">
         <div class="box bg-transparent has-text-white">
@@ -14,38 +11,37 @@
             <li><strong>Email:</strong> <%= current_user.email %></li>
             <li><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %d, %Y") %></li>
           </ul>
-
-
-<%= form_with model: @user, url: admin_profile_update_path, method: :patch, local: true, html: { multipart: true } do |f| %>
-
-
-  <div class="field">
-    <%= f.label :avatar, "Upload Profile Picture" %><br>
-    <%= f.file_field :avatar %>
-
-    <% if @user.avatar.attached? %>
-  <div style="margin-top: 10px;">
-    <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [150, 150])) + "?v=#{@user.avatar.blob.checksum}" %>
-  </div>
-<% else %>
-  <p>No avatar attached.</p>
-<% end %>
-
-  </div>
-
-  <%= f.submit "Save", class: "button is-primary" %>
-<% end %>
-
-
+          <%= form_with model: @user, url: admin_profile_update_path, method: :patch, local: true, html: { multipart: true } do |f| %>
+            <!-- Avatar Field -->
+            <div class="field">
+              <%= f.label :avatar, "Upload Profile Picture" %><br>
+              <%= f.file_field :avatar %>
+              <% if @user.avatar.attached? %>
+                <div style="margin-top: 10px;">
+                  <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [150, 150])) + "?v=#{@user.avatar.blob.checksum}" %>
+                </div>
+              <% else %>
+                <p>No avatar attached.</p>
+              <% end %>
+            </div>
+            <!-- About Field -->
+            <div class="field">
+              <%= f.label :about, "About Me" %>
+              <div class="control">
+                <%= f.text_area :about, rows: 4, class: "textarea", placeholder: "Write something about yourself..." %>
+                <p class="help ml-3">Maximum 500 characters.</p>
+              </div>
+            </div>
+            <%= f.submit "Save", class: "button bg-transparent mt-2" %>
+          <% end %>
         </div>
       </div>
-      <!-- Quick Actions -->
       <div class="buttons is-centered mt-4">
         <%= link_to "Account Setting", edit_user_registration_path, class: "button is-rounded bg-transparent" %>
         <%= link_to "Return to Home", root_path, class: "button is-rounded bg-transparent" %>
       </div>
+    </div>
   </div>
-</div>
 </div>
 <style>
   .dashboard-container {

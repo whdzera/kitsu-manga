@@ -28,6 +28,8 @@ class User < ApplicationRecord
                 "only allows letters, numbers, and underscores without spaces"
             }
   validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validate :avatar_type
+  validates :about, length: { maximum: 500 }
 
   # Role methods
   def admin?
@@ -60,5 +62,16 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role ||= "member"
+  end
+
+  def avatar_type
+    return unless avatar.attached?
+
+    unless avatar.content_type.in?(
+             %w[image/png image/jpg image/jpeg image/webp]
+           )
+      errors.add(:avatar, "must be a PNG, JPG, JPEG, or WEBP image")
+      avatar.purge
+    end
   end
 end
