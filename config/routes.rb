@@ -71,5 +71,10 @@ Rails.application.routes.draw do
     delete "chapter-:chapter_number",
            to: "chapters#destroy",
            as: "delete_chapter"
+
+    # comments
+    resources :chapters, param: :chapter_number, only: [] do
+      resources :comments, only: [:create]
+    end
   end
 end

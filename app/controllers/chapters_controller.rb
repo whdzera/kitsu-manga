@@ -1,26 +1,41 @@
 class ChaptersController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :index] 
-  before_action :require_admin, only: [:create, :new, :update, :edit, :destroy]
+  before_action :authenticate_user!, except: %i[show index]
+  before_action :require_admin, only: %i[create new update edit destroy]
   before_action :set_manga, except: [:index]
-  before_action :set_chapter, only: [:show, :edit, :update, :destroy]
+  before_action :set_chapter, only: %i[show edit update destroy]
 
   def index
-    @latest_chapters = Chapter.includes(:manga).order(created_at: :desc).page(params[:page]).per(6)
+    @latest_chapters =
+      Chapter
+        .includes(:manga)
+        .order(created_at: :desc)
+        .page(params[:page])
+        .per(6)
   end
 
   def show
-     
-    @chapter = Chapter.find_by(chapter_number: params[:chapter_number])
-    
+    @chapter = @manga.chapters.find_by(chapter_number: params[:chapter_number])
+
     if @chapter.nil?
       redirect_to root_path, alert: "Chapter not found"
       return
     end
-    
-    @previous_chapter = Chapter.where("chapter_number < ?", @chapter.chapter_number)
-                               .order(chapter_number: :desc).first
-    @next_chapter = Chapter.where("chapter_number > ?", @chapter.chapter_number)
-                           .order(:chapter_number).first
+
+    @previous_chapter =
+      @manga
+        .chapters
+        .where("chapter_number < ?", @chapter.chapter_number)
+        .order(chapter_number: :desc)
+        .first
+
+    @next_chapter =
+      @manga
+        .chapters
+        .where("chapter_number > ?", @chapter.chapter_number)
+        .order(:chapter_number)
+        .first
+
+    @comments = @chapter.comments.includes(:user).order(created_at: :asc)
   end
 
   def new
@@ -35,7 +50,8 @@ class ChaptersController < ApplicationController
 
     if @chapter.save
       redirect_to manga_chapter_path(@manga.title, @chapter.chapter_number),
-                  notice: "Chapter #{@chapter.chapter_number} added successfully!"
+                  notice:
+                    "Chapter #{@chapter.chapter_number} added successfully!"
     else
       render :new, status: :unprocessable_entity
     end
@@ -47,27 +63,31 @@ class ChaptersController < ApplicationController
   def update
     if @chapter.update(chapter_params)
       redirect_to manga_chapter_path(@manga.title, @chapter.chapter_number),
-                  notice: "Chapter #{@chapter.chapter_number} updated successfully!"
+                  notice:
+                    "Chapter #{@chapter.chapter_number} updated successfully!"
     else
-      flash[:alert] = "Failed to update chapter: #{@chapter.errors.full_messages.join(', ')}"
+      flash[
+        :alert
+      ] = "Failed to update chapter: #{@chapter.errors.full_messages.join(", ")}"
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     chapter_number = @chapter.chapter_number
-    
+
     if @chapter.destroy
-      redirect_to manga_path(@manga.title), 
+      redirect_to manga_path(@manga.title),
                   notice: "Chapter #{chapter_number} Delete Succesfully!"
     else
       redirect_to manga_chapter_path(@manga.title, @chapter.chapter_number),
-                  alert: "Failed to chapter chapter: #{@chapter.errors.full_messages.join(', ')}"
+                  alert:
+                    "Failed to chapter chapter: #{@chapter.errors.full_messages.join(", ")}"
     end
   end
 
   def latest
-    @latest_chapters = Chapter.order(created_at: :desc).limit(5) 
+    @latest_chapters = Chapter.order(created_at: :desc).limit(5)
   end
 
   private
@@ -92,5 +112,4 @@ class ChaptersController < ApplicationController
       redirect_to root_path
     end
   end
-  
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_05_095315) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_05_105824) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -63,6 +63,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_095315) do
     t.index ["manga_id"], name: "index_chapters_on_manga_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "chapter_id", null: false
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id"], name: "index_comments_on_chapter_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -111,4 +121,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_095315) do
   add_foreign_key "bookmarks", "mangas"
   add_foreign_key "bookmarks", "users"
   add_foreign_key "chapters", "mangas"
+  add_foreign_key "comments", "chapters"
+  add_foreign_key "comments", "users"
 end

@@ -55,6 +55,24 @@
       <%= link_to "Back to Manga", manga_path(@manga.title), class: "button" %>
     </div>
   </div>
+
+<% @chapter.comments.each do |comment| %>
+  <div>
+    <strong><%= comment.user.username %></strong>: <%= comment.body %>
+    <small><%= time_ago_in_words(comment.created_at) %> lalu</small>
+  </div>
+<% end %>
+
+<% if user_signed_in? %>
+<%= form_with url: manga_chapter_comments_path(@manga, @chapter), local: true do |form| %>
+
+    <div><%= form.text_area :body, placeholder: "Tulis komentar..." %></div>
+    <div><%= form.submit "Kirim" %></div>
+  <% end %>
+<% else %>
+  <p><%= link_to "Login", new_user_session_path %> untuk berkomentar.</p>
+<% end %>
+
 </div>
 <style>
   .manga-header {
