@@ -1,86 +1,64 @@
-<div class="container mb-5 mt-5">
-    <div data-controller="user-management">
-      <div class="box bg-transparent has-text-white">
-        <h3 class="title is-5"><i class="fas fa-users"></i> Users Management</h3>
-        <div class="field is-grouped mb-4">
-          <div class="control">
-            <div class="select is-small">
-              <select id="filtered-users"
-                  data-user-management-target="filter" 
-                  data-action="change->user-management#filterRole">
-                <option value="">Filter by Role</option>
-                <option value="admin">Admin</option>
-                <option value="member">Member</option>
-              </select>
-            </div>
-          </div>
-          <div class="control is-expanded">
-            <input id="search_users"
-               class="input is-small bg-full-transparent" 
-               type="text" 
-               placeholder="Search users..." 
-               data-user-management-target="search" 
-               data-action="input->user-management#search">
-          </div>
-        </div>
-        <div class="table-container">
-          <table class="table is-fullwidth bg-full-transparent" data-user-management-target="table">
-            <thead>
-              <tr>
-                <th><i class="fas fa-user"></i> Username</th>
-                <th><i class="fas fa-envelope"></i> Email</th>
-                <th><i class="fas fa-user-tag"></i> Role</th>
-                <th><i class="fas fa-calendar"></i> Joined</th>
-                <th><i class="fas fa-cogs"></i> Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @users.first(10).each do |user| %>
-                <tr>
-                  <td><%= user.username %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.role.capitalize %></td>
-                  <td><%= user.created_at.strftime("%b %d, %Y") %></td>
-                  <td class="has-text-centered">
-                    <div class="buttons is-flex">
-                      <%= link_to admin_edit_user_path(user), class: "button is-small bg-transparent" do %>
-                        <i class="fas fa-edit"></i>
-                      <% end %>
-                      <% if user != current_user %>
-                        <%= button_to admin_delete_user_path(user), method: :delete, data: {
-                controller: "confirm",
-                action: "confirm#confirm",
-                confirm_title_value: "Delete Record?",
-                confirm_message_value: "This will permanently remove the users.",
-                confirm_confirm_text_value: "Yes, delete it!"
-              },
-                        class: "button is-small is-danger is-outlined", 
-                        form: { style: 'display: inline-block;' } do %>
-                          <i class="fas fa-trash"></i>
-                        <% end %>
-                      <% else %>
-                        <span class="tag is-info is-light">Current</span>
-                      <% end %>
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-          <% if @users.count > 10 %>
-            <div class="has-text-centered my-3">
-              <button class="button bg-transparant is-small"
-                  data-user-management-target="loadMore"
-                  data-action="click->user-management#loadMore"
-                data-page="1" 
-                data-total="<%= @users.count %>"
-                data-path="<%= admin_dashboard_path %>"
-                data-current-user-id="<%= current_user.id %>">
-                Load More
-              </button>
-            </div>
-          <% end %>
+<div class="container is-fluid">
+<div class="dashboard-container">
+  <!-- Main Content -->
+  <div class="content-area">
+      <div class="notification bg-transparent">
+        <h2 class="has-text-weight-bold"><i class="fas fa-user"></i> Welcome, <%= current_user.username %>!</h2>
+      </div>
+      <!-- Account Information Section -->
+      <div class="dashboard-section">
+        <div class="box bg-transparent has-text-white">
+          <h3 class="title is-5"><i class="fas fa-user-circle"></i> Account Information</h3>
+          <ul class="content">
+            <li><strong>Username:</strong> <%= current_user.username %></li>
+            <li><strong>Email:</strong> <%= current_user.email %></li>
+            <li><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %d, %Y") %></li>
+          </ul>
+
+
+<%= form_with model: @user, url: admin_profile_update_path, method: :patch, local: true, html: { multipart: true } do |f| %>
+
+
+  <div class="field">
+    <%= f.label :avatar, "Upload Profile Picture" %><br>
+    <%= f.file_field :avatar %>
+
+    <% if @user.avatar.attached? %>
+  <div style="margin-top: 10px;">
+    <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [150, 150])) + "?v=#{@user.avatar.blob.checksum}" %>
+  </div>
+<% else %>
+  <p>No avatar attached.</p>
+<% end %>
+
+  </div>
+
+  <%= f.submit "Save", class: "button is-primary" %>
+<% end %>
+
+
         </div>
       </div>
-    </div>
+      <!-- Quick Actions -->
+      <div class="buttons is-centered mt-4">
+        <%= link_to "Account Setting", edit_user_registration_path, class: "button is-rounded bg-transparent" %>
+        <%= link_to "Return to Home", root_path, class: "button is-rounded bg-transparent" %>
+      </div>
+  </div>
 </div>
+</div>
+<style>
+  .dashboard-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .content-area {
+    padding: 1rem;
+  }
+  .dashboard-section {
+    margin-bottom: 1.5rem;
+  }
+  .buttons.is-centered {
+    justify-content: center;
+  }
+</style>

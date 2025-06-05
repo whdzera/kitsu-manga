@@ -25,7 +25,9 @@ Rails.application.routes.draw do
 
   # Admin area
   namespace :admin do
-    get "dashboard", to: "dashboard#index"
+    get "account", to: "dashboard#index"
+    patch "profile", to: "dashboard#update", as: :profile_update
+    get "usermanagement", to: "dashboard#users_manag"
     get "reports", to: "dashboard#reports", as: "reports"
     get "users/:id/edit", to: "dashboard#edit_user", as: "edit_user"
     patch "users/:id", to: "dashboard#update_user", as: "update_user"
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
   namespace :member do
     get "dashboard", to: "dashboard#index"
     get "dashboard/bookmarks", to: "dashboard#bookmarks"
+    patch "profile", to: "dashboard#update", as: :profile_update
   end
 
   # Search

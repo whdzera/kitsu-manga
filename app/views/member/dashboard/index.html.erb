@@ -1,4 +1,4 @@
-<div class="container is-fluid"></div>
+<div class="container is-fluid">
 <div class="dashboard-container">
   <!-- Main Content -->
   <div class="content-area">
@@ -14,6 +14,29 @@
             <li><strong>Email:</strong> <%= current_user.email %></li>
             <li><strong>Member since:</strong> <%= current_user.created_at.strftime("%B %d, %Y") %></li>
           </ul>
+
+
+<%= form_with model: @user, url: member_profile_update_path, method: :patch, local: true, html: { multipart: true } do |f| %>
+
+
+  <div class="field">
+    <%= f.label :avatar, "Upload Profile Picture" %><br>
+    <%= f.file_field :avatar %>
+
+    <% if @user.avatar.attached? %>
+  <div style="margin-top: 10px;">
+    <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [150, 150])) + "?v=#{@user.avatar.blob.checksum}" %>
+  </div>
+<% else %>
+  <p>No avatar attached.</p>
+<% end %>
+
+  </div>
+
+  <%= f.submit "Save", class: "button is-primary" %>
+<% end %>
+
+
         </div>
       </div>
       <!-- Quick Actions -->

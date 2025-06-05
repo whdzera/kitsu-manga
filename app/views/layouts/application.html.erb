@@ -73,13 +73,14 @@
           <% if user_signed_in? %>
             <div class="navbar-item has-dropdown is-hoverable">
               <%= link_to user_profile_path(current_user.username), class: "navbar-item", style: "margin-left: 16px;" do %>
-                <span class="icon">
-                  <i class="fa fa-user-circle fa-2x" style="margin-right: 16px;"></i>
-                </span>
+                <% if current_user.avatar.attached? %>
+                  <%= image_tag current_user.avatar.variant(resize_to_fill: [32, 32]), style: "width: 32px; height: 32px; border-radius: 50%; object-fit: cover;" %>
+                <% else %>
+                  <i class="fa fa-user-circle fa-2x"></i>
+                <% end %>
                 <strong><%= current_user.username %></strong>
               <% end %>
               <div class="navbar-dropdown bg-full-transparent">
-                
                 <% if current_user.member? %>
                   <a class="navbar-item" href="<%= member_dashboard_path %>">
                     <span class="icon">
@@ -89,7 +90,13 @@
                   </a>
                 <% end %>
                 <% if current_user.admin? %>
-                  <a class="navbar-item" href="<%= admin_dashboard_path %>">
+                  <a class="navbar-item" href="<%= admin_account_path %>">
+                    <span class="icon">
+                      <i class="fas fa-user"></i>
+                    </span>
+                    <strong>account</strong>
+                  </a>
+                  <a class="navbar-item" href="<%= admin_usermanagement_path %>">
                     <span class="icon">
                       <i class="fas fa-tools"></i>
                     </span>

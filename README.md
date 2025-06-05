@@ -33,6 +33,7 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 
 - Ruby (3.3.0)
 - Rails (8.0.1)
+- ImageMagick (6.9.11)
 
 ### Setup
 
