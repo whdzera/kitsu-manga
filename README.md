@@ -50,7 +50,7 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
    ```
 3. Setup the database:
    ```sh
-   rails db:migrate
+   rails db:setup
    ```
 4. Start the Rails server:
    ```sh
