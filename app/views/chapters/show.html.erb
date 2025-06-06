@@ -58,7 +58,6 @@
   <div class="box bg-transparent">
     <h2 class="title is-4 mb-4">Comments</h2>
     <% if user_signed_in? %>
-      <%= turbo_frame_tag "comment_form" do %>
         <%= form_with(
             url: manga_chapter_comments_path(@manga, chapter_number: @chapter.chapter_number),
             scope: :comment,
@@ -78,30 +77,32 @@
                 action: "confirm#confirm",
                 confirm_title_value: "Comment?",
                 confirm_message_value: "Are you sure comment it?",
-                confirm_confirm_text_value: "Yes, Comment it!"
+                confirm_confirm_text_value: "Yes, Comment it!",
+                confirm_button_color_value: "#171515"
               } %>
             </div>
           </div>
-        <% end %>
       <% end %>
     <% else %>
       <p class="has-text-grey-light"><em>Please login or Regist Account to post a comment.</em></p>
-    <% end %><%= turbo_frame_tag "comments_list" do %>
+    <% end %>
       <% @chapter.comments.order(created_at: :desc).each do |comment| %>
         <div class="box bg-transparent" id="<%= dom_id(comment) %>">
           <div class="level">
             <div class="level-left is-align-items-center">
               <% if comment.user.avatar.attached? %>
-                <%= image_tag comment.user.avatar.variant(resize_to_fill: [64, 64]),
-    class: "image is-64x64 mr-3",
-    style: "border-radius: 50%; object-fit: cover;" %>
+                <%= link_to user_profile_path(comment.user.username), data: { turbo: false } do %>
+                <%= image_tag comment.user.avatar.variant(resize_to_fill: [64, 64]), class: "image is-64x64 mr-3", style: "border-radius: 50%; object-fit: cover;" %>
+                <% end %>
               <% else %>
                 <span class="icon is-large mr-3 has-text-grey-light">
-                  <i class="fas fa-user-circle fa-3x"></i>
+                <%= link_to user_profile_path(comment.user.username), data: { turbo: false } do %>
+                  <i class="fas fa-user-circle fa-4x"></i>
+                <% end %>
                 </span>
               <% end %>
               <div>
-                <strong><%= comment.user.username %></strong><br>
+                <strong><%= link_to comment.user.username, user_profile_path(comment.user.username), data: { turbo: false } %></strong><br>
                 <small class="has-text-grey is-size-7"><%= time_ago_in_words(comment.created_at) %> ago</small>
               </div>
             </div>
@@ -124,10 +125,9 @@
               </div>
             <% end %>
           </div>
-          <p class="mt-2"><%= sanitize(comment.body, tags: [], attributes: []) %></p>
+          <p class="mt-2"><%= sanitize(comment.body, tags: [], attributes: []).gsub("\n", "<br>").html_safe %></p>
         </div>
       <% end %>
-    <% end %>
   </div>
 </div>
 <style>

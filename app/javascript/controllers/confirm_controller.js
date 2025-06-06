@@ -6,7 +6,8 @@ export default class extends Controller {
     message: String,
     title: String,
     icon: String,
-    confirmText: String
+    confirmText: String,
+    buttonColor: String
   }
 
   confirm(event) {
@@ -19,7 +20,7 @@ export default class extends Controller {
       background: "rgba(0, 0, 0, 0.36)",       
       color: "#ffffff",     
       showCancelButton: true,
-      confirmButtonColor: "#e3342f",
+      confirmButtonColor: this.hasButtonColorValue ? this.buttonColorValue : "#e3342f",
       cancelButtonColor: "#6c757d",
       confirmButtonText: this.confirmTextValue || "Yes, continue!",
       cancelButtonText: "Cancel"

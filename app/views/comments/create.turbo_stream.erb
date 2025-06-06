@@ -1,2 +1,0 @@
-<%= turbo_stream.replace "comments_list", partial: "comments/comments", locals: { comments: @chapter.comments } %>
-<%= turbo_stream.replace "comment_form", partial: "comments/form", locals: { manga: @manga, chapter: @chapter, comment: Comment.new } %>

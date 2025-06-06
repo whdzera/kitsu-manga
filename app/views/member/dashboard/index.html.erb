@@ -29,11 +29,18 @@
             <div class="field">
               <%= f.label :about, "About Me" %>
               <div class="control">
-                <%= f.text_area :about, rows: 4, class: "textarea", placeholder: "Write something about yourself..." %>
+                <%= f.text_area :about, rows: 4, class: "textarea bg-full-transparent", placeholder: "Write something about yourself..." %>
                 <p class="help ml-3">Maximum 500 characters.</p>
               </div>
             </div>
-            <%= f.submit "Save", class: "button bg-transparent mt-2" %>
+            <%= f.submit "Save", class: "button bg-transparent mt-2", data: {
+              controller: "confirm",
+              action: "confirm#confirm",
+              confirm_title_value: "Save?",
+              confirm_message_value: "Are you sure want to saved?",
+              confirm_confirm_text_value: "Yes, saved it!",
+              confirm_button_color_value: "#171515"
+            } %>
           <% end %>
         </div>
       </div>

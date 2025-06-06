@@ -11,7 +11,7 @@
       </div>
       <article id="announcement-box" class="message">
         <div class="message-header bg-full-transparent">
-          <span id="announcement-text"><%= @announcement&.content %></span>
+          <span id="announcement-text"><%= simple_format(@announcement&.content) %></span>
         </div>
       </article>
       <% if current_user&.admin? %>
@@ -19,12 +19,12 @@
           <%= form_with(model: @announcement, url: update_announcement_path, method: :patch) do |f| %>
             <div class="field">
               <div class="control">
-                <%= f.text_area :content, rows: 5, class: "textarea" %>
+                <%= f.text_area :content, rows: 5, class: "textarea bg-full-transparent" %>
               </div>
             </div>
             <div class="field">
               <div class="control">
-                <%= f.submit "Update", class: "button is-centered" %>
+                <%= f.submit "Update", class: "button ml-2 bg-transparent" %>
               </div>
             </div>
           <% end %>
