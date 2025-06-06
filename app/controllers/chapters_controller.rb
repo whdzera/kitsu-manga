@@ -34,8 +34,6 @@ class ChaptersController < ApplicationController
         .where("chapter_number > ?", @chapter.chapter_number)
         .order(:chapter_number)
         .first
-
-    @comments = @chapter.comments.includes(:user).order(created_at: :asc)
   end
 
   def new

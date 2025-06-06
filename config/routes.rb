@@ -73,8 +73,11 @@ Rails.application.routes.draw do
            as: "delete_chapter"
 
     # comments
-    resources :chapters, param: :chapter_number, only: [] do
-      resources :comments, only: [:create]
-    end
+    post "chapter-:chapter_number/comments",
+         to: "comments#create",
+         as: "chapter_comments"
+    delete "chapter-:chapter_number/comments/:id",
+           to: "comments#destroy",
+           as: "chapter_comment"
   end
 end
