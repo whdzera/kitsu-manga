@@ -1,29 +1,12 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  title: MyString
-  alternative_title: MyString
-  image_cover: MyString
-  status: MyString
-  type: 
-  series: MyString
-  author: MyString
-  rating: 1.5
-  created_date: 2025-03-15
-  genre: MyString
-  chapter: 1
-  image: MyString
-
-two:
-  title: MyString
-  alternative_title: MyString
-  image_cover: MyString
-  status: MyString
-  type: 
-  series: MyString
-  author: MyString
-  rating: 1.5
-  created_date: 2025-03-15
-  genre: MyString
-  chapter: 1
-  image: MyString
+  title: "Example Title"
+  alternative_title: "Alt Title"
+  image_cover: "example.jpg"
+  status: "ongoing"
+  manga_type: "manga"
+  series: "series name"
+  author: "author name"
+  rating: 4.5
+  created_date: 2024-01-01
+  genre: "Action, Adventure"
+  synopsis: "Some synopsis here."
