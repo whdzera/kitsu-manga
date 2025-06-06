@@ -58,6 +58,90 @@
       </div>
     <% end %>
   </div>
+<div class="box bg-transparent">
+  <h2 class="title is-5 mb-2">Comments about <%= @user.username %>'s</h2>
+
+  <% if user_signed_in? %>
+    <%= turbo_frame_tag "comment_form" do %>
+      <%= form_with(
+          model: ProfileComment.new,
+          url: profile_comments_path,
+          local: false,
+          html: { class: "box bg-transparent mb-4" }
+        ) do |f| %>
+        <%= f.hidden_field :profile_user_id, value: @profile.id %>
+
+        <div class="field">
+          <%= f.label :body, "Write a comment:", class: "label" %>
+          <div class="control">
+            <%= f.text_area :body, rows: 4, class: "textarea bg-full-transparent", placeholder: "Your comment here..." %>
+          </div>
+        </div>
+
+        <div class="field mt-3">
+          <div class="control">
+            <%= f.submit "Post Comment", class: "button bg-transparent is-fullwidth", data: {
+              controller: "confirm",
+              action: "confirm#confirm",
+              confirm_title_value: "Comment?",
+              confirm_message_value: "Are you sure want to post this comment?",
+              confirm_confirm_text_value: "Yes, post it!"
+            } %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p class="has-text-grey-light"><em>Please login or register an account to post a comment.</em></p>
+  <% end %>
+
+  <%= turbo_frame_tag "comments_list" do %>
+    <% @profile_comments.order(created_at: :desc).each do |comment| %>
+      <div class="box bg-transparent" id="<%= dom_id(comment) %>">
+        <div class="level">
+          <div class="level-left is-align-items-center">
+            <% if comment.user.avatar.attached? %>
+              <%= image_tag comment.user.avatar.variant(resize_to_fill: [64, 64]),
+                            class: "image is-64x64 mr-3",
+                            style: "border-radius: 50%; object-fit: cover;" %>
+            <% else %>
+              <span class="icon is-large mr-3 has-text-grey-light">
+                <i class="fas fa-user-circle fa-3x"></i>
+              </span>
+            <% end %>
+            <div>
+              <strong><%= comment.user.username %></strong><br>
+              <small class="has-text-grey is-size-7"><%= time_ago_in_words(comment.created_at) %> ago</small>
+            </div>
+          </div>
+
+          <% if comment.user == current_user || (current_user && current_user.admin?) %>
+            <div class="level-right">
+              <%= button_to profile_comment_path(comment),
+                    method: :delete,
+                    data: {
+                      turbo_confirm: "Are you sure you want to delete this comment?",
+                      controller: "confirm",
+                      action: "confirm#confirm",
+                      confirm_title_value: "Delete Comment?",
+                      confirm_message_value: "This will permanently remove the comment.",
+                      confirm_confirm_text_value: "Yes, delete it!"
+                    },
+                    class: "button is-small bg-transparent",
+                    form: { data: { turbo: true } } do %>
+                Delete
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <p class="mt-2"><%= sanitize(comment.body, tags: [], attributes: []) %></p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+
 </div>
 <style>
   .page-header {

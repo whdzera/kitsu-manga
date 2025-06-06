@@ -2,6 +2,9 @@ class User < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :bookmarked_mangas, through: :bookmarks, source: :manga
   has_many :comments, dependent: :destroy
+  has_many :profile_comments,
+           foreign_key: "profile_user_id",
+           dependent: :destroy
   has_one_attached :avatar
 
   # Include default devise modules

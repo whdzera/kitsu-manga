@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   # user profile
   get "/u/:username", to: "profiles#show", as: :user_profile
+  resources :profile_comments, only: %i[create destroy]
 
   # Admin area
   namespace :admin do

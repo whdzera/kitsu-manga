@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_05_105824) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_06_105428) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -95,6 +95,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_105824) do
     t.text "synopsis"
   end
 
+  create_table "profile_comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "profile_user_id", null: false
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_user_id"], name: "index_profile_comments_on_profile_user_id"
+    t.index ["user_id"], name: "index_profile_comments_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -123,4 +133,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_05_105824) do
   add_foreign_key "chapters", "mangas"
   add_foreign_key "comments", "chapters"
   add_foreign_key "comments", "users"
+  add_foreign_key "profile_comments", "users"
+  add_foreign_key "profile_comments", "users", column: "profile_user_id"
 end

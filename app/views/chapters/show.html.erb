@@ -91,7 +91,6 @@
         <div class="box bg-transparent" id="<%= dom_id(comment) %>">
           <div class="level">
             <div class="level-left is-align-items-center">
-              <%# Avatar %>
               <% if comment.user.avatar.attached? %>
                 <%= image_tag comment.user.avatar.variant(resize_to_fill: [64, 64]),
     class: "image is-64x64 mr-3",
@@ -101,7 +100,6 @@
                   <i class="fas fa-user-circle fa-3x"></i>
                 </span>
               <% end %>
-              <%# Username dan waktu %>
               <div>
                 <strong><%= comment.user.username %></strong><br>
                 <small class="has-text-grey is-size-7"><%= time_ago_in_words(comment.created_at) %> ago</small>
