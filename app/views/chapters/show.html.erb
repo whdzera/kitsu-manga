@@ -126,7 +126,7 @@
               </div>
             <% end %>
           </div>
-          <p class="mt-2"><%= comment.body %></p>
+          <p class="mt-2"><%= sanitize(comment.body, tags: [], attributes: []) %></p>
         </div>
       <% end %>
     <% end %>
