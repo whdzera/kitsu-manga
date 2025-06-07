@@ -1,10 +1,12 @@
+@use "bulma"; 
+
 .turbo-progress-bar {
   background-color: #c4bebe7a !important;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 2%;
+  height: 25px;
 }
 
 ::-webkit-scrollbar-thumb {

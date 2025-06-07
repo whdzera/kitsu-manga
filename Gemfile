@@ -8,6 +8,7 @@ gem "puma", "6.6.0"
 gem "importmap-rails", "2.1.0"
 gem "turbo-rails", "2.0.13"
 gem "stimulus-rails", "1.3.4"
+gem "bulma-rails", "1.0.3"
 gem "jbuilder", "2.13.0"
 gem "devise", "4.9.4"
 gem "kaminari", "1.2.2"
@@ -28,3 +29,5 @@ group :development, :test do
   gem "debug", "1.9.1", platforms: %i[mri windows], require: "debug/prelude"
   gem "brakeman", "7.0.0", require: false
 end
+
+gem "dartsass-rails", "~> 0.5.1"

@@ -36,3 +36,5 @@
 node_modules
 package-lock.json
 Gemfile.lock
+/app/assets/builds/*
+!/app/assets/builds/.keep
