@@ -18,8 +18,8 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 - Email Confirmation Register with Action Mailer
 - Pagination with Kaminari
 - Role: Admin, Member, Guest
-- Admin dashboard: User manag, reports, etc
-- Profile Users: About, Rencet fav manga,etc
+- Admin dashboard: User and Manga management, reports, etc
+- Profile Users: About, Rencet fav manga, etc
 - Bookmarks Manga System
 - Comments system
 
@@ -41,7 +41,7 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 
 1. Clone this repository:
    ```sh
-   git clone https://github.com/rokhimin/kitsu-manga.git
+   git clone https://github.com/whdzera/kitsu-manga.git
    cd kitsu-manga
    ```
 2. Install dependencies:
@@ -68,7 +68,7 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 
 ## Gists
 
-- [Automation increase chapter in kitsumanga](https://gist.github.com/rokhimin/b99aa5c9d2d779a52ae4e2fc9b132e99)
+- [Automation increase chapter in kitsumanga](https://gist.github.com/whdzera/b99aa5c9d2d779a52ae4e2fc9b132e99)
 
 ## License
 
