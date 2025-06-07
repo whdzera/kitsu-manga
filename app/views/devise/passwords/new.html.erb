@@ -1,37 +1,30 @@
-<div class="box bg-full-transparent">
-  <h2 class="title has-text-white has-text-centered">
-    <i class="fas fa-key"></i> Forgot Password?
-  </h2>
-
-  <div class="columns is-centered">
-    <div class="column is-one-third">
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "box bg-transparent" }) do |f| %>
-        <%= render "devise/shared/error_messages", resource: resource %>
-        <br>
-
-        <div class="field">
-          <div class="control has-icons-left">
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input is-rounded bg-full-transparent", placeholder: "Enter your email" %>
-            <span class="icon is-small is-left">
-              <i class="fa fa-envelope"></i>
-            </span>
-          </div>
+<h2 class="title has-text-white has-text-centered mt-4">
+  <i class="fas fa-key"></i> Forgot Password?
+</h2>
+<div class="columns is-centered">
+  <div class="column is-one-third">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "box bg-transparent" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <br>
+      <div class="field">
+        <div class="control has-icons-left">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input bg-full-transparent", placeholder: "Enter your email" %>
+          <span class="icon is-small is-left">
+            <i class="fa fa-envelope"></i>
+          </span>
         </div>
-
-        <div class="field">
-          <div class="control">
-            <%= f.submit "Send Reset Instructions", class: "button is-fullwidth is-rounded" %>
-          </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <%= f.submit "Send Reset Instructions", class: "button is-fullwidth bg-transparent" %>
         </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div class="field">
-    <div class="has-text-centered mt-3">
-      <a href="/users/sign_in">Login</a><br>
-      <a href="/users/sign_up">Registration</a>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
-
+<div class="field">
+  <div class="has-text-centered mt-3">
+    <%= link_to "Login", "/users/sign_in", class: "button bg-transparent is-small" %>
+    <%= link_to "Registration", "/users/sign_up", class: "button bg-transparent is-small" %>
+  </div>
+</div>

@@ -1,19 +1,22 @@
 <div class="container mb-5 mt-5">
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <div class="box bg-transparent">
-          <div class="manga-form">
-            <%= form_with url: manga_chapter_create_path(@manga.title), method: :post, local: true do |f| %>
-              <div class="field">
-                <%= f.label :chapter_number, "Number Chapter" %>
-                <%= f.number_field :chapter_number, name: "chapter[chapter_number]", value: @chapter.chapter_number, class: "input bg-transparent" %>
-              </div>
-              <div class="field">
-                <%= f.label :images, "URL Images Chapter" %>
-                <%= f.text_area :images, name: "chapter[images]", class: "textarea bg-transparent", rows: 10 %>
-              </div>
-              <div class="field">
-                <%= f.submit "Added Chapter", class: "button bg-transparent", data: {
+  <h2 class="title has-text-white has-text-centered">
+    <i class="fa-solid fa-book"></i> Create New Chapter for Manga <%= @manga.title %>
+  </h2>
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="box bg-transparent">
+        <div class="manga-form">
+          <%= form_with url: manga_chapter_create_path(@manga.title), method: :post, local: true do |f| %>
+            <div class="field">
+              <%= f.label :chapter_number, "Number Chapter", class: "label has-text-white" %>
+              <%= f.number_field :chapter_number, name: "chapter[chapter_number]", value: @chapter.chapter_number, class: "input bg-full-transparent" %>
+            </div>
+            <div class="field">
+              <%= f.label :images, "URL Images Chapter", class: "label has-text-white" %>
+              <%= f.text_area :images, name: "chapter[images]", class: "textarea bg-full-transparent", rows: 10 %>
+            </div>
+            <div class="field has-text-right">
+              <%= f.submit "Added Chapter", class: "button bg-transparent", data: {
                 controller: "confirm",
                 action: "confirm#confirm",
                 confirm_title_value: "Added?",
@@ -21,11 +24,11 @@
                 confirm_confirm_text_value: "Yes, Added it!",
                 confirm_button_color_value: "#171515"
               } %>
-              </div>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
-          <%= link_to "Back to Manga", @manga, class: "button bg-tansparent" %>
       </div>
+      <%= link_to "Back to Manga", @manga, class: "button bg-tansparent" %>
     </div>
+  </div>
 </div>

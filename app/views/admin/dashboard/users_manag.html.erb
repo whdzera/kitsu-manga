@@ -1,86 +1,86 @@
 <div class="container mb-5 mt-5">
-    <div data-controller="user-management">
-      <div class="box bg-transparent has-text-white">
-        <h3 class="title is-5"><i class="fas fa-users"></i> Users Management</h3>
-        <div class="field is-grouped mb-4">
-          <div class="control">
-            <div class="select is-small">
-              <select id="filtered-users"
+  <div data-controller="user-management">
+    <div class="box bg-transparent has-text-white">
+      <h3 class="title is-5"><i class="fas fa-users"></i> Users Management</h3>
+      <div class="field is-grouped mb-4">
+        <div class="control">
+          <div class="select is-small">
+            <select id="filtered-users"
                   data-user-management-target="filter" 
                   data-action="change->user-management#filterRole">
-                <option value="">Filter by Role</option>
-                <option value="admin">Admin</option>
-                <option value="member">Member</option>
-              </select>
-            </div>
+              <option value="">Filter by Role</option>
+              <option value="admin">Admin</option>
+              <option value="member">Member</option>
+            </select>
           </div>
-          <div class="control is-expanded">
-            <input id="search_users"
+        </div>
+        <div class="control is-expanded">
+          <input id="search_users"
                class="input is-small bg-full-transparent" 
                type="text" 
                placeholder="Search users..." 
                data-user-management-target="search" 
                data-action="input->user-management#search">
-          </div>
         </div>
-        <div class="table-container">
-          <table class="table is-fullwidth bg-full-transparent" data-user-management-target="table">
-            <thead>
+      </div>
+      <div class="table-container">
+        <table class="table is-fullwidth bg-full-transparent" data-user-management-target="table">
+          <thead>
+            <tr>
+              <th><i class="fas fa-user"></i> Username</th>
+              <th><i class="fas fa-envelope"></i> Email</th>
+              <th><i class="fas fa-user-tag"></i> Role</th>
+              <th><i class="fas fa-calendar"></i> Joined</th>
+              <th><i class="fas fa-cogs"></i> Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.first(10).each do |user| %>
               <tr>
-                <th><i class="fas fa-user"></i> Username</th>
-                <th><i class="fas fa-envelope"></i> Email</th>
-                <th><i class="fas fa-user-tag"></i> Role</th>
-                <th><i class="fas fa-calendar"></i> Joined</th>
-                <th><i class="fas fa-cogs"></i> Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @users.first(10).each do |user| %>
-                <tr>
-                  <td><%= user.username %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.role.capitalize %></td>
-                  <td><%= user.created_at.strftime("%b %d, %Y") %></td>
-                  <td class="has-text-centered">
-                    <div class="buttons is-flex">
-                      <%= link_to admin_edit_user_path(user), class: "button is-small bg-transparent" do %>
-                        <i class="fas fa-edit"></i>
-                      <% end %>
-                      <% if user != current_user %>
-                        <%= button_to admin_delete_user_path(user), method: :delete, data: {
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.role.capitalize %></td>
+                <td><%= user.created_at.strftime("%b %d, %Y") %></td>
+                <td class="has-text-centered">
+                  <div class="buttons is-flex">
+                    <%= link_to admin_edit_user_path(user), class: "button is-small bg-transparent" do %>
+                      <i class="fas fa-edit"></i>
+                    <% end %>
+                    <% if user != current_user %>
+                      <%= button_to admin_delete_user_path(user), method: :delete, data: {
                 controller: "confirm",
                 action: "confirm#confirm",
-                confirm_title_value: "Delete Record?",
+                confirm_title_value: "Delete User?",
                 confirm_message_value: "This will permanently remove the users.",
                 confirm_confirm_text_value: "Yes, delete it!"
               },
                         class: "button is-small is-danger is-outlined", 
                         form: { style: 'display: inline-block;' } do %>
-                          <i class="fas fa-trash"></i>
-                        <% end %>
-                      <% else %>
-                        <span class="tag is-info is-light">Current</span>
+                        <i class="fas fa-trash"></i>
                       <% end %>
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-          <% if @users.count > 10 %>
-            <div class="has-text-centered my-3">
-              <button class="button bg-transparant is-small"
+                    <% else %>
+                      <span class="tag is-info is-light">Current</span>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% if @users.count > 10 %>
+          <div class="has-text-centered my-3">
+            <button class="button bg-transparant is-small"
                   data-user-management-target="loadMore"
                   data-action="click->user-management#loadMore"
-                data-page="1" 
-                data-total="<%= @users.count %>"
-                data-path="<%= admin_usermanagement_path %>"
-                data-current-user-id="<%= current_user.id %>">
-                Load More
-              </button>
-            </div>
-          <% end %>
-        </div>
+              data-page="1" 
+              data-total="<%= @users.count %>"
+              data-path="<%= admin_usermanagement_path %>"
+              data-current-user-id="<%= current_user.id %>">
+              Load More
+            </button>
+          </div>
+        <% end %>
       </div>
     </div>
+  </div>
 </div>

@@ -1,17 +1,21 @@
 <div class="container mb-5 mt-5">
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <div class="box bg-transparent">
-          <div class="manga-form">
-            <%= form_with model: [@manga, @chapter], url: manga_chapter_path(@manga.title, @chapter.chapter_number), method: :patch, local: true do |f| %>
-              <div class="field">
-                <%= f.label :chapter_number %>
-                <%= f.number_field :chapter_number, value: @chapter.chapter_number, class: "input bg-transparent"  %>
-              </div>
-              <div class="field">
-                <%= f.label :images, "Chapter Images URL" %>
-                <%= f.text_area :images, value: @chapter.images, class: "textarea bg-transparent", rows: 10 %>
-              </div>
+  <h2 class="title has-text-white has-text-centered">
+    <i class="fa-solid fa-book"></i> Edit Chapter Manga <%= @manga.title %>
+  </h2>
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="box bg-transparent">
+        <div class="manga-form">
+          <%= form_with model: [@manga, @chapter], url: manga_chapter_path(@manga.title, @chapter.chapter_number), method: :patch, local: true do |f| %>
+            <div class="field">
+              <%= f.label :chapter_number, class: "label has-text-white" %>
+              <%= f.number_field :chapter_number, value: @chapter.chapter_number, class: "input bg-full-transparent"  %>
+            </div>
+            <div class="field">
+              <%= f.label :images, "Chapter Images URL", class: "label has-text-white" %>
+              <%= f.text_area :images, value: @chapter.images, class: "textarea bg-full-transparent", rows: 10 %>
+            </div>
+            <div class="field has-text-right">
               <%= f.submit "Update Chapter", class: "button bg-transparent", data: {
                 controller: "confirm",
                 action: "confirm#confirm",
@@ -20,10 +24,11 @@
                 confirm_confirm_text_value: "Yes, update it!",
                 confirm_button_color_value: "#171515"
               } %>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
-          <%= link_to "Back to Manga", manga_chapter_path(@manga.title, @chapter.chapter_number), class: "button bg-tansparent" %>
       </div>
+      <%= link_to "Back to Manga", manga_chapter_path(@manga.title, @chapter.chapter_number), class: "button bg-tansparent" %>
     </div>
+  </div>
 </div>

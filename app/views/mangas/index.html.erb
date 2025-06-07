@@ -22,8 +22,8 @@
               <p class="manga-info"><strong>Status:</strong> <%= manga.status %></p>
               <div class="manga-actions">
                 <% if current_user&.admin? %>
-                  <%= link_to "Edit", edit_manga_path(manga.title), class: "button is-small"  %>
-                  <%= button_to "Delete", manga, method: :delete, class: "button is-small", data: {
+                  <%= link_to "Edit", edit_manga_path(manga.title), class: "button bg-transparent is-small"  %>
+                  <%= button_to "Delete", manga, method: :delete, class: "button bg-transparent is-small", data: {
                 controller: "confirm",
                 action: "confirm#confirm",
                 confirm_title_value: "Delete?",

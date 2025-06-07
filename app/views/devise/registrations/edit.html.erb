@@ -1,70 +1,70 @@
 <div class="container mt-5 mb-5">
-    <h1 class="title has-text-centered has-text-white">
-      <i class="fas fa-user-edit"></i> Edit <%= resource_name.to_s.humanize %>
-    </h1>
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "box bg-transparent" }) do |f| %>
-          <%= render "devise/shared/error_messages", resource: resource %>
-          <!-- Email -->
-          <div class="field">
-            <label class="label has-text-white"><i class="fas fa-envelope"></i> Email</label>
-            <div class="control has-icons-left">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input bg-full-transparent is-rounded" %>
-              <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
-            </div>
+  <h1 class="title has-text-centered has-text-white">
+    <i class="fas fa-user-edit"></i> Edit <%= resource_name.to_s.humanize %>
+  </h1>
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "box bg-transparent" }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <!-- Email -->
+        <div class="field">
+          <label class="label has-text-white"><i class="fas fa-envelope"></i> Email</label>
+          <div class="control has-icons-left">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input bg-full-transparent" %>
+            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
           </div>
-          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <div class="notification is-warning">
-              <i class="fas fa-info-circle"></i> Currently waiting confirmation for: <strong><%= resource.unconfirmed_email %></strong>
-            </div>
+        </div>
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div class="notification is-warning">
+            <i class="fas fa-info-circle"></i> Currently waiting confirmation for: <strong><%= resource.unconfirmed_email %></strong>
+          </div>
+        <% end %>
+        <!-- Password -->
+        <div class="field" data-controller="toggle-password">
+          <label class="label has-text-white">
+            <i class="fas fa-lock"></i> Password 
+            <small>(leave blank if you don't want to change it)</small>
+          </label>
+          <div class="control has-icons-left has-icons-right">
+            <%= f.password_field :password, autocomplete: "new-password", class: "input bg-full-transparent", data: { toggle_password_target: "password" } %>
+            <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+            <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
+              <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
+            </span>
+          </div>
+          <% if @minimum_password_length %>
+            <p class="help has-text-grey-light"><i class="fas fa-info-circle"></i> Minimum <%= @minimum_password_length %> characters</p>
           <% end %>
-          <!-- Password -->
-          <div class="field" data-controller="toggle-password">
-            <label class="label has-text-white">
-              <i class="fas fa-lock"></i> Password 
-              <small>(leave blank if you don't want to change it)</small>
-            </label>
-            <div class="control has-icons-left has-icons-right">
-              <%= f.password_field :password, autocomplete: "new-password", class: "input bg-full-transparent is-rounded", data: { toggle_password_target: "password" } %>
-              <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
-              <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
-                <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
-              </span>
-            </div>
-            <% if @minimum_password_length %>
-              <p class="help has-text-grey-light"><i class="fas fa-info-circle"></i> Minimum <%= @minimum_password_length %> characters</p>
-            <% end %>
+        </div>
+        <!-- Password Confirmation -->
+        <div class="field" data-controller="toggle-password">
+          <label class="label has-text-white"><i class="fas fa-key"></i> Confirm Password</label>
+          <div class="control has-icons-left has-icons-right">
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input bg-full-transparent", data: { toggle_password_target: "password" } %>
+            <span class="icon is-small is-left"><i class="fas fa-key"></i></span>
+            <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
+              <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
+            </span>
           </div>
-          <!-- Password Confirmation -->
-          <div class="field" data-controller="toggle-password">
-            <label class="label has-text-white"><i class="fas fa-key"></i> Confirm Password</label>
-            <div class="control has-icons-left has-icons-right">
-              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input bg-full-transparent is-rounded", data: { toggle_password_target: "password" } %>
-              <span class="icon is-small is-left"><i class="fas fa-key"></i></span>
-              <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
-                <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
-              </span>
-            </div>
+        </div>
+        <!-- Current Password -->
+        <div class="field" data-controller="toggle-password">
+          <label class="label has-text-white">
+            <i class="fas fa-lock"></i> Current Password 
+            <small>(we need this to confirm your changes)</small>
+          </label>
+          <div class="control has-icons-left has-icons-right">
+            <%= f.password_field :current_password, autocomplete: "current-password", class: "input bg-full-transparent", data: { toggle_password_target: "password" } %>
+            <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+            <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
+              <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
+            </span>
           </div>
-          <!-- Current Password -->
-          <div class="field" data-controller="toggle-password">
-            <label class="label has-text-white">
-              <i class="fas fa-lock"></i> Current Password 
-              <small>(we need this to confirm your changes)</small>
-            </label>
-            <div class="control has-icons-left has-icons-right">
-              <%= f.password_field :current_password, autocomplete: "current-password", class: "input bg-full-transparent is-rounded", data: { toggle_password_target: "password" } %>
-              <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
-              <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
-                <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
-              </span>
-            </div>
-          </div>
-          <!-- Update Button -->
-          <div class="field">
-            <div class="control">
-              <%= f.submit "Update", class: "button bg-transparent is-rounded", data: {
+        </div>
+        <!-- Update Button -->
+        <div class="field">
+          <div class="control">
+            <%= f.submit "Update", class: "button bg-transparent ", data: {
                 controller: "confirm",
                 action: "confirm#confirm",
                 confirm_title_value: "Update?",
@@ -72,24 +72,24 @@
                 confirm_confirm_text_value: "Yes, update it!",
                 confirm_button_color_value: "#171515"
               } %>
-            </div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
-    <!-- Cancel Account -->
-    <div class="has-text-centered">
-      <%= button_to "Delete My Account", registration_path(resource_name), method: :delete, class: "button is-danger is-rounded",
+  </div>
+  <!-- Cancel Account -->
+  <div class="has-text-centered">
+    <%= button_to "Delete My Account", registration_path(resource_name), method: :delete, class: "button is-danger",
               data: {
                 controller: "confirm",
                 action: "confirm#confirm",
-                confirm_title_value: "Delete Record?",
-                confirm_message_value: "This will permanently remove the record.",
+                confirm_title_value: "Delete Account?",
+                confirm_message_value: "This will permanently remove the account.",
                 confirm_confirm_text_value: "Yes, delete it!"
               } %>
-    </div>
-    <br>
-    <div class="has-text-centered">
-      <%= link_to "<i class='fas fa-arrow-left'></i> Back".html_safe, :back, class: "button bg-transparent is-rounded" %>
-    </div>
+  </div>
+  <br>
+  <div class="has-text-centered">
+    <%= link_to "<i class='fas fa-arrow-left'></i> Back".html_safe, :back, class: "button bg-transparent" %>
+  </div>
 </div>

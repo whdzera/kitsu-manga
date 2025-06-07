@@ -1,60 +1,58 @@
-<div class="box bg-full-transparent">
-  <h2 class="title has-text-white has-text-centered">
-    <i class="fas fa-sign-in-alt"></i> Log In
-  </h2>
-  <div class="columns is-centered">
-    <div class="column is-one-third">
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "box bg-transparent" }) do |f| %>
-        <% if flash[:alert] %>
-          <div class="notification bg-transparent"><%= flash[:alert] %></div>
-        <% end %>
-        <br>
-        <div class="field">
-          <div class="control has-icons-left has-icons-right">
-            <%= f.text_field :login, autofocus: true, class: "input is-rounded bg-full-transparent", placeholder: "Username" %>
-            <span class="icon is-small is-left">
-              <i class="fas fa-user"></i>
-            </span>
-          </div>
+<h2 class="title has-text-white has-text-centered mt-4">
+  <i class="fas fa-sign-in-alt"></i> Log In
+</h2>
+<div class="columns is-centered">
+  <div class="column is-one-third">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "box bg-transparent" }) do |f| %>
+      <% if flash[:alert] %>
+        <div class="notification bg-transparent"><%= flash[:alert] %></div>
+      <% end %>
+      <br>
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <%= f.text_field :login, autofocus: true, class: "input bg-full-transparent", placeholder: "Username" %>
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
         </div>
-        <div class="field" data-controller="toggle-password">
-          <div class="control has-icons-left has-icons-right">
-            <%= f.password_field :password, 
+      </div>
+      <div class="field" data-controller="toggle-password">
+        <div class="control has-icons-left has-icons-right">
+          <%= f.password_field :password, 
             autocomplete: "current-password", 
-            class: "input is-rounded bg-full-transparent", 
+            class: "input bg-full-transparent", 
             placeholder: "Password", 
             data: { "toggle-password-target" => "password" } %>
-            <span class="icon is-small is-left">
+          <span class="icon is-small is-left">
             <i class="fa fa-lock"></i>
-            </span>
-            <span id="btn_toggle" class="icon is-small is-right" 
+          </span>
+          <span id="btn_toggle" class="icon is-small is-right" 
             style="pointer-events: all; cursor: pointer"
             data-action="click->toggle-password#toggle">
             <i class="fa fa-fw fa-eye field_icon" 
               data-toggle-password-target="icon"></i>
-            </span>
-          </div>
+          </span>
         </div>
-        <% if devise_mapping.rememberable? %>
-          <div class="field">
-            <label class="checkbox has-text-white">
-              <%= f.check_box :remember_me %> Remember me
-            </label>
-          </div>
-        <% end %>
-        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-        <% site_key = Rails.application.credentials.dig(:hcaptcha, :site_key) %>
-        <div class="h-captcha" data-sitekey="<%= site_key %>" data-theme="dark" data-size="compact"></div>
+      </div>
+      <% if devise_mapping.rememberable? %>
         <div class="field">
-          <div class="control">
-            <%= f.submit "Log In", class: "button is-fullwidth is-rounded" %>
-          </div>
+          <label class="checkbox has-text-white">
+            <%= f.check_box :remember_me %> Remember me
+          </label>
         </div>
       <% end %>
-    </div>
+      <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+      <% site_key = Rails.application.credentials.dig(:hcaptcha, :site_key) %>
+      <div class="h-captcha" data-sitekey="<%= site_key %>" data-theme="dark" data-size="compact"></div>
+      <div class="field">
+        <div class="control">
+          <%= f.submit "Log In", class: "button is-fullwidth bg-transparent" %>
+        </div>
+      </div>
+    <% end %>
   </div>
-  <div class="has-text-centered mt-3">
-    <a href="/users/sign_up">Registration</a><br>
-    <a href="/users/password/new">Forgot your password?</a>
-  </div>
+</div>
+<div class="has-text-centered mt-3 mb-3">
+  <%= link_to "Registration", "/users/sign_up", class: "button bg-transparent is-small" %>
+  <%= link_to "Forgot your password?", "/users/password/new", class: "button bg-transparent is-small" %>
 </div>

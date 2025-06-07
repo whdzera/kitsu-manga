@@ -1,69 +1,96 @@
 <div class="container mt-5 mb-5">
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <div class="box bg-transparent">
-          <div class="manga-edit-form">
-            <%= form_with(model: @manga, local: true) do |f| %>
-              <div class="field">
-                <%= f.label :title %>
-                <%= f.text_field :title, class: "input bg-tansparent" %>
+  <h2 class="title has-text-white has-text-centered">
+    <i class="fa-solid fa-book"></i> Edit Manga
+  </h2>
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="box bg-transparent">
+        <div class="manga-edit-form">
+          <%= form_with(model: @manga, local: true) do |f| %>
+            <div class="columns is-multiline">
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :title, class: "label has-text-white" %>
+                  <%= f.text_field :title, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :alternative_title %>
-                <%= f.text_field :alternative_title, class: "input bg-tansparent" %>
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :alternative_title, class: "label has-text-white" %>
+                  <%= f.text_field :alternative_title, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :image_cover, "Image Cover URL" %>
-                <%= f.text_field :image_cover, class: "input bg-tansparent" %>
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :image_cover, "Image Cover URL", class: "label has-text-white" %>
+                  <%= f.text_field :image_cover, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :status %>
-                <%= f.select :status, ["Ongoing", "Completed"], {}, class: "input bg-tansparent" %>
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :status, class: "label has-text-white" %>
+                  <%= f.select :status, ["Ongoing", "Completed"], {}, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :manga_type, "Manga Type" %>
-                <%= f.text_field :manga_type, class: "input bg-tansparent" %>
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :manga_type, "Manga Type", class: "label has-text-white" %>
+                  <%= f.text_field :manga_type, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :series %>
-                <%= f.text_field :series, class: "input bg-tansparent" %>
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :series, class: "label has-text-white" %>
+                  <%= f.text_field :series, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :author %>
-                <%= f.text_field :author, class: "input bg-tansparent" %>
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :author, class: "label has-text-white" %>
+                  <%= f.text_field :author, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :rating %>
-                <%= f.number_field :rating, step: 0.1, class: "input bg-tansparent" %>
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :rating, class: "label has-text-white" %>
+                  <%= f.number_field :rating, step: 0.1, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :created_date %>
-                <%= f.date_field :created_date, class: "input bg-tansparent" %>
+              <div class="column is-half">
+                <div class="field">
+                  <%= f.label :created_date, class: "label has-text-white" %>
+                  <%= f.date_field :created_date, class: "input bg-full-transparent" %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :genre %>
-                <%= f.text_area :genre, placeholder: "Comma separated (e.g., Action, Fantasy)", class: "input bg-tansparent", rows: "4" %>
+              <div class="column is-full">
+                <div class="field">
+                  <%= f.label :genre, class: "label has-text-white" %>
+                  <%= f.text_area :genre, placeholder: "Comma separated (e.g., Action, Fantasy)", class: "textarea bg-full-transparent", rows: 3 %>
+                </div>
               </div>
-              <div class="field">
-                <%= f.label :synopsis %>
-                <%= f.text_area :synopsis, class: "textarea bg-tansparent", rows: "10" %>
+              <div class="column is-full">
+                <div class="field">
+                  <%= f.label :synopsis, class: "label has-text-white" %>
+                  <%= f.text_area :synopsis, class: "textarea bg-full-transparent", rows: 6 %>
+                </div>
               </div>
-              <div class="actions">
-                <%= f.submit "Update Manga", class: "button bg-tansparent", data: {
-                controller: "confirm",
-                action: "confirm#confirm",
-                confirm_title_value: "Update?",
-                confirm_message_value: "Do you want to save the changes?",
-                confirm_confirm_text_value: "Yes, update it!",
-                confirm_button_color_value: "#171515"
-              } %>
+              <div class="column is-full has-text-right">
+                <%= f.submit "Update Manga", class: "button bg-transparent px-5", data: {
+          controller: "confirm",
+          action: "confirm#confirm",
+          confirm_title_value: "Update?",
+          confirm_message_value: "Do you want to save the changes?",
+          confirm_confirm_text_value: "Yes, update it!",
+          confirm_button_color_value: "#171515"
+        } %>
               </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="manga-links">
-          <%= link_to "Back to Manga", @manga, class: "button bg-tansparent" %>
+            </div>
+          <% end %>
         </div>
       </div>
+      <div class="manga-links">
+        <%= link_to "Back to Manga", @manga, class: "button bg-tansparent" %>
+      </div>
     </div>
+  </div>
 </div>
