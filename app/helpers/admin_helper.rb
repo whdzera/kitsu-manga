@@ -11,7 +11,7 @@ module AdminHelper
       end
 
     link_to "#{title} <i class='fas #{icon_class}'></i>".html_safe,
-            sort: column,
-            direction: direction
+            { sort: column, direction: direction },
+            class: "has-text-white"
   end
 end

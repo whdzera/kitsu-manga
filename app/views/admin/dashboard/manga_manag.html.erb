@@ -21,7 +21,7 @@
           <% @mangas.each do |manga| %>
             <tr>
               <td>
-                <%= link_to manga do %>
+                <%= link_to manga, class: "has-text-white" do %>
                   <%= manga.title %>
                 <% end %>
               </td>
