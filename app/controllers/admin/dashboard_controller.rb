@@ -41,6 +41,14 @@ module Admin
       end
     end
 
+    def manga_manag
+      @sort_column =
+        params[:sort].presence_in(Manga.column_names) || "created_at"
+      @sort_direction =
+        params[:direction].in?(%w[asc desc]) ? params[:direction] : "desc"
+      @mangas = Manga.order("#{@sort_column} #{@sort_direction}")
+    end
+
     def reports
       @total_mangas = Manga.count
       @total_users = User.count

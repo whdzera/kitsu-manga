@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     get "account", to: "dashboard#index"
     patch "profile", to: "dashboard#update", as: :profile_update
     get "usermanagement", to: "dashboard#users_manag"
+    get "mangamanagement", to: "dashboard#manga_manag"
     get "reports", to: "dashboard#reports", as: "reports"
     get "users/:id/edit", to: "dashboard#edit_user", as: "edit_user"
     patch "users/:id", to: "dashboard#update_user", as: "update_user"

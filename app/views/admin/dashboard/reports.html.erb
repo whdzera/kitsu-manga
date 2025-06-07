@@ -1,23 +1,23 @@
 <div class="container mb-5 mt-5">
-    <div data-controller="user-management">
-      <div class="box bg-transparent has-text-white">
-        <h3 class="title is-5"><i class="fas fa-chart-bar"></i> Reports</h3>
-        <div class="field is-grouped mb-4">
-          <h2>Total Mangas</h2>
-          <p><%= @total_mangas %></p>
-        </div>
-        <div class="field is-grouped mb-4">
-          <h2>Total Users</h2>
-          <p><%= @total_users %></p>
-        </div>
-        <div class="field is-grouped mb-4">
-          <h2>Users by Role</h2>
-          <ul>
-            <% @users_by_role.each do |role, count| %>
-              <li><%= role.capitalize %>: <%= count %></li>
-            <% end %>
-          </ul>
-        </div>
+  <h1 class="title is-3 has-text-centered"><i class="fas fa-chart-bar"></i> Reports</h1>
+  <div data-controller="user-management">
+    <div class="box bg-transparent has-text-white">
+      <div class="field is-grouped mb-4">
+        <h2>Total Mangas</h2>
+        <p><%= @total_mangas %></p>
+      </div>
+      <div class="field is-grouped mb-4">
+        <h2>Total Users</h2>
+        <p><%= @total_users %></p>
+      </div>
+      <div class="field is-grouped mb-4">
+        <h2>Users by Role</h2>
+        <ul>
+          <% @users_by_role.each do |role, count| %>
+            <li><%= role.capitalize %>: <%= count %></li>
+          <% end %>
+        </ul>
       </div>
     </div>
+  </div>
 </div>
