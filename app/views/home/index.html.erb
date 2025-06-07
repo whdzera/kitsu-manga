@@ -2,8 +2,8 @@
 <div class="columns">
   <div class="column is-8">
     <!-- Announcement  -->
-    <div class="manga-section bg-transparent">
-      <div class="section-title">
+    <div class="manga-section bg-transparent ml-4 mr-2">
+      <div class="section-title has-text-white">
         Announcement
         <% if current_user&.admin? %>
           <button id="edit-btn" class="button is-small" onclick="toggleEdit()">Edit</button>
@@ -49,17 +49,17 @@
       }
     </script>
     <!-- Featured Manga -->
-    <div class="manga-section bg-transparent">
-      <div class="section-title">Featured Manga</div>
-      <div class="scroll-container featured-scroll">
+    <div class="manga-section bg-transparent ml-4 mr-2">
+      <div class="section-title has-text-white">Featured Manga</div>
+      <div class="scroll-container featured-scroll ml-4">
         <% featured_manga = Manga.order(rating: :desc).limit(10) %>
         <% if featured_manga.any? %>
           <% featured_manga.each do |manga| %>
             <div class="scroll-item">
               <div class="manga-box">
-                <a href="<%= manga_path(manga.title.gsub(' ', '-')) %>">
+                <a href="<%= manga_path(manga.title.gsub(' ', '-')) %>" data-controller="thumbnail">
                   <% if manga.image_cover.present? %>
-                    <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image">
+                    <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image" data-thumbnail-target="image">
                   <% else %>
                     <div class="manga-image"></div>
                   <% end %>
@@ -75,19 +75,19 @@
       </div>
     </div>
     <!-- Latest Updates -->
-    <div class="manga-section bg-transparent">
-      <div class="section-title">Latest Updates</div>
+    <div class="manga-section bg-transparent ml-4 mr-2">
+      <div class="section-title has-text-white">Latest Updates</div>
       <div class="vertical-scroll latest-vertical-scroll">
         <% latest_chapters = Chapter.includes(:manga).order(created_at: :desc).limit(12) %>
         <% if latest_chapters.any? %>
           <% latest_chapters.each do |chapter| %>
             <div class="vertical-scroll-item bg-full-transparent">
               <div class="manga-box">
-                <a href="<%= manga_chapter_path(chapter.manga.title.gsub(' ', '-'), chapter.chapter_number) %>">
+                <a href="<%= manga_chapter_path(chapter.manga.title.gsub(' ', '-'), chapter.chapter_number) %>" data-controller="thumbnail">
                   <div class="columns is-mobile">
                     <div class="column is-4">
                       <% if chapter.manga.image_cover.present? %>
-                        <img src="<%= chapter.manga.image_cover %>" alt="<%= chapter.manga.title %>" class="manga-chapter-image">
+                        <img src="<%= chapter.manga.image_cover %>" alt="<%= chapter.manga.title %>" class="manga-chapter-image" data-thumbnail-target="image">
                       <% else %>
                         <div class="manga-image-small"></div>
                       <% end %>
@@ -116,16 +116,16 @@
   </div>
   <div class="column is-4">
     <!-- Popular This Week -->
-    <div class="manga-section">
-      <div class="section-title">Popular This Week</div>
-      <% popular_mangas = Manga.order(created_at: :desc, rating: :desc).limit(5) %>
+    <div class="manga-section ml-2 mr-4">
+      <div class="section-title has-text-white">Popular This Week</div>
+      <% popular_mangas = Manga.order(created_at: :desc, rating: :desc).limit(10) %>
       <% popular_mangas.each_with_index do |manga, index| %>
         <div class="manga-box">
-          <a href="<%= manga_path(manga.title.gsub(' ', '-')) %>">
+          <a href="<%= manga_path(manga.title.gsub(' ', '-')) %>" data-controller="thumbnail">
             <div class="columns is-mobile">
               <div class="column is-3">
                 <% if manga.image_cover.present? %>
-                  <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image">
+                  <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image" data-thumbnail-target="image">
                 <% else %>
                   <div class="manga-image"></div>
                 <% end %>
@@ -178,7 +178,6 @@
     margin-bottom: 5px;
     object-fit: cover;
   }
-
 
   .manga-chapter-image {
     width: 100%;
