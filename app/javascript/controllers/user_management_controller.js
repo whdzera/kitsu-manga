@@ -85,14 +85,16 @@ export default class extends Controller {
 
     return `
       <tr>
-        <td>${user.username}</td>
+        <td>
+          <a href="/u/${user.username}" class="has-text-white" data-turbo="false">${user.username}</a>
+        </td>
         <td>${user.email}</td>
         <td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
         <td>${formattedDate}</td>
         <td class="has-text-centered">
           <div class="buttons is-flex">
             <a href="/admin/users/${user.id}/edit" class="button is-small bg-transparent">
-              <i class="fas fa-edit"></i>
+              <i class="fas fa-edit"></i>Edit
             </a>
             ${deleteOrCurrentTag}
           </div>

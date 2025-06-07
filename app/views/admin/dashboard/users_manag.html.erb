@@ -37,14 +37,18 @@
           <tbody>
             <% @users.first(10).each do |user| %>
               <tr>
-                <td><%= user.username %></td>
+                <td>
+                  <%= link_to user_profile_path(user.username), class: "has-text-white", data: { turbo: false } do %>
+                    <%= user.username %>
+                  <% end %>
+                </td>
                 <td><%= user.email %></td>
                 <td><%= user.role.capitalize %></td>
                 <td><%= user.created_at.strftime("%b %d, %Y") %></td>
                 <td class="has-text-centered">
                   <div class="buttons is-flex">
                     <%= link_to admin_edit_user_path(user), class: "button is-small bg-transparent" do %>
-                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-edit"></i>Edit
                     <% end %>
                     <% if user != current_user %>
                       <%= button_to admin_delete_user_path(user), method: :delete, data: {
