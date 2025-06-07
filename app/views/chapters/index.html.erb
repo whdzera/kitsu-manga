@@ -6,7 +6,7 @@
     <div class="manga-grid">
       <% @latest_chapters.each do |chapter| %>
         <div class="manga-card">
-          <a href="<%= manga_chapter_path(chapter.manga.title, chapter.chapter_number) %>">
+          <a href="<%= manga_chapter_path(chapter.manga.title.gsub(' ', '-'), chapter.chapter_number) %>">
             <div class="manga-cover-container">
               <% if chapter.manga.image_cover.present? %>
                 <img src="<%= chapter.manga.image_cover %>" alt="<%= chapter.manga.title %>" class="manga-cover">

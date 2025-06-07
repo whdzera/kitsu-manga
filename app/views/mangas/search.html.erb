@@ -6,7 +6,7 @@
     <div class="manga-grid">
       <% @mangas.each do |manga| %>
         <div class="manga-card">
-          <a href="<%= manga_path(manga.title) %>">
+          <a href="<%= manga_path(manga.title.gsub(' ', '-')) %>">
             <div class="manga-cover-container">
               <% if manga.image_cover.present? %>
                 <img src="<%= manga.image_cover %>" alt="<%= manga.title %> Cover" class="manga-cover">
@@ -19,8 +19,14 @@
               <p class="manga-info"><strong>Status:</strong> <%= manga.status %></p>
               <div class="manga-actions">
                 <% if current_user&.admin? %>
-                  <%= link_to "Edit", edit_manga_path(manga.title), class: "button is-small"  %>
-                  <%= button_to "Delete", manga, method: :delete, class: "button is-small", onclick: "return confirm('Are you sure you want to delete this manga?');" %>
+                  <%= link_to "Edit", edit_manga_path(manga.title.gsub(' ', '-')), class: "button is-small"  %>
+                  <%= button_to "Delete", manga, method: :delete, class: "button is-small", data: {
+                controller: "confirm",
+                action: "confirm#confirm",
+                confirm_title_value: "Delete?",
+                confirm_message_value: "This will permanently remove the manga.",
+                confirm_confirm_text_value: "Yes, delete it!"
+              } %>
                 <% end %>
               </div>
             </div>

@@ -57,7 +57,7 @@
           <% featured_manga.each do |manga| %>
             <div class="scroll-item">
               <div class="manga-box">
-                <a href="<%= manga_path(manga.title) %>">
+                <a href="<%= manga_path(manga.title.gsub(' ', '-')) %>">
                   <% if manga.image_cover.present? %>
                     <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="manga-image">
                   <% else %>
@@ -83,7 +83,7 @@
           <% latest_chapters.each do |chapter| %>
             <div class="vertical-scroll-item bg-full-transparent">
               <div class="manga-box">
-                <a href="<%= manga_chapter_path(chapter.manga.title, chapter.chapter_number) %>">
+                <a href="<%= manga_chapter_path(chapter.manga.title.gsub(' ', '-'), chapter.chapter_number) %>">
                   <div class="columns is-mobile">
                     <div class="column is-4">
                       <% if chapter.manga.image_cover.present? %>
@@ -121,7 +121,7 @@
       <% popular_mangas = Manga.order(created_at: :desc, rating: :desc).limit(5) %>
       <% popular_mangas.each_with_index do |manga, index| %>
         <div class="manga-box">
-          <a href="<%= manga_path(manga.title) %>">
+          <a href="<%= manga_path(manga.title.gsub(' ', '-')) %>">
             <div class="columns is-mobile">
               <div class="column is-3">
                 <% if manga.image_cover.present? %>

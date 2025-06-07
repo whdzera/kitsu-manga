@@ -35,7 +35,7 @@
       <div class="bookmarks-grid">
         <% @bookmarked_mangas.each do |manga| %>
           <div class="bookmark-card">
-            <%= link_to manga_path(manga.title), class: "bookmark-link" do %>
+            <%= link_to manga_path(manga.title.gsub(' ', '-')), class: "bookmark-link" do %>
               <div class="bookmark-cover-container">
                 <% if manga.image_cover.present? %>
                   <img src="<%= manga.image_cover %>" alt="<%= manga.title %>" class="bookmark-cover">
