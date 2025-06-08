@@ -12,24 +12,23 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 
 ## Features
 
-- UI Semi Transparent with Bulma
-- login/regist Auth with Devise
-- login/regist Anti bot with Hcaptcha
-- Email Confirmation Register with Action Mailer
+- UI semi transparent with Bulma
+- login/regist auth with Devise
+- login/regist anti bot with Hcaptcha
+- Email confirmation register with Action Mailer
 - Pagination with Kaminari
-- Role: Admin, Member, Guest
+- Role: Admin, Member, Guest(without regist)
 - Admin dashboard: User and Manga management, reports, etc
-- Profile Users: About, Rencet fav manga, etc
-- Bookmarks Manga System
+- Profile users: About, Rencet fav manga, etc
+- Bookmarks System
 - Comments system
-
 
 ## Tech Stack
 
 - Ruby on Rails (Backend)
 - SQLite (Database) for development, can be switched to MySQL or PostgreSQL
 - Bulma and Font-awesome (Styling and icon)
-- Stimulus and Turbo (Interactive)
+- Stimulus (Interactive)
 
 ### Prerequisites
 
@@ -56,7 +55,18 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
    ```sh
    rails server
    ```
-5. Open `http://localhost:3000` in your browser.
+
+## Developer Tool
+
+Run Rails Development mode:
+   ```sh
+   rake dev
+   ```
+
+Run Unit Test:
+   ```sh
+   rake test
+   ```
 
 ## Contributing
 
@@ -72,6 +82,7 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 
 ## License
 
+`do not deploy in public sever without my permission`
 This project is licensed under the Apache License.
 
 ## Contact
