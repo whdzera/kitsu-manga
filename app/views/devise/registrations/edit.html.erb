@@ -29,32 +29,39 @@
             <i class="fas fa-info-circle"></i> Currently waiting confirmation for: <strong><%= resource.unconfirmed_email %></strong>
           </div>
         <% end %>
-        <!-- Password -->
-        <div class="field" data-controller="toggle-password">
-          <label class="label has-text-white">
-            <i class="fas fa-lock"></i> Password 
-            <small>(leave blank if you don't want to change it)</small>
-          </label>
-          <div class="control has-icons-left has-icons-right">
-            <%= f.password_field :password, autocomplete: "new-password", class: "input bg-full-transparent", data: { toggle_password_target: "password" } %>
-            <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
-            <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
-              <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
-            </span>
+        <div data-controller="password-match">
+          <!-- Password -->
+          <div class="field" data-controller="toggle-password">
+            <label class="label has-text-white">
+              <i class="fas fa-lock"></i> Password 
+              <small>(leave blank if you don't want to change it)</small>
+            </label>
+            <div class="control has-icons-left has-icons-right">
+              <%= f.password_field :password, autocomplete: "new-password", class: "input bg-full-transparent", id: "password-field", data: { toggle_password_target: "password", 
+                        "password-match-target": "password", 
+                        "action": "input->password-match#check" } %>
+              <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+              <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
+                <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
+              </span>
+            </div>
+            <% if @minimum_password_length %>
+              <p class="help has-text-grey-light"><i class="fas fa-info-circle"></i> Minimum <%= @minimum_password_length %> characters</p>
+            <% end %>
+            <p data-password-match-target="message" class="is-size-7 has-text-danger ml-2 mt-1 is-hidden"></p>
           </div>
-          <% if @minimum_password_length %>
-            <p class="help has-text-grey-light"><i class="fas fa-info-circle"></i> Minimum <%= @minimum_password_length %> characters</p>
-          <% end %>
-        </div>
-        <!-- Password Confirmation -->
-        <div class="field" data-controller="toggle-password">
-          <label class="label has-text-white"><i class="fas fa-key"></i> Confirm Password</label>
-          <div class="control has-icons-left has-icons-right">
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input bg-full-transparent", data: { toggle_password_target: "password" } %>
-            <span class="icon is-small is-left"><i class="fas fa-key"></i></span>
-            <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
-              <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
-            </span>
+          <!-- Password Confirmation -->
+          <div class="field" data-controller="toggle-password">
+            <label class="label has-text-white"><i class="fas fa-key"></i> Confirm Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input bg-full-transparent", data: { toggle_password_target: "password", 
+                        "password-match-target": "passwordConfirmation", 
+                        "action": "input->password-match#check" } %>
+              <span class="icon is-small is-left"><i class="fas fa-key"></i></span>
+              <span class="icon is-small is-right" data-action="click->toggle-password#toggle" style="pointer-events: all; cursor: pointer;">
+                <i class="fa fa-fw fa-eye" data-toggle-password-target="icon"></i>
+              </span>
+            </div>
           </div>
         </div>
         <!-- Current Password -->
