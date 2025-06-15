@@ -8,231 +8,255 @@
     </div>
     <!-- Detail Manga -->
     <div class="manga-details">
-      <h1><%= @manga.title %></h1>
-      <p class="manga-info"><strong>Alternative Title:</strong> <%= @manga.alternative_title %></p>
-      <p class="manga-info"><strong>Status:</strong> <%= @manga.status %></p>
-      <p class="manga-info"><strong>Type:</strong> <%= @manga.manga_type %></p>
-      <p class="manga-info"><strong>Series:</strong> <%= @manga.series %></p>
-      <p class="manga-info"><strong>Author:</strong> <%= @manga.author %></p>
-      <p class="manga-info"><strong>Rating:</strong> ⭐ <%= @manga.rating %>/10</p>
-      <p class="manga-info"><strong>Genre:</strong>
-        <% @manga.genre.split(',').map(&:strip).each_with_index do |genre, index| %>
-          <%= link_to genre, "/manga/genre/#{ERB::Util.url_encode(genre)}" %><%= ", " unless index == @manga.genre.split(',').size - 1 %>
-        <% end %>
-      </p>
-      <div class="manga-actions">
-        <% if user_signed_in? %>
-          <% if current_user.bookmarked_mangas.include?(@manga) %>
-            <%= button_to manga_bookmark_path(@manga), method: :delete, class: "button bg-transparent" do %>
-              <i class="fa fa-bookmark"></i> Unbookmark
-            <% end %>
-          <% else %>
-            <%= button_to manga_bookmark_path(@manga), method: :post, class: "button bg-transparent" do %>
-              <i class="fa fa-bookmark"></i> Bookmark
+      <h1 class="mb-2"><%= @manga.title %></h1>
+      <p class="manga-info"><strong class="title is-5">Alternative Title</strong> <%= @manga.alternative_title %></p>
+      <p class="manga-info"><strong class="title is-5">Status</strong> <%= @manga.status %></p>
+      <p class="manga-info"><strong class="title is-5">Type</strong> <%= @manga.manga_type %></p>
+      <p class="manga-info"><strong class="title is-5">Series</strong> <%= @manga.series %></p>
+      <p class="manga-info"><strong class="title is-5">Author</strong> <%= @manga.author %></p>
+      <p class="manga-info"><strong class="title is-5">Rating</strong>⭐ <%= @manga.rating %>/10</p>
+      <p class="manga-info"><strong class="title is-5">Genre</strong>
+        <div class="tags are-medium is-flex is-flex-wrap-wrap" style="gap: 0.5rem;">
+          <% @manga.genre.split(',').map(&:strip).each do |genre| %>
+            <%= link_to genre, "/manga/genre/#{ERB::Util.url_encode(genre)}", class: "tag is-info is-light genre-tag" %>
+          <% end %>
+        </div>
+        <div class="manga-actions">
+          <% if user_signed_in? %>
+            <% if current_user.bookmarked_mangas.include?(@manga) %>
+              <%= button_to manga_bookmark_path(@manga), method: :delete, class: "button bg-transparent" do %>
+                <i class="fa fa-bookmark"></i> Unbookmark
+              <% end %>
+            <% else %>
+              <%= button_to manga_bookmark_path(@manga), method: :post, class: "button bg-transparent" do %>
+                <i class="fa fa-bookmark"></i> Bookmark
+              <% end %>
             <% end %>
           <% end %>
-        <% end %>
-        <% if current_user&.admin? %>
-          <a href="<%= @manga.title.gsub(' ', '-') %>/chapter/new" class="button bg-transparent">New</a>
-          <%= link_to "Edit", edit_manga_path(@manga.title.gsub(' ', '-')), class: "button bg-transparent" %>
-          <%= button_to "Delete", @manga, method: :delete, class: "button bg-transparent", data: {
+          <% if current_user&.admin? %>
+            <a href="<%= @manga.title.gsub(' ', '-') %>/chapter/new" class="button bg-transparent">New</a>
+            <%= link_to "Edit", edit_manga_path(@manga.title.gsub(' ', '-')), class: "button bg-transparent" %>
+            <%= button_to "Delete", @manga, method: :delete, class: "button bg-transparent", data: {
                 controller: "confirm",
                 action: "confirm#confirm",
                 confirm_title_value: "Delete?",
                 confirm_message_value: "This will permanently remove the manga.",
                 confirm_confirm_text_value: "Yes, delete it!"
               } %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="box bg-transparent">
-    <div class="article">
-      <h1 class="manga-info"><strong>Synopsis</strong></h1>
-      <p><%= @manga.synopsis %></p>
-    </div>
-  </div>
-  <!-- Chapter List -->
-  <div class="box bg-transparent">
-    <div class="chapter-list">
-      <h2>📖 Chapters</h2>
-      <div class="chapters-scroll-container">
-        <ul>
-          <% @chapters.each do |chapter| %>
-            <li>
-              <%= link_to "Chapter #{chapter.chapter_number}", manga_chapter_path(@manga.title.gsub(' ', '-'), chapter.chapter_number) %>
-            </li>
           <% end %>
-        </ul>
+        </div>
+      </div>
+    </div>
+    <div class="box bg-transparent">
+      <div class="article">
+        <h1 class="manga-info"><strong>Synopsis</strong></h1>
+        <p><%= @manga.synopsis %></p>
+      </div>
+    </div>
+    <!-- Chapter List -->
+    <div class="box bg-transparent">
+      <div class="chapter-list">
+        <h2 class="title is-5 mb-4">📖 Chapters</h2>
+        <div class="chapters-scroll-container">
+          <ul>
+            <% @chapters.each do |chapter| %>
+              <li class="chapter-item is-flex is-justify-content-space-between is-align-items-center mb-2">
+                <%= link_to "Chapter #{chapter.chapter_number}", manga_chapter_path(@manga.title.gsub(' ', '-'), chapter.chapter_number) %><span class="has-text-grey is-size-7"><%= chapter.created_at.strftime("%d %b %Y") %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<style>
-  .container {
-    padding: 10px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .manga-container {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 20px;
-    padding: 20px;
-    color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    margin-top: 16px;
-  }
-
-  .manga-cover img {
-    width: 100%;
-    border-radius: 6px;
-  }
-
-  .manga-details {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .manga-details h1 {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #ffffff;
-  }
-
-  .manga-info {
-    font-size: 0.95rem;
-    margin-bottom: 5px;
-  }
-
-  .manga-info strong {
-    color: #ffffff;
-    font-weight: bold;
-  }
-
-  .manga-actions {
-    margin-top: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .button {
-    padding: 8px 16px;
-    border-radius: 4px;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  .button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .chapter-list {
-    margin-top: 20px;
-    padding: 15px;
-    background: bg-transparent;
-    border-radius: 6px;
-    margin-bottom: 16px;
-  }
-
-  .chapter-list h2 {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-
-  .chapters-scroll-container {
-    max-height: 300px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #ffffff #282828;
-  }
-
-  .chapters-scroll-container::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .chapters-scroll-container::-webkit-scrollbar-track {
-    background: #282828;
-    border-radius: 3px;
-  }
-
-  .chapters-scroll-container::-webkit-scrollbar-thumb {
-    background-color: #ffffff;
-    border-radius: 3px;
-  }
-
-  .chapter-list ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .chapter-list li {
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .chapter-list a {
-    color: #ffffff;
-    font-weight: bold;
-    transition: color 0.3s;
-    display: block;
-    width: 100%;
-  }
-
-  .chapter-list a:hover {
-    color: #cccccc;
-  }
-
-  /* Responsive design */
-  @media screen and (max-width: 768px) {
-    .manga-container {
-      grid-template-columns: 1fr;
-    }
-
-    .manga-cover {
-      max-width: 200px;
+  <style>
+    .container {
+      padding: 10px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    .manga-details h1 {
-      margin-top: 10px;
-    }
-
-  }
-
-  @media screen and (max-width: 480px) {
     .manga-container {
-      padding: 10px;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 20px;
+      padding: 20px;
+      color: #fff;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+      margin-top: 16px;
+    }
+
+    .manga-cover img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .manga-details {
+      display: flex;
+      flex-direction: column;
     }
 
     .manga-details h1 {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .manga-info {
+      font-size: 0.95rem;
+      margin-bottom: 5px;
+    }
+
+    .manga-info strong {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .manga-actions {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: 1px solid #ffffff;
+      color: #ffffff;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
     }
 
     .chapter-list {
-      padding: 10px;
+      margin-top: 20px;
+      padding: 15px;
+      background: bg-transparent;
+      border-radius: 6px;
+      margin-bottom: 16px;
     }
-  }
 
-  .box {
-    padding: 15px;
-    margin-top: 20px;
-    border-radius: 6px;
-  }
+    .chapter-list h2 {
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
 
-  .article h1 {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-</style>
+    .chapters-scroll-container {
+      max-height: 300px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #ffffff #282828;
+    }
+
+    .chapters-scroll-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chapters-scroll-container::-webkit-scrollbar-track {
+      background: #282828;
+      border-radius: 3px;
+    }
+
+    .chapters-scroll-container::-webkit-scrollbar-thumb {
+      background-color: #ffffff;
+      border-radius: 3px;
+    }
+
+    .chapter-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .chapter-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .chapter-list a {
+      color: #ffffff;
+      font-weight: bold;
+      transition: color 0.3s;
+      display: block;
+      width: 100%;
+    }
+
+    .chapter-list a:hover {
+      color: #cccccc;
+    }
+
+    /* Responsive design */
+    @media screen and (max-width: 768px) {
+      .manga-container {
+        grid-template-columns: 1fr;
+      }
+
+      .manga-cover {
+        max-width: 200px;
+        margin: 0 auto;
+      }
+
+      .manga-details h1 {
+        margin-top: 10px;
+      }
+
+    }
+
+    @media screen and (max-width: 480px) {
+      .manga-container {
+        padding: 10px;
+      }
+
+      .manga-details h1 {
+        font-size: 1.5rem;
+      }
+
+      .chapter-list {
+        padding: 10px;
+      }
+    }
+
+    .box {
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 6px;
+    }
+
+    .article h1 {
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .genre-tag {
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid rgba(207, 207, 207, 0.12);
+    color:rgb(255, 255, 255); /* text-sky-300 */
+    background-color: rgba(3, 7, 8, 0.4);
+    transition: all 0.3s ease;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    }
+
+    .genre-tag:hover {
+    background-color: rgba(255, 255, 255, 0.19);
+    transform: scale(1.05);
+    border-color: rgba(0, 0, 0, 0.5);
+    color:rgb(255, 255, 255);
+    text-decoration: none;
+    }
+  </style>

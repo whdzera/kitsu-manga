@@ -17,29 +17,37 @@
   <div class="manga-images bg-transparent">
     <% if @chapter.images.present? %>
       <% @chapter.images.split(',').each do |image| %>
-        <img src="<%= image.strip %>" alt="Page from Chapter <%= @chapter.chapter_number %>">
-      <% end %>
-    <% else %>
-      <p>No image available for this chapter.</p>
-    <% end %>
-  </div>
-  <div class="box bg-transparent">
-    <div class="chapter-nav">
-      <% if @previous_chapter %>
-        <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button" %>
+        <img
+    src="<%= image.strip %>"
+    alt="Page from Chapter <%= @chapter.chapter_number %>"
+    draggable="false"
+    oncontextmenu="return false;"
+    onmousedown="return false;"
+    onselectstart="return false;"
+    style="pointer-events: none;"
+  >
+        <% end %>
       <% else %>
-        <span class="button disabled">Previous Chapter</span>
-      <% end %>
-      <% if @next_chapter %>
-        <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button" %>
-      <% else %>
-        <span class="button disabled">Next Chapter</span>
+        <p>No image available for this chapter.</p>
       <% end %>
     </div>
-    <% if current_user&.admin? %>
-      <div class="actions">
-        <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button" %>
-        <%= button_to "Delete", manga_delete_chapter_path(@manga.title, @chapter.chapter_number), 
+    <div class="box bg-transparent">
+      <div class="chapter-nav">
+        <% if @previous_chapter %>
+          <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button" %>
+        <% else %>
+          <span class="button disabled">Previous Chapter</span>
+        <% end %>
+        <% if @next_chapter %>
+          <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button" %>
+        <% else %>
+          <span class="button disabled">Next Chapter</span>
+        <% end %>
+      </div>
+      <% if current_user&.admin? %>
+        <div class="actions">
+          <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button" %>
+          <%= button_to "Delete", manga_delete_chapter_path(@manga.title, @chapter.chapter_number), 
                     method: :delete, 
                     class: "button button-danger",
                     data: {
@@ -49,30 +57,30 @@
                 confirm_message_value: "This will permanently remove the chapter.",
                 confirm_confirm_text_value: "Yes, delete it!"
               } %>
+        </div>
+      <% end %>
+      <div class="actions">
+        <%= link_to "Back to Manga", manga_path(@manga.title), class: "button" %>
       </div>
-    <% end %>
-    <div class="actions">
-      <%= link_to "Back to Manga", manga_path(@manga.title), class: "button" %>
     </div>
-  </div>
-  <div class="box bg-transparent">
-    <h2 class="title is-4 mb-4">Comments</h2>
-    <% if user_signed_in? %>
-      <%= form_with(
+    <div class="box bg-transparent">
+      <h2 class="title is-4 mb-4">Comments</h2>
+      <% if user_signed_in? %>
+        <%= form_with(
             url: manga_chapter_comments_path(@manga, chapter_number: @chapter.chapter_number),
             scope: :comment,
             local: false,
             html: { class: "box bg-transparent" }
           ) do |f| %>
-        <div class="field">
-          <%= f.label :body, "Write a comment:", class: "label" %>
-          <div class="control">
-            <%= f.text_area :body, rows: 4, class: "textarea bg-full-transparent", placeholder: "Your comment here..." %>
+          <div class="field">
+            <%= f.label :body, "Write a comment:", class: "label" %>
+            <div class="control">
+              <%= f.text_area :body, rows: 4, class: "textarea bg-full-transparent", placeholder: "Your comment here..." %>
+            </div>
           </div>
-        </div>
-        <div class="field mt-3">
-          <div class="control">
-            <%= f.submit "Post Comment", class: "button bg-transparent is-fullwidth", data: {
+          <div class="field mt-3">
+            <div class="control">
+              <%= f.submit "Post Comment", class: "button bg-transparent is-fullwidth", data: {
                 controller: "confirm",
                 action: "confirm#confirm",
                 confirm_title_value: "Comment?",
@@ -80,35 +88,35 @@
                 confirm_confirm_text_value: "Yes, Comment it!",
                 confirm_button_color_value: "#171515"
               } %>
-          </div>
-        </div>
-      <% end %>
-    <% else %>
-      <p class="has-text-grey-light mb-4"><em>Please login or Regist Account to post a comment.</em></p>
-    <% end %>
-    <% @chapter.comments.order(created_at: :desc).each do |comment| %>
-      <div class="box bg-transparent" id="<%= dom_id(comment) %>">
-        <div class="level">
-          <div class="level-left is-align-items-center">
-            <% if comment.user.avatar.attached? %>
-              <%= link_to user_profile_path(comment.user.username), data: { turbo: false } do %>
-                <%= image_tag comment.user.avatar.variant(resize_to_fill: [64, 64]), class: "image is-64x64 mr-3", style: "border-radius: 50%; object-fit: cover;" %>
-              <% end %>
-            <% else %>
-              <span class="icon is-large mr-3 has-text-grey-light">
-                <%= link_to user_profile_path(comment.user.username), data: { turbo: false } do %>
-                  <i class="fas fa-user-circle fa-4x"></i>
-                <% end %>
-              </span>
-            <% end %>
-            <div>
-              <strong><%= link_to comment.user.username, user_profile_path(comment.user.username), data: { turbo: false } %></strong><br>
-              <small class="has-text-grey is-size-7"><%= time_ago_in_words(comment.created_at) %> ago</small>
             </div>
           </div>
-          <% if comment.user == current_user || current_user&.admin? %>
-            <div class="level-right">
-              <%= button_to manga_chapter_comment_path(@manga, chapter_number: @chapter.chapter_number, id: comment.id),
+        <% end %>
+      <% else %>
+        <p class="has-text-grey-light mb-4"><em>Please login or Regist Account to post a comment.</em></p>
+      <% end %>
+      <% @chapter.comments.order(created_at: :desc).each do |comment| %>
+        <div class="box bg-transparent" id="<%= dom_id(comment) %>">
+          <div class="level">
+            <div class="level-left is-align-items-center">
+              <% if comment.user.avatar.attached? %>
+                <%= link_to user_profile_path(comment.user.username), data: { turbo: false } do %>
+                  <%= image_tag comment.user.avatar.variant(resize_to_fill: [64, 64]), class: "image is-64x64 mr-3", style: "border-radius: 50%; object-fit: cover;" %>
+                <% end %>
+              <% else %>
+                <span class="icon is-large mr-3 has-text-grey-light">
+                  <%= link_to user_profile_path(comment.user.username), data: { turbo: false } do %>
+                    <i class="fas fa-user-circle fa-4x"></i>
+                  <% end %>
+                </span>
+              <% end %>
+              <div>
+                <strong><%= link_to comment.user.username, user_profile_path(comment.user.username), data: { turbo: false } %></strong><br>
+                <small class="has-text-grey is-size-7"><%= time_ago_in_words(comment.created_at) %> ago</small>
+              </div>
+            </div>
+            <% if comment.user == current_user || current_user&.admin? %>
+              <div class="level-right">
+                <%= button_to manga_chapter_comment_path(@manga, chapter_number: @chapter.chapter_number, id: comment.id),
                 method: :delete,
                 data: {
                   turbo_confirm: "Are you sure you want to delete this comment?",
@@ -120,66 +128,66 @@
                 },
                 class: "button is-small bg-transparent",
                 form: { data: { turbo: true } } do %>
-                Delete
-              <% end %>
-            </div>
-          <% end %>
+                  Delete
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <p class="mt-2"><%= sanitize(comment.body, tags: [], attributes: []).gsub("\n", "<br>").html_safe %></p>
         </div>
-        <p class="mt-2"><%= sanitize(comment.body, tags: [], attributes: []).gsub("\n", "<br>").html_safe %></p>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
-<style>
-  .manga-header {
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    margin-top: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
+  <style>
+    .manga-header {
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      margin-top: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
 
-  .manga-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-align: center;
-  }
+    .manga-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-align: center;
+    }
 
-  .chapter-nav {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
-  }
+    .chapter-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px 0;
+    }
 
-  .manga-images {
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
+    .manga-images {
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
 
-  .manga-images img {
-    display: block;
-    max-width: 100%;
-    margin: 0 auto 10px;
-    border-radius: 4px;
-  }
+    .manga-images img {
+      display: block;
+      max-width: 100%;
+      margin: 0 auto 10px;
+      border-radius: 4px;
+    }
 
-  .actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
 
-  .box {
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
-</style>
+    .box {
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+  </style>
