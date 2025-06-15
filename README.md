@@ -23,12 +23,9 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 - Bookmarks System
 - Comments system
 
-## Tech Stack
+### Tech Stack
 
-- Ruby on Rails (Backend)
-- SQLite (Database) for development, can be switched to MySQL or PostgreSQL
-- Bulma and Font-awesome (Styling and icon)
-- Stimulus (Interactive)
+- Ruby on Rails, Stimulusjs, Bulma
 
 ### Prerequisites
 
