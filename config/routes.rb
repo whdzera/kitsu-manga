@@ -7,6 +7,11 @@ Rails.application.routes.draw do
                confirmations: "users/confirmations"
              }
 
+  # check username form
+  devise_scope :user do
+    get "users/check_username", to: "users/registrations#check_username"
+  end
+
   # Static page for confirmation instructions
   get "/confirmation_instructions",
       to: "static_pages#confirmation_instructions",
@@ -15,6 +20,7 @@ Rails.application.routes.draw do
   # Homepage accessible to everyone
   root to: "home#index"
 
+  # Announcement
   patch "/announcement", to: "announcements#update", as: :update_announcement
 
   # 404 page not found

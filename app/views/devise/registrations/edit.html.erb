@@ -6,6 +6,16 @@
     <div class="column is-half">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "box bg-transparent" }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
+        <!-- Username -->
+        <div class="field" data-controller="username">
+          <label class="label has-text-white"><i class="fas fa-user"></i> Username</label>
+          <div class="control has-icons-left">
+            <%= f.text_field :username, autocomplete: "username", class: "input bg-full-transparent" , 
+              data: { username_target: "input", action: "input->username#checkUsername" } %>
+            <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+          </div>
+          <p data-username-target="message" class="is-size-7 mt-1 ml-2"></p>
+        </div>
         <!-- Email -->
         <div class="field">
           <label class="label has-text-white"><i class="fas fa-envelope"></i> Email</label>

@@ -23,6 +23,7 @@ class User < ApplicationRecord
   ROLES = %w[member admin].freeze
 
   # Validations
+
   validates :username,
             presence: true,
             uniqueness: true,
@@ -30,8 +31,20 @@ class User < ApplicationRecord
               with: /\A[\w\-]+\z/,
               message:
                 "only allows letters, numbers, and underscores without spaces"
+            },
+            length: {
+              minimum: 6,
+              message: "must be at least 6 characters long"
             }
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :email,
+            presence: true,
+            uniqueness: {
+              case_sensitive: false
+            },
+            format: {
+              without: /\+/,
+              message: "must not contain '+'"
+            }
   validate :avatar_type
   validates :about, length: { maximum: 500 }
 
