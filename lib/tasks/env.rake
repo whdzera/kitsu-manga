@@ -1,3 +1,3 @@
 task :env do
-  exec "bin/rails credentials:edit"
+  sh 'VISUAL="code --wait" bin/rails credentials:edit'
 end

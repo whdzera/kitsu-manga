@@ -70,12 +70,13 @@ Rails.application.configure do
 
   # Konfigurasi SMTP
   config.action_mailer.smtp_settings = {
-    user_name: Rails.application.credentials.dig(:smtp, :user_name),
-    password: Rails.application.credentials.dig(:smtp, :password),
-    address: "sandbox.smtp.mailtrap.io",
-    host: "sandbox.smtp.mailtrap.io",
-    port: "2525",
-    authentication: :login
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: "localhost",
+    user_name: Rails.application.credentials.dig(:gmail, :user_name),
+    password: Rails.application.credentials.dig(:gmail, :password),
+    authentication: "plain",
+    enable_starttls_auto: true
   }
 
   # Aktifkan pengiriman email
