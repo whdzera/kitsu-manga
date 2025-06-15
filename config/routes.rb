@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  # Profile Users
   get "profiles/show"
+
   # Devise routes for users
   devise_for :users,
              controllers: {

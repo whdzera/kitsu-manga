@@ -3,7 +3,7 @@
 </h2>
 <div class="columns is-centered">
   <div class="column is-one-third">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "box bg-transparent" }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }, html: { class: "box bg-transparent" }) do |f| %>
       <% if flash[:alert] %>
         <div class="notification bg-transparent"><%= flash[:alert] %></div>
       <% end %>
@@ -35,13 +35,13 @@
         </div>
       </div>
       <% if devise_mapping.rememberable? %>
-        <div class="field">
+        <div class="field ml-2">
           <label class="checkbox has-text-white">
             <%= f.check_box :remember_me %> Remember me
           </label>
         </div>
       <% end %>
-      <div class="g-recaptcha" data-sitekey="<%= Rails.application.credentials.dig(:recaptcha, :site_key) %>"></div>
+      <div class="g-recaptcha" data-theme="dark" data-sitekey="<%= Rails.application.credentials.dig(:recaptcha, :site_key) %>"></div>
       <script src="https://www.google.com/recaptcha/api.js" async defer></script>
       <div class="field">
         <div class="field">
@@ -49,8 +49,8 @@
             <%= f.submit "Log In", class: "button is-fullwidth bg-transparent" %>
           </div>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
 <div class="has-text-centered mt-3 mb-3">

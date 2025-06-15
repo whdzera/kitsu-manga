@@ -1,29 +1,20 @@
+require "net/http"
+require "uri"
+
 class Users::RegistrationsController < Devise::RegistrationsController
+  include Recaptcha::Adapters::ControllerMethods
+  include Recaptcha::Adapters::ViewMethods
+
   def check_username
     user_exists = User.exists?(username: params[:username])
     render json: { taken: user_exists }
   end
 
-  def verify_recaptcha(response_token, remote_ip = nil)
-    uri = URI("https://www.google.com/recaptcha/api/siteverify")
-    res =
-      Net::HTTP.post_form(
-        uri,
-        {
-          "secret" =>
-            Rails.application.credentials.dig(:recaptcha, :secret_key),
-          "response" => response_token,
-          "remoteip" => remote_ip
-        }
-      )
-    JSON.parse(res.body)["success"] == true
-  end
-
   def create
     build_resource(sign_up_params)
 
-    unless verify_recaptcha(params["g-recaptcha-response"], request.remote_ip)
-      resource.errors.add(:base, "Verification reCAPTCHA failed. try again.")
+    unless verify_recaptcha
+      resource.errors.add(:base, "Verification reCAPTCHA failed. Try again.")
       clean_up_passwords(resource)
       set_minimum_password_length
       return render :new, status: :unprocessable_entity
