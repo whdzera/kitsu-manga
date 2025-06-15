@@ -2,7 +2,8 @@ source "https://rubygems.org"
 
 gem "rails", "8.0.2"
 gem "propshaft", "1.1.0"
-gem "sqlite3", "2.6.0"
+gem "pg", "1.5.9" # Use PostgreSQL as the database for Production
+gem "sqlite3", "2.6.0" # Use SQLite3 as the database for Development and Test
 gem "puma", "6.6.0"
 gem "importmap-rails", "2.1.0"
 gem "turbo-rails", "2.0.13"
