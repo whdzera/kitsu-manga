@@ -70,7 +70,6 @@
         ) do |f| %>
           <%= f.hidden_field :profile_user_id, value: @profile.id %>
           <div class="field">
-            <%= f.label :body, "Write a comment:", class: "label" %>
             <div class="control">
               <%= f.text_area :body, rows: 4, class: "textarea bg-full-transparent", placeholder: "Your comment here..." %>
             </div>

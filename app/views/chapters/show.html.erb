@@ -3,14 +3,14 @@
     <h1 class="manga-title"><%= @manga.title %> - Chapter <%= @chapter.chapter_number %></h1>
     <div class="chapter-nav">
       <% if @previous_chapter %>
-        <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button" %>
+        <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button bg-full-transparent" %>
       <% else %>
-        <span class="button disabled">Previous Chapter</span>
+        <span class="button disabled bg-full-transparent">Previous Chapter</span>
       <% end %>
       <% if @next_chapter %>
-        <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button" %>
+        <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button bg-full-transparent" %>
       <% else %>
-        <span class="button disabled">Next Chapter</span>
+        <span class="button disabled bg-full-transparent">Next Chapter</span>
       <% end %>
     </div>
   </div>
@@ -34,22 +34,22 @@
     <div class="box bg-transparent">
       <div class="chapter-nav">
         <% if @previous_chapter %>
-          <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button" %>
+          <%= link_to "Previous Chapter", url_for(controller: "chapters", action: "show", chapter_number: @previous_chapter.chapter_number), class: "button bg-full-transparent" %>
         <% else %>
-          <span class="button disabled">Previous Chapter</span>
+          <span class="button disabled bg-full-transparent">Previous Chapter</span>
         <% end %>
         <% if @next_chapter %>
-          <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button" %>
+          <%= link_to "Next Chapter", url_for(controller: "chapters", action: "show", chapter_number: @next_chapter.chapter_number), class: "button bg-full-transparent" %>
         <% else %>
-          <span class="button disabled">Next Chapter</span>
+          <span class="button disabled bg-full-transparent">Next Chapter</span>
         <% end %>
       </div>
       <% if current_user&.admin? %>
         <div class="actions">
-          <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button" %>
+          <%= link_to "Edit", manga_edit_chapter_path(@manga.title, @chapter.chapter_number), class: "button bg-full-transparent" %>
           <%= button_to "Delete", manga_delete_chapter_path(@manga.title, @chapter.chapter_number), 
                     method: :delete, 
-                    class: "button button-danger",
+                    class: "button bg-full-transparent",
                     data: {
                 controller: "confirm",
                 action: "confirm#confirm",
@@ -60,7 +60,7 @@
         </div>
       <% end %>
       <div class="actions">
-        <%= link_to "Back to Manga", manga_path(@manga.title), class: "button" %>
+        <%= link_to "Back to Manga", manga_path(@manga.title), class: "button bg-full-transparent" %>
       </div>
     </div>
     <div class="box bg-transparent">
@@ -73,7 +73,6 @@
             html: { class: "box bg-transparent" }
           ) do |f| %>
           <div class="field">
-            <%= f.label :body, "Write a comment:", class: "label" %>
             <div class="control">
               <%= f.text_area :body, rows: 4, class: "textarea bg-full-transparent", placeholder: "Your comment here..." %>
             </div>
