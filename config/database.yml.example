@@ -1,0 +1,24 @@
+default: &default
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: storage/development.sqlite3
+
+test:
+  <<: *default
+  database: storage/test.sqlite3
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: kitsumanga
+  username: whdzera@gmail.com
+  password: 
+  host: 
+  port: 5432
+  pool: 5
+  sslmode: require
+  
