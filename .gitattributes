@@ -5,5 +5,3 @@ config/credentials.yml.enc diff=rails_credentials
 
 # Marking specific file types as Ruby for syntax highlighting
 *.erb linguist-language=Ruby
-*.html linguist-language=Ruby
-*.css linguist-language=Ruby
