@@ -6,5 +6,5 @@ document.addEventListener('turbo:visit', () => {
 });
 
 document.addEventListener('turbo:load', () => {
-  setTimeout(() => Turbo.navigator.delegate.adapter.progressBar.hide(), 1000);
+  setTimeout(() => Turbo.navigator.delegate.adapter.progressBar.hide(), 1300);
 });
