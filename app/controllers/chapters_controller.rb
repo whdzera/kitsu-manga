@@ -1,7 +1,9 @@
+require "rss"
+
 class ChaptersController < ApplicationController
-  before_action :authenticate_user!, except: %i[show index]
+  before_action :authenticate_user!, except: %i[show index feed]
   before_action :require_admin, only: %i[create new update edit destroy]
-  before_action :set_manga, except: [:index]
+  before_action :set_manga, except: %i[index feed]
   before_action :set_chapter, only: %i[show edit update destroy]
 
   def index
@@ -86,6 +88,36 @@ class ChaptersController < ApplicationController
 
   def latest
     @latest_chapters = Chapter.order(created_at: :desc).limit(5)
+  end
+
+  def feed
+    @chapters = Chapter.includes(:manga).order(created_at: :desc).limit(20)
+
+    rss =
+      RSS::Maker.make("2.0") do |maker|
+        maker.channel.title = "Latest Manga Chapters"
+        maker.channel.link = request.original_url
+        maker.channel.description = "RSS feed of latest manga chapter releases"
+        maker.channel.language = "en"
+        maker.channel.updated =
+          (@chapters.first&.created_at || Time.now).to_time
+
+        @chapters.each do |chapter|
+          maker.items.new_item do |item|
+            item.title =
+              "#{chapter.manga.title} - Chapter #{chapter.chapter_number}"
+            item.link = manga_chapter_url(chapter.manga, chapter)
+            item.description = <<~HTML
+        <strong>Manga:</strong> #{chapter.manga.title}<br/>
+        <strong>Chapter:</strong> #{chapter.chapter_number}<br/>
+        <strong>Released at:</strong> #{chapter.created_at.strftime("%B %d, %Y")}<br/>
+      HTML
+            item.updated = chapter.created_at.to_time
+          end
+        end
+      end
+
+    render xml: rss.to_s
   end
 
   private

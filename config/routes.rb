@@ -57,6 +57,9 @@ Rails.application.routes.draw do
   # Bookmarks
   get "/manga/bookmarks", to: "bookmarks#index", as: "manga_bookmarks"
 
+  # Rss Feed
+  get "/feed", to: "chapters#feed", defaults: { format: "rss" }
+
   # List lastest chapters
   get "/manga/chapters", to: "chapters#index", as: "all_manga_chapters"
 
