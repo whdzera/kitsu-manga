@@ -2,6 +2,7 @@ module Api
   module V1
     class Api::V1::MangasController < Api::BaseController
       before_action :authenticate_user!, except: %i[index show]
+      before_action :require_admin, only: %i[create update destroy]
       before_action :set_manga, only: %i[show update destroy]
 
       def index

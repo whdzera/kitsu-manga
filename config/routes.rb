@@ -17,7 +17,9 @@ Rails.application.routes.draw do
         post "login", to: "sessions#create"
         delete "logout", to: "sessions#destroy"
       end
-      resources :mangas, path: "manga"
+      resources :mangas, path: "manga", param: :id do
+        resources :chapters, param: :chapter_number
+      end
     end
   end
 
