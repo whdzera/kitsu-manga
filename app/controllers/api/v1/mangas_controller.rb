@@ -1,6 +1,6 @@
 module Api
   module V1
-    class MangasController < ApplicationController
+    class Api::V1::MangasController < Api::BaseController
       before_action :authenticate_user!, except: %i[index show]
       before_action :set_manga, only: %i[show update destroy]
 
@@ -37,8 +37,19 @@ module Api
       end
 
       def destroy
-        @manga.destroy
-        head :no_content
+        if @manga.destroy
+          render json: {
+                   message: "Manga deleted successfully",
+                   id: @manga.id,
+                   title: @manga.title
+                 },
+                 status: :ok
+        else
+          render json: {
+                   error: "Failed to delete manga"
+                 },
+                 status: :unprocessable_entity
+        end
       end
 
       private
@@ -46,7 +57,7 @@ module Api
       def set_manga
         @manga =
           Manga.find_by(id: params[:id]) ||
-            Manga.find_by(title: params[:id].tr("-", " "))
+            Manga.where("title LIKE ?", "%#{params[:id].tr("-", " ")}%").first
         unless @manga
           render json: { error: "Manga not found" }, status: :not_found
         end

@@ -14,7 +14,9 @@ class User < ApplicationRecord
          :rememberable,
          :validatable,
          :confirmable,
-         authentication_keys: [:login]
+         :jwt_authenticatable,
+         authentication_keys: [:login],
+         jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null
 
   # Virtual attribute for login (username or email)
   attr_accessor :login

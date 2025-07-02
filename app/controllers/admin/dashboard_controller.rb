@@ -56,6 +56,20 @@ module Admin
       @users_by_role = User.group(:role).count
     end
 
+    def api
+      user = current_user
+
+      if user
+        payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+        @token = payload[0]
+        @user = user
+
+        render :api
+      else
+        render plain: "User not found", status: :not_found
+      end
+    end
+
     def edit_user
       @user = User.find(params[:id])
     end

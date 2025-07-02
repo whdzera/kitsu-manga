@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   # Rest APIs
   namespace :api do
     namespace :v1 do
+      devise_scope :user do
+        post "login", to: "sessions#create"
+        delete "logout", to: "sessions#destroy"
+      end
       resources :mangas, path: "manga"
     end
   end
@@ -46,6 +50,7 @@ Rails.application.routes.draw do
     patch "profile", to: "dashboard#update", as: :profile_update
     get "usermanagement", to: "dashboard#users_manag"
     get "mangamanagement", to: "dashboard#manga_manag"
+    get "apimanagement", to: "dashboard#api"
     get "reports", to: "dashboard#reports", as: "reports"
     get "users/:id/edit", to: "dashboard#edit_user", as: "edit_user"
     patch "users/:id", to: "dashboard#update_user", as: "update_user"
