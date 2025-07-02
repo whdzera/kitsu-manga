@@ -8,9 +8,9 @@ Kitsu Manga is a web reading manga written in Ruby on Rails, featuring a clean i
 
 <img src="https://i.imgur.com/jrRGFmr.png" width="80%">
 
-<img src="https://i.imgur.com/dYVLylg.png" width="80%">
-
 <img src="https://i.imgur.com/SilPtHy.png" width="80%">
+
+<img src="https://i.imgur.com/xtxcd8w.png" width="80%">
 
 ## Features
 
