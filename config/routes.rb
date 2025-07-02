@@ -10,6 +10,13 @@ Rails.application.routes.draw do
                confirmations: "users/confirmations"
              }
 
+  # Rest APIs
+  namespace :api do
+    namespace :v1 do
+      resources :mangas, path: "manga"
+    end
+  end
+
   # check username form
   devise_scope :user do
     get "users/check_username", to: "users/registrations#check_username"
